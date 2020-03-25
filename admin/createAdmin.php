@@ -8,7 +8,7 @@
         $password=$_POST['password'];
         $status=$_POST['status'];
 
-    $result = mysqli_query($conn, "INSERT INTO user(username,name,email,password,status)VALUES('$usename','$name','$email','$password','$status')");
+    $result = mysqli_query($conn, "INSERT INTO user(username,name,email,password,status)VALUES('$username','$name','$email','$password','$status')");
 
     if($result){
         echo "create admin success";
