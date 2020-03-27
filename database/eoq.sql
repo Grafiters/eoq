@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2020 at 12:18 PM
+-- Generation Time: Mar 27, 2020 at 03:34 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -35,7 +35,8 @@ CREATE TABLE `item` (
   `name` varchar(50) NOT NULL,
   `price` double NOT NULL,
   `stock` int(15) NOT NULL,
-  `cur_time` timestamp NOT NULL DEFAULT current_timestamp()
+  `create` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -49,7 +50,8 @@ CREATE TABLE `pivot` (
   `purchase_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
   `total` double NOT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp()
+  `create` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -62,7 +64,8 @@ CREATE TABLE `purchase` (
   `purchase_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `create` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -81,7 +84,8 @@ CREATE TABLE `result` (
   `hasil_pesan` double NOT NULL,
   `hasil_simpan` double NOT NULL,
   `rop` double NOT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp()
+  `create` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -96,7 +100,8 @@ CREATE TABLE `supplier` (
   `phone` int(15) DEFAULT NULL,
   `address` varchar(50) DEFAULT NULL,
   `branch` varchar(50) DEFAULT NULL,
-  `cur_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+  `create` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -112,7 +117,8 @@ CREATE TABLE `user` (
   `email` varchar(25) DEFAULT NULL,
   `password` varchar(15) DEFAULT NULL,
   `status` char(10) DEFAULT NULL,
-  `cur_timestamp` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+  `create` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
