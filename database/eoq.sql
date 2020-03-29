@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2020 at 03:34 PM
+-- Generation Time: Mar 29, 2020 at 03:22 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -38,6 +38,13 @@ CREATE TABLE `item` (
   `create` timestamp NOT NULL DEFAULT current_timestamp(),
   `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`item_id`, `supplier_id`, `type`, `name`, `price`, `stock`, `create`, `update`) VALUES
+(1, 1, 'elektronik', 'alone', 3500000, 5, '2020-03-29 12:49:50', '2020-03-29 12:49:50');
 
 -- --------------------------------------------------------
 
@@ -97,12 +104,19 @@ CREATE TABLE `result` (
 CREATE TABLE `supplier` (
   `supplier_id` int(11) NOT NULL,
   `name` varchar(25) DEFAULT NULL,
-  `phone` int(15) DEFAULT NULL,
+  `phone` bigint(15) DEFAULT NULL,
   `address` varchar(50) DEFAULT NULL,
   `branch` varchar(50) DEFAULT NULL,
   `create` timestamp NOT NULL DEFAULT current_timestamp(),
   `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`supplier_id`, `name`, `phone`, `address`, `branch`, `create`, `update`) VALUES
+(1, 'alone', 82322597622, 'jl. ampera semarang barat', 'semarang tengah', '2020-03-29 12:39:18', '2020-03-29 12:39:18');
 
 -- --------------------------------------------------------
 
@@ -174,7 +188,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `pivot`
@@ -198,7 +212,7 @@ ALTER TABLE `result`
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -208,8 +222,13 @@ ALTER TABLE `supplier`
 -- Constraints for table `item`
 --
 ALTER TABLE `item`
-  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`),
-  ADD CONSTRAINT `item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `pivot` (`item_id`);
+  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`);
+
+--
+-- Constraints for table `pivot`
+--
+ALTER TABLE `pivot`
+  ADD CONSTRAINT `pivot_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `result` (`item_id`);
 
 --
 -- Constraints for table `purchase`
@@ -222,7 +241,7 @@ ALTER TABLE `purchase`
 -- Constraints for table `result`
 --
 ALTER TABLE `result`
-  ADD CONSTRAINT `result_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `pivot` (`item_id`);
+  ADD CONSTRAINT `result_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
