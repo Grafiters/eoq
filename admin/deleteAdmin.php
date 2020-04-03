@@ -1,8 +1,9 @@
 <?php
     include_once("../Connect.php");
 
-    $id = $_GET['user_id'];
-    $result = mysqli_query($conn, "DELETE FROM user WHERE user_id=$id"); 
+    $id = $_GET['id'];
+    $query = "DELETE FROM user WHERE user_id=$id";
+    $result = $conn->query($query);
 
-    header("Location:index.php");
+    header("Location: /pages/admin");
 ?>
