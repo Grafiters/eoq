@@ -1,5 +1,8 @@
 <?php
-    include("../Connect.php");
+    include("../../Connect.php");
+    $query = "SELECT * FROM user ORDER BY user_id DESC";
 
-    $result = mysqli_query($conn, "SELECT * FROM user");
+    if (!$conn->connect_error) {
+      $users = $conn->query($query);
+    }
 ?>

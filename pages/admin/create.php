@@ -123,30 +123,34 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="">
+                <form action="/admin/createAdmin.php" method="post">
+                  <div class="form-group">
+                    <label class="form-label" for="">Username</label>
+                    <input class="form-control" type="text" name="username" required>
+                  </div>
                   <div class="form-group">
                     <label class="form-label" for="">Nama</label>
-                    <input class="form-control" type="text" name="nama" required>
+                    <input class="form-control" type="text" name="name" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Jabatan</label>
-                    <select class="form-control" id="jabatan" name="jabatan">
+                    <select class="form-control" id="jabatan" name="status">
                       <option value="admin">Admin</option>
                       <option value="penjualan">Penjualan</option>
                       <option value="produksi">Produksi</option>
                     </select>
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="">No Telepon</label>
-                    <input class="form-control" type="text" name="telp" required>
+                    <label class="form-label" for="">Email</label>
+                    <input class="form-control" type="email" name="email" required>
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="">Alamat</label>
-                    <textarea id="alamat" class="form-control" name="alamat"></textarea>
+                    <label class="form-label" for="">Password</label>
+                    <input class="form-control" type="password" name="password" required>
                   </div>
                   <div class="form-group text-right">
-                    <button class="btn btn-warning" type="cancel">Cancel</button>
-                    <button class="btn btn-success" type="submit">Submit</button>
+                    <input class="btn btn-warning" type="cancel" value="Cancel" />
+                    <input class="btn btn-success" type="submit" name="submit" value="Submit" />
                   </div>
                 </form>
               </div>
