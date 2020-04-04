@@ -1,6 +1,3 @@
-<?php
-  include('../../admin/editAdmin.php');
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,6 +15,8 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -67,7 +66,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/admin/index.php" class="nav-link active">
+            <a href="/pages/admin/index.php" class="nav-link">
               <i class="nav-icon fas fa-user-circle"></i>
               <p>Admin</p>
             </a>
@@ -79,7 +78,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/pages/pembelian/index.php" class="nav-link active">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -98,15 +97,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Daftar Admin</h1>
+            <h1>Daftar Pembelian</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
-              <li class="breadcrumb-item">
-                <a href="/pages/admin/index.php">Daftar Admin</a>
-              </li>
-              <li class="breadcrumb-item active">Edit Admin</li>
+              <li class="breadcrumb-item active">Daftar Pembelian</li>
             </ol>
           </div>
         </div>
@@ -118,50 +114,45 @@
       <div class="container-fluid">
         <div class="row">
           <!-- right column -->
-          <div class="col-md-8 mx-auto">
+          <div class="col-12">
             <!-- general form elements disabled -->
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Edit Admin</h3>
+              <div class="card-header text-right border-bottom-0">
+                <h3 class="card-title">Daftar Pembelian</h3>
+                <a class="btn btn-success btn-sm" href="/pages/pembelian/create.php">
+                  Tambah Pembelian
+                </a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="/admin/updateAdmin.php?id=<?= $_GET['id'] ?>" method="post">
-                  <div class="form-group">
-                    <label class="form-label" for="">Username</label>
-                    <input class="form-control" type="text" name="username" value="<?= $user['username'] ?>" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Nama</label>
-                    <input class="form-control" type="text" name="name" value="<?= $user['name'] ?>" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Jabatan</label>
-                    <select class="form-control" id="jabatan" name="status">
+                <table id="example1" class="table table-bordered table-hover text-center">
+                  <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Kode Pembelian</th>
+                    <th>Tanggal Pembelian</th>
+                    <th>Total Bayar</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
                     <?php
-                      foreach ($roles as $role) {
-                        $selected = '';
-                        if ($role == $user['status']) {
-                          $selected = 'selected';
-                        }
-                        echo "<option value='$role' $selected>$role</option>";
+                      for ($i = 1; $i < 100; $i++) {
+                        $status = $i%2 ? 'hello' : 'bark';
+                        $btnEdit = "<a href='/pages/pembelian/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $action = $btnEdit.$btnDelete;
+                        echo "<tr>";
+                          echo "<td>$i</td>";
+                          echo "<td>hello</td>";
+                          echo "<td>foo bar</td>";
+                          echo "<td>$status</td>";
+                          echo "<td>$action</td>";
+                        echo "</tr>";
                       }
                     ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Email</label>
-                    <input class="form-control" type="email" name="email" value="<?= $user['email'] ?>" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Password</label>
-                    <input class="form-control" type="password" name="password">
-                  </div>
-                  <div class="form-group text-right">
-                    <a class="btn btn-warning" href="/pages/admin">Back</a>
-                    <input type="submit" name="update" class="btn btn-primary" value="Submit">
-                  </div>
-                </form>
+                  </tbody>
+                </table>
               </div>
               <!-- /.card-body -->
             </div>
@@ -195,9 +186,19 @@
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+  });
+</script>
 </body>
 </html>
-
 
