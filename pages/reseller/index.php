@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -64,7 +66,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/admin/index.php" class="nav-link active">
+            <a href="../admin/index.php" class="nav-link">
               <i class="nav-icon fas fa-user-circle"></i>
               <p>Admin</p>
             </a>
@@ -76,7 +78,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/pages/pembelian/index.php" class="nav-link active">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -95,15 +97,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Daftar Admin</h1>
+            <h1>Daftar Pembelian</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
-              <li class="breadcrumb-item">
-                <a href="/pages/admin/index.php">Daftar Admin</a>
-              </li>
-              <li class="breadcrumb-item active">Tambah Admin</li>
+              <li class="breadcrumb-item active">Daftar Pembelian</li>
             </ol>
           </div>
         </div>
@@ -115,48 +114,29 @@
       <div class="container-fluid">
         <div class="row">
           <!-- right column -->
-          <div class="col-md-8 mx-auto">
+          <div class="col-12">
             <!-- general form elements disabled -->
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Tambah Admin</h3>
+              <div class="card-header text-right border-bottom-0">
+                <h3 class="card-title">Daftar Pembelian</h3>
+                <a class="btn btn-success btn-sm" href="/pages/pembelian/create.php">
+                  Tambah Pembelian
+                </a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="../../backend/admin/createAdmin.php" method="post">
-                  <div class="form-group">
-                    <label class="form-label" for="">Username</label>
-                    <input class="form-control" type="text" name="username" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Nama</label>
-                    <input class="form-control" type="text" name="name" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Telephone</label>
-                    <input class="form-control" type="text" name="telp" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Jabatan</label>
-                    <select class="form-control" id="jabatan" name="status">
-                      <option value="admin">Admin</option>
-                      <option value="penjualan">Penjualan</option>
-                      <option value="produksi">Produksi</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Email</label>
-                    <input class="form-control" type="email" name="email" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Password</label>
-                    <input class="form-control" type="password" name="password" required>
-                  </div>
-                  <div class="form-group text-right">
-                    <input class="btn btn-warning" type="cancel" value="Cancel" />
-                    <input class="btn btn-success" type="submit" name="submit" value="Submit" />
-                  </div>
-                </form>
+                <table id="example1" class="table table-bordered table-hover text-center">
+                  <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Kode Reseller</th>
+                    <th>Nama Reseller</th>
+                    <th>Alamat</th>
+                    <th>No Telepon</th>
+                    <th>Cabang</th>
+                  </tr>
+                  </thead>
+                </table>
               </div>
               <!-- /.card-body -->
             </div>
@@ -190,8 +170,19 @@
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+  });
+</script>
 </body>
 </html>
 

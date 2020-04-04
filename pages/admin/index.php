@@ -1,4 +1,4 @@
-<?php include('../../Backend/admin/showAdmin.php') ?>
+<?php include('../../backend/admin/showAdmin.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,19 +67,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/admin/index.php" class="nav-link active">
+            <a href="../admin/index.php" class="nav-link active">
               <i class="nav-icon fas fa-user-circle"></i>
               <p>Admin</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="../penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="../pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -120,7 +120,7 @@
             <div class="card">
               <div class="card-header text-right border-bottom-0">
                 <h3 class="card-title">Daftar Admin</h3>
-                <a class="btn btn-success btn-sm" href="/pages/admin/create.php">
+                <a class="btn btn-success btn-sm" href="create.php">
                   Tambah Admin
                 </a>
               </div>

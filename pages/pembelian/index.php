@@ -66,7 +66,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/admin/index.php" class="nav-link">
+            <a href="../admin/index.php" class="nav-link">
               <i class="nav-icon fas fa-user-circle"></i>
               <p>Admin</p>
             </a>
@@ -140,14 +140,14 @@
                       for ($i = 1; $i < 100; $i++) {
                         $status = $i%2 ? 'hello' : 'bark';
                         $btnEdit = "<a href='/pages/pembelian/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
-                        $action = $btnEdit.$btnDelete;
+                        $btnDelete = "<form class='d-inline mx-1' action='../../backend/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        // $action = $btnEdit.$btnDelete;
                         echo "<tr>";
                           echo "<td>$i</td>";
                           echo "<td>hello</td>";
                           echo "<td>foo bar</td>";
                           echo "<td>$status</td>";
-                          echo "<td>$action</td>";
+                          // echo "<td>$action</td>";
                         echo "</tr>";
                       }
                     ?>

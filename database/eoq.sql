@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 29, 2020 at 03:22 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Host: 172.18.0.2
+-- Generation Time: Apr 04, 2020 at 10:11 AM
+-- Server version: 5.7.29
+-- PHP Version: 7.4.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,32 +18,72 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `eoq`
+-- Database: `eoq2`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `item`
+-- Table structure for table `barang`
 --
 
-CREATE TABLE `item` (
-  `item_id` int(11) NOT NULL,
+CREATE TABLE `barang` (
+  `id` int(11) NOT NULL,
+  `code` varchar(10) COLLATE latin1_spanish_ci NOT NULL COMMENT 'kategori + inisial name contoh AB7, BBA',
+  `name` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `total` int(10) UNSIGNED ZEROFILL NOT NULL COMMENT 'total akan berubah sesuai dengan transaksi yang dilakukan',
+  `description` tinytext COLLATE latin1_spanish_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hasil`
+--
+
+CREATE TABLE `hasil` (
+  `id` int(11) NOT NULL,
+  `barang_id` int(11) NOT NULL,
+  `kebutuhan_tahunan` int(11) NOT NULL,
+  `biaya_sekali_pesan` int(11) NOT NULL,
+  `biaya_simpan_barang` int(11) NOT NULL,
+  `eoq` int(11) NOT NULL,
+  `hasil_biasa_pesan` int(11) NOT NULL,
+  `hasil_biaya_simpan` int(11) NOT NULL,
+  `rop` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `upcated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pembelian`
+--
+
+CREATE TABLE `pembelian` (
+  `id` int(11) NOT NULL,
   `supplier_id` int(11) NOT NULL,
-  `type` char(15) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `price` double NOT NULL,
-  `stock` int(15) NOT NULL,
-  `create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `code` varchar(10) COLLATE latin1_spanish_ci NOT NULL COMMENT 'KB + 3 digit id => KB001',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `item`
+-- Table structure for table `penjualan`
 --
 
-INSERT INTO `item` (`item_id`, `supplier_id`, `type`, `name`, `price`, `stock`, `create`, `update`) VALUES
-(1, 1, 'elektronik', 'alone', 3500000, 5, '2020-03-29 12:49:50', '2020-03-29 12:49:50');
+CREATE TABLE `penjualan` (
+  `id` int(11) NOT NULL,
+  `pembeli` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `code` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -53,47 +92,13 @@ INSERT INTO `item` (`item_id`, `supplier_id`, `type`, `name`, `price`, `stock`, 
 --
 
 CREATE TABLE `pivot` (
-  `pivot_id` int(11) NOT NULL,
-  `purchase_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
-  `total` double NOT NULL,
-  `create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `purchase`
---
-
-CREATE TABLE `purchase` (
-  `purchase_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
-  `create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `result`
---
-
-CREATE TABLE `result` (
-  `result_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
-  `kb_tahun` int(11) NOT NULL,
-  `sekali_ps` double NOT NULL,
-  `simpan_bg` double NOT NULL,
-  `eoq` double NOT NULL,
-  `hasil_pesan` double NOT NULL,
-  `hasil_simpan` double NOT NULL,
-  `rop` double NOT NULL,
-  `create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id` int(11) NOT NULL,
+  `penjualan_id` int(11) NOT NULL,
+  `barang_id` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -102,21 +107,15 @@ CREATE TABLE `result` (
 --
 
 CREATE TABLE `supplier` (
-  `supplier_id` int(11) NOT NULL,
-  `name` varchar(25) DEFAULT NULL,
-  `phone` bigint(15) DEFAULT NULL,
-  `address` varchar(50) DEFAULT NULL,
-  `branch` varchar(50) DEFAULT NULL,
-  `create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `supplier`
---
-
-INSERT INTO `supplier` (`supplier_id`, `name`, `phone`, `address`, `branch`, `create`, `update`) VALUES
-(1, 'alone', 82322597622, 'jl. ampera semarang barat', 'semarang tengah', '2020-03-29 12:39:18', '2020-03-29 12:39:18');
+  `id` int(11) NOT NULL,
+  `code` varchar(10) COLLATE latin1_spanish_ci NOT NULL COMMENT 'RES + 2 digit id + inisial name >> RES01JYB',
+  `name` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `phone` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+  `branch` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
+  `address` tinytext COLLATE latin1_spanish_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 -- --------------------------------------------------------
 
@@ -125,123 +124,135 @@ INSERT INTO `supplier` (`supplier_id`, `name`, `phone`, `address`, `branch`, `cr
 --
 
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
-  `name` varchar(25) DEFAULT NULL,
-  `username` varchar(15) DEFAULT NULL,
-  `email` varchar(25) DEFAULT NULL,
-  `password` varchar(15) DEFAULT NULL,
-  `status` char(10) DEFAULT NULL,
-  `create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id` int(11) NOT NULL,
+  `username` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `name` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `phone` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
+  `password` text COLLATE latin1_spanish_ci NOT NULL COMMENT 'password pake hash(sha512)',
+  `role` enum('admin, pengadaan, penjualan') COLLATE latin1_spanish_ci NOT NULL,
+  `code` varchar(5) COLLATE latin1_spanish_ci NOT NULL COMMENT 'generate dari inisial role + inisial name contoh ADMMSN',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `item`
+-- Indexes for table `barang`
 --
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`item_id`),
-  ADD UNIQUE KEY `supplier_id` (`supplier_id`);
+ALTER TABLE `barang`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hasil`
+--
+ALTER TABLE `hasil`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `barang_id` (`barang_id`);
+
+--
+-- Indexes for table `pembelian`
+--
+ALTER TABLE `pembelian`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `supplier_id` (`supplier_id`);
+
+--
+-- Indexes for table `penjualan`
+--
+ALTER TABLE `penjualan`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `pivot`
 --
 ALTER TABLE `pivot`
-  ADD PRIMARY KEY (`pivot_id`),
-  ADD UNIQUE KEY `purchase_id` (`purchase_id`),
-  ADD UNIQUE KEY `item_id` (`item_id`);
-
---
--- Indexes for table `purchase`
---
-ALTER TABLE `purchase`
-  ADD PRIMARY KEY (`purchase_id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
-
---
--- Indexes for table `result`
---
-ALTER TABLE `result`
-  ADD PRIMARY KEY (`result_id`),
-  ADD UNIQUE KEY `item_id` (`item_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `barang_id` (`barang_id`),
+  ADD KEY `penjualan_id` (`penjualan_id`);
 
 --
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
-  ADD PRIMARY KEY (`supplier_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `item`
+-- AUTO_INCREMENT for table `barang`
 --
-ALTER TABLE `item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `barang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `hasil`
+--
+ALTER TABLE `hasil`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pembelian`
+--
+ALTER TABLE `pembelian`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `penjualan`
+--
+ALTER TABLE `penjualan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pivot`
 --
 ALTER TABLE `pivot`
-  MODIFY `pivot_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `purchase`
---
-ALTER TABLE `purchase`
-  MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `result`
---
-ALTER TABLE `result`
-  MODIFY `result_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `item`
+-- Constraints for table `hasil`
 --
-ALTER TABLE `item`
-  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`supplier_id`);
+ALTER TABLE `hasil`
+  ADD CONSTRAINT `hasil_ibfk_1` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id`);
+
+--
+-- Constraints for table `pembelian`
+--
+ALTER TABLE `pembelian`
+  ADD CONSTRAINT `pembelian_ibfk_3` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`);
 
 --
 -- Constraints for table `pivot`
 --
 ALTER TABLE `pivot`
-  ADD CONSTRAINT `pivot_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `result` (`item_id`);
-
---
--- Constraints for table `purchase`
---
-ALTER TABLE `purchase`
-  ADD CONSTRAINT `purchase_ibfk_1` FOREIGN KEY (`purchase_id`) REFERENCES `pivot` (`purchase_id`),
-  ADD CONSTRAINT `purchase_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `result`
---
-ALTER TABLE `result`
-  ADD CONSTRAINT `result_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`);
+  ADD CONSTRAINT `pivot_ibfk_1` FOREIGN KEY (`barang_id`) REFERENCES `barang` (`id`),
+  ADD CONSTRAINT `pivot_ibfk_2` FOREIGN KEY (`penjualan_id`) REFERENCES `penjualan` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
