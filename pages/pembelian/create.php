@@ -1,6 +1,3 @@
-<?php
-  include('../../admin/editAdmin.php');
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,7 +64,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/admin/index.php" class="nav-link active">
+            <a href="/pages/admin/index.php" class="nav-link">
               <i class="nav-icon fas fa-user-circle"></i>
               <p>Admin</p>
             </a>
@@ -79,7 +76,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/pages/pembelian/index.php" class="nav-link active">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -98,15 +95,15 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Daftar Admin</h1>
+            <h1>Tambah Pembelian</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
               <li class="breadcrumb-item">
-                <a href="/pages/admin/index.php">Daftar Admin</a>
+                <a href="/pages/pembelian/index.php">Daftar Pembelian</a>
               </li>
-              <li class="breadcrumb-item active">Edit Admin</li>
+              <li class="breadcrumb-item active">Tambah Pembelian</li>
             </ol>
           </div>
         </div>
@@ -122,46 +119,97 @@
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Edit Admin</h3>
+                <h3 class="card-title">Tambah Pembelian</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="/admin/updateAdmin.php?id=<?= $_GET['id'] ?>" method="post">
-                  <div class="form-group">
-                    <label class="form-label" for="">Username</label>
-                    <input class="form-control" type="text" name="username" value="<?= $user['username'] ?>" required>
+                <div class="row align-items-end">
+                  <!-- kode-pesan & tgl bayar -->
+                  <div class="col">
+                    <div class="form-group row">
+                      <label class="form-label col-sm-4" for="">Kode Pembelian</label>
+                      <div class="col-sm-8">
+                        <input class="form-control" type="text" disabled>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="form-label col-sm-4" for="">Tanggal Pembelian</label>
+                      <div class="col-sm-8">
+                        <input type="date" name="tanggal" class="form-control">
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Nama</label>
-                    <input class="form-control" type="text" name="name" value="<?= $user['name'] ?>" required>
+                  <!-- END kode-pesan & tgl bayar -->
+                  <!-- Nama Supplier -->
+                  <div class="col">
+                    <div class="form-group row">
+                      <label class="form-label col-sm-4" for="">Nama Supplier</label>
+                      <div class="col-sm-8">
+                        <select id="supplier" class="form-control" name="supplier">
+                          <option value="JYB Group">JYB Group</option>
+                          <option value="Uni Max Power">Uni Max Power</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Jabatan</label>
-                    <select class="form-control" id="jabatan" name="status">
-                    <?php
-                      foreach ($roles as $role) {
-                        $selected = '';
-                        if ($role == $user['status']) {
-                          $selected = 'selected';
-                        }
-                        echo "<option value='$role' $selected>$role</option>";
-                      }
-                    ?>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Email</label>
-                    <input class="form-control" type="email" name="email" value="<?= $user['email'] ?>" required>
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Password</label>
-                    <input class="form-control" type="password" name="password">
-                  </div>
-                  <div class="form-group text-right">
-                    <a class="btn btn-warning" href="/pages/admin">Back</a>
-                    <input type="submit" name="update" class="btn btn-primary" value="Submit">
-                  </div>
-                </form>
+                  <!-- END nama supplier -->
+                </div>
+                <!-- tabel belanja -->
+                <table class="table table-hover table-borderless text-center">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th>Nama Barang</th>
+                      <th>Harga Satuan</th>
+                      <th>Jumlah Beli</th>
+                      <th>Total Bayar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Bio 7</td>
+                      <td>Rp 200.000</td>
+                      <td>150</td>
+                      <td>Rp 30.000.000</td>
+                    </tr>
+                    <!-- form tambah belanja -->
+                    <form action="/back-end/penjualan/create.php" method="POST">
+                      <tr>
+                        <td></td>
+                        <td>
+                          <select id="barang" class="form-control" name="barang">
+                            <option value="bio7">Bio7</option>
+                            <option value="Bio Activa">Bio Activa</option>
+                            <option value="Bio Moringa">Bio Moringa</option>
+                            <option value="M-King">M-King</option>
+                          </select>
+                        </td>
+                        <td>
+                          <input id="price" name="price" class="form-control" type="number" min="0">
+                        </td>
+                        <td>
+                          <input id="amount" name="amount" class="form-control" type="number" min="0">
+                        </td>
+                        <td>
+                          <input id="total" name="total" class="form-control" type="number" disabled>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="5" class="text-right">
+                          <button class="btn btn-sm btn-warning" type="reset">
+                            reset
+                          </button>
+                          <button class="btn btn-sm btn-success" type="submit">
+                            submit
+                          </button>
+                        </td>
+                      </tr>
+                    </form>
+                    <!-- END form tambah belanja -->
+                  </tbody>
+                </table>
+                <!-- END tabel belanja -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -191,6 +239,22 @@
 </div>
 <!-- ./wrapper -->
 
+<script>
+const harga = document.getElementById('price')
+const jumlah = document.getElementById('amount')
+const total = document.getElementById('total')
+harga.addEventListener('change', function(e) {
+  const jumlahBeli = jumlah.value
+  const temp = jumlahBeli * e.target.value
+  total.setAttribute('value', temp)
+})
+jumlah.addEventListener('change', function(e) {
+  const hargaBeli = harga.value
+  const temp = hargaBeli * e.target.value
+  total.setAttribute('value', temp)
+})
+</script>
+
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -199,5 +263,4 @@
 <script src="../../dist/js/adminlte.min.js"></script>
 </body>
 </html>
-
 
