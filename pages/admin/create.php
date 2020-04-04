@@ -158,7 +158,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="/admin/createAdmin.php" method="post">
+                <form action="../../backend/admin/createAdmin.php" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Username</label>
                     <input class="form-control" type="text" name="username" required>
@@ -166,6 +166,10 @@
                   <div class="form-group">
                     <label class="form-label" for="">Nama</label>
                     <input class="form-control" type="text" name="name" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="">Telephone</label>
+                    <input class="form-control" type="text" name="telp" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Jabatan</label>

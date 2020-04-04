@@ -1,5 +1,5 @@
 <?php
-    include("../Connect.php");
+    include("../../Connect.php");
 
     if (isset($_POST['submit'])) {
         $supplier=$_POST['supplier'];

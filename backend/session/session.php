@@ -1,11 +1,11 @@
 <?php
    session_start();
-   include('../Connect.php');
+   include('../../Connect.php');
    
-   $user_check = $_POST['username'];
+   $user_check = $_POST['email'];
    $pass_check = $_POST['password'];
    
-   $ses_sql = mysqli_query($conn,"select * from user where username = '$user_check' and password ='$pass_check'");
+   $ses_sql = mysqli_query($conn,"select * from user where email = '$user_check' and password ='$pass_check'");
    
    $row = mysqli_num_rows($ses_sql);
    

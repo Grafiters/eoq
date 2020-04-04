@@ -59,39 +59,16 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
+          <li class="nav-item">
             <a href="/index.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Data Master
-                <i class="right fas fa-angle-left"></i>
-              </p>
+              <p>Dashboard</p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a class="nav-link" href="/pages/admin">
-                  <i class="far fa-user nav-icon"></i>
-                  <p>Data User</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/pages/item">
-                  <i class="fas fa-box nav-icon"></i>
-                  <p>Data Barang</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
-                  <i class="fas fa-user-tie nav-icon"></i>
-                  <p>Data Reseller</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
-              <i class="nav-icon fas fa-warehouse"></i>
-              <p>Stok</p>
+            <a href="../admin/index.php" class="nav-link">
+              <i class="nav-icon fas fa-user-circle"></i>
+              <p>Admin</p>
             </a>
           </li>
           <li class="nav-item">
@@ -104,18 +81,6 @@
             <a href="/pages/pembelian/index.php" class="nav-link active">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
-              <i class="nav-icon fas fa-calculator"></i>
-              <p>Perhitungan EOQ</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
-              <i class="nav-icon fas fa-scroll"></i>
-              <p>Laporan</p>
             </a>
           </li>
         </ul>
@@ -164,29 +129,13 @@
                   <thead>
                   <tr>
                     <th>No</th>
-                    <th>Kode Pembelian</th>
-                    <th>Tanggal Pembelian</th>
-                    <th>Total Bayar</th>
-                    <th>Action</th>
+                    <th>Kode Reseller</th>
+                    <th>Nama Reseller</th>
+                    <th>Alamat</th>
+                    <th>No Telepon</th>
+                    <th>Cabang</th>
                   </tr>
                   </thead>
-                  <tbody>
-                    <?php
-                      for ($i = 1; $i < 100; $i++) {
-                        $status = $i%2 ? 'hello' : 'bark';
-                        $btnEdit = "<a href='/pages/pembelian/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='../../backend/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
-                        // $action = $btnEdit.$btnDelete;
-                        echo "<tr>";
-                          echo "<td>$i</td>";
-                          echo "<td>hello</td>";
-                          echo "<td>foo bar</td>";
-                          echo "<td>$status</td>";
-                          // echo "<td>$action</td>";
-                        echo "</tr>";
-                      }
-                    ?>
-                  </tbody>
                 </table>
               </div>
               <!-- /.card-body -->

@@ -1,5 +1,5 @@
 <?php
-    include_once("../Connect.php");
+    include_once("../../Connect.php");
 
     if (isset($_POST['update'])) {
         $id = $_POST['item_id'];
