@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -93,13 +95,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/pages/penjualan/index.php" class="nav-link active">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link active">
+            <a href="/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -130,15 +132,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Tambah Pembelian</h1>
+            <h1>Daftar Penjualan</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
-              <li class="breadcrumb-item">
-                <a href="/pages/pembelian/index.php">Daftar Pembelian</a>
-              </li>
-              <li class="breadcrumb-item active">Tambah Pembelian</li>
+              <li class="breadcrumb-item active">Daftar Penjualan</li>
             </ol>
           </div>
         </div>
@@ -150,101 +149,45 @@
       <div class="container-fluid">
         <div class="row">
           <!-- right column -->
-          <div class="col-md-8 mx-auto">
+          <div class="col-12">
             <!-- general form elements disabled -->
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Tambah Pembelian</h3>
+              <div class="card-header text-right border-bottom-0">
+                <h3 class="card-title">Daftar Penjualan</h3>
+                <a class="btn btn-success btn-sm" href="/pages/penjualan/create.php">
+                  Tambah Penjualan
+                </a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <div class="row align-items-end">
-                  <!-- kode-pesan & tgl bayar -->
-                  <div class="col">
-                    <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Kode Pembelian</label>
-                      <div class="col-sm-8">
-                        <input class="form-control" type="text" disabled>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Tanggal Pembelian</label>
-                      <div class="col-sm-8">
-                        <input type="date" name="tanggal" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-                  <!-- END kode-pesan & tgl bayar -->
-                  <!-- Nama Supplier -->
-                  <div class="col">
-                    <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Nama Supplier</label>
-                      <div class="col-sm-8">
-                        <select id="supplier" class="form-control" name="supplier">
-                          <option value="JYB Group">JYB Group</option>
-                          <option value="Uni Max Power">Uni Max Power</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- END nama supplier -->
-                </div>
-                <!-- tabel belanja -->
-                <table class="table table-hover table-borderless text-center">
+                <table id="example1" class="table table-bordered table-hover text-center">
                   <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>Nama Barang</th>
-                      <th>Harga Satuan</th>
-                      <th>Jumlah Beli</th>
-                      <th>Total Bayar</th>
-                    </tr>
+                  <tr>
+                    <th>No</th>
+                    <th>Kode Penjualan</th>
+                    <th>Tanggal Penjualan</th>
+                    <th>Total Bayar</th>
+                    <th>Action</th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Bio 7</td>
-                      <td>Rp 200.000</td>
-                      <td>150</td>
-                      <td>Rp 30.000.000</td>
-                    </tr>
-                    <!-- form tambah belanja -->
-                    <form action="/back-end/penjualan/create.php" method="POST">
-                      <tr>
-                        <td></td>
-                        <td>
-                          <select id="barang" class="form-control" name="barang">
-                            <option value="bio7">Bio7</option>
-                            <option value="Bio Activa">Bio Activa</option>
-                            <option value="Bio Moringa">Bio Moringa</option>
-                            <option value="M-King">M-King</option>
-                          </select>
-                        </td>
-                        <td>
-                          <input id="price" name="price" class="form-control" type="number" min="0">
-                        </td>
-                        <td>
-                          <input id="amount" name="amount" class="form-control" type="number" min="0">
-                        </td>
-                        <td>
-                          <input id="total" name="total" class="form-control" type="number" disabled>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="5" class="text-right">
-                          <button class="btn btn-sm btn-warning" type="reset">
-                            reset
-                          </button>
-                          <button class="btn btn-sm btn-success" type="submit">
-                            submit
-                          </button>
-                        </td>
-                      </tr>
-                    </form>
-                    <!-- END form tambah belanja -->
+                    <?php
+                      for ($i = 1; $i < 100; $i++) {
+                        $status = $i%2 ? 'hello' : 'bark';
+                        $btnEdit = "<a href='/pages/penjualan/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $action = $btnEdit.$btnDelete;
+                        echo "<tr>";
+                          echo "<td>$i</td>";
+                          echo "<td>hello</td>";
+                          echo "<td>foo bar</td>";
+                          echo "<td>$status</td>";
+                          echo "<td>$action</td>";
+                        echo "</tr>";
+                      }
+                    ?>
                   </tbody>
                 </table>
-                <!-- END tabel belanja -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -274,28 +217,23 @@
 </div>
 <!-- ./wrapper -->
 
-<script>
-const harga = document.getElementById('price')
-const jumlah = document.getElementById('amount')
-const total = document.getElementById('total')
-harga.addEventListener('change', function(e) {
-  const jumlahBeli = jumlah.value
-  const temp = jumlahBeli * e.target.value
-  total.setAttribute('value', temp)
-})
-jumlah.addEventListener('change', function(e) {
-  const hargaBeli = harga.value
-  const temp = hargaBeli * e.target.value
-  total.setAttribute('value', temp)
-})
-</script>
-
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+  });
+</script>
 </body>
 </html>
 

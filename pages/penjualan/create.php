@@ -93,13 +93,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/pages/penjualan/index.php" class="nav-link active">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link active">
+            <a href="/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -130,15 +130,15 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Tambah Pembelian</h1>
+            <h1>Tambah Penjualan</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
               <li class="breadcrumb-item">
-                <a href="/pages/pembelian/index.php">Daftar Pembelian</a>
+                <a href="/pages/penjualan/index.php">Daftar Penjualan</a>
               </li>
-              <li class="breadcrumb-item active">Tambah Pembelian</li>
+              <li class="breadcrumb-item active">Tambah Penjualan</li>
             </ol>
           </div>
         </div>
@@ -154,7 +154,7 @@
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Tambah Pembelian</h3>
+                <h3 class="card-title">Tambah Penjualan</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -162,13 +162,13 @@
                   <!-- kode-pesan & tgl bayar -->
                   <div class="col">
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Kode Pembelian</label>
+                      <label class="form-label col-sm-4" for="">Kode Penjualan</label>
                       <div class="col-sm-8">
                         <input class="form-control" type="text" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Tanggal Pembelian</label>
+                      <label class="form-label col-sm-4" for="">Tanggal Penjualan</label>
                       <div class="col-sm-8">
                         <input type="date" name="tanggal" class="form-control">
                       </div>
