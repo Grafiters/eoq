@@ -1,12 +1,11 @@
 <?php
-    $dbHost = 'localhost';
+    $dbHost = '172.18.0.2';
     $dbName = 'eoq';
     $dbUser = 'root';
-    $dbPass = '';
+    $dbPass = 'admin123';
 
-    $conn = mysqli_connect($dbHost, $dbUser, $dbPass, $dbName);
-
-    if (!$conn) {
-        echo "Connection Error";
+    $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+    if ($conn->connect_error) {
+        echo "Connection Error ".$conn->connect_error;
     }
 ?>
