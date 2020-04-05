@@ -141,15 +141,15 @@
                     <?php
                       $idx = 1;
                       while ($user = $users->fetch_array()) {
-                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/pages/admin/edit.php?id=".$user['user_id']."'>edit</a>";
-                        $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/pages/admin/edit.php?id=".$user['id']."'>edit</a>";
+                        $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$user['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr class='text-center'>";
                           echo "<td>".$idx."</td>";
                           echo "<td>".ucwords($user['username'])."</td>";
                           echo "<td>".ucwords($user['name'])."</td>";
                           echo "<td>".$user['email']."</td>";
-                          echo "<td>".ucwords($user['status'])."</td>";
+                          echo "<td>".ucwords($user['role'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                         $idx++;
