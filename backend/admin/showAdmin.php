@@ -1,9 +1,9 @@
 <?php
     include('../../Connect.php');
-    $query = "SELECT * FROM user ORDER BY user_id DESC";
+    // $query = "SELECT * FROM user ORDER BY user_id DESC";
 
-    if (!$conn->connect_error) {
-      $users = $conn->query($query);
-      var_dump($users);
+    if ($conn) {
+      $users = mysqli_query($conn, "SELECT * FROM user ORDER BY id DESC");
+      // var_dump($users);
     }
 ?>
