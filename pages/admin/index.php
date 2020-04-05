@@ -73,6 +73,12 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="../reseller/index.php" class="nav-link">
+              <i class="nav-icon fas fa-user-circle"></i>
+              <p>Reseller</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="../penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>

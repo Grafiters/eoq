@@ -72,13 +72,19 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="../admin/index.php" class="nav-link active">
+              <i class="nav-icon fas fa-user-circle"></i>
+              <p>Reseller</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link active">
+            <a href="/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -97,7 +103,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Daftar Pembelian</h1>
+            <h1>Daftar Reseller</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -118,9 +124,9 @@
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header text-right border-bottom-0">
-                <h3 class="card-title">Daftar Pembelian</h3>
-                <a class="btn btn-success btn-sm" href="/pages/pembelian/create.php">
-                  Tambah Pembelian
+                <h3 class="card-title">Daftar Reseller</h3>
+                <a class="btn btn-success btn-sm" href="/eoq/pages/reseller/create.php">
+                  Tambah Reseller
                 </a>
               </div>
               <!-- /.card-header -->
