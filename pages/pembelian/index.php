@@ -89,7 +89,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/pages/stock/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
@@ -107,13 +107,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/pages/perhitungan-eoq/" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/pages/laporan/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -176,13 +176,13 @@
                         $status = $i%2 ? 'hello' : 'bark';
                         $btnEdit = "<a href='/pages/pembelian/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
                         $btnDelete = "<form class='d-inline mx-1' action='../../backend/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
-                        // $action = $btnEdit.$btnDelete;
+                        $action = $btnEdit.$btnDelete;
                         echo "<tr>";
                           echo "<td>$i</td>";
                           echo "<td>hello</td>";
                           echo "<td>foo bar</td>";
                           echo "<td>$status</td>";
-                          // echo "<td>$action</td>";
+                          echo "<td>$action</td>";
                         echo "</tr>";
                       }
                     ?>
