@@ -58,7 +58,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="/index.php" class="nav-link active">
+            <a href="/index.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Data Master
@@ -67,7 +67,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link " href="/pages/admin">
+                <a class="nav-link" href="/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
@@ -87,7 +87,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/pages/stock/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
@@ -105,13 +105,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/pages/perhitungan-eoq/" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/pages/laporan/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -169,11 +169,11 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Satuan</label>
-                    <input class="form-control" type="text" name="satuan" required>
+                    <input class="form-control" type="number" name="satuan" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
-                    <input class="form-control" type="text" name="keterangan" required>
+                    <textarea id="keterangan" class="form-control" name="keterangan"></textarea>
                   </div>
                   <div class="form-group text-right">
                     <input class="btn btn-warning" type="cancel" value="Cancel" />
