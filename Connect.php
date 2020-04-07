@@ -1,8 +1,8 @@
 <?php
-    $dbHost = '172.18.0.2';
+    $dbHost = 'localhost';
     $dbName = 'eoq';
     $dbUser = 'root';
-    $dbPass = 'admin123';
+    $dbPass = '';
 
     $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
     if ($conn->connect_error) {
