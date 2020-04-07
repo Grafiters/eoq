@@ -1,3 +1,19 @@
+<?php
+  include ('../../Connect.php');
+  $query = $conn->query('SELECT MAX(id) as maxId FROM barang');
+  // var_dump($query);
+  $hasil = $query->fetch_assoc();
+  $idCode = $hasil['maxId'];
+  
+  $char = "AB";
+  $noUrut = (int)substr($idCode, 0, 2);
+  $noUrut++;
+  if ($noUrut<10) {
+      $code = $char."0".$noUrut;
+  }else{
+      $code = $char.$noUrut.strtoupper($cutName);
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -161,15 +177,15 @@
                 <form action="../../backend/admin/createAdmin.php" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Kode Item</label>
-                    <input class="form-control" type="text" name="code_item" required>
+                    <input class="form-control" type="text" name="code" value=<?php echo $code ?> readonly>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Nama Item</label>
-                    <input class="form-control" type="text" name="name_item" required>
+                    <input class="form-control" type="text" name="name" required>
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="">Satuan</label>
-                    <input class="form-control" type="number" name="satuan" required>
+                    <label class="form-label" for="">Total</label>
+                    <input class="form-control" type="number" name="total" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>

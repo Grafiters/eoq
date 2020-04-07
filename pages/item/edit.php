@@ -1,5 +1,14 @@
 <?php
-  include('../../admin/editAdmin.php');
+  include('../../Connect.php');
+
+  $id = $_GET['id'];
+  $result = mysqli_query($conn, "SELECT * FROM barang WHERE id=$id");
+  while ($data = mysqli_fetch_array($result)) {
+      $code = $data['code'];
+      $name = $data['name'];
+      $total = $data['total'];
+      $description = $data['description'];
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -161,23 +170,24 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="/item/updateitem.php?id=<?= $_GET['id'] ?>" method="post">
+                <form action="/eoq/backend/item/updateitem.php?id=<?= $_GET['id'] ?>" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Kode Item</label>
-                    <input class="form-control" type="text" name="code_item" value="<?= $user['code_item'] ?>" required>
+                    <input class="form-control" type="text" name="code" value="<?php echo $code ?>" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Nama Item</label>
-                    <input class="form-control" type="text" name="name_item" value="<?= $user['name_item'] ?>" required>
+                    <input class="form-control" type="text" name="name" value="<?php echo $name ?>" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Satuan</label>
-                    <input class="form-control" type="number" name="satuan" value="<?= $user['satuan'] ?>" required>
+                    <input class="form-control" type="number" name="total" value="<?php echo $total ?>" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
-                    <textarea id="keterangan" class="form-control" name="keterangan"><?= $user['keterangan'] ?></textarea>
+                    <textarea id="keterangan" class="form-control" name="keterangan"><?php echo $description ?></textarea>
                   </div>
+                  <input type="hidden" name="id" value=<?php echo $_GET['id'];?> >
                   <div class="form-group text-right">
                     <a class="btn btn-warning" href="/pages/item">Back</a>
                     <input type="submit" name="update" class="btn btn-primary" value="Submit">

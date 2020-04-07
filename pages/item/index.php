@@ -1,4 +1,4 @@
-<?php include('../../backend/admin/showAdmin.php'); ?>
+<?php include('../../backend/item/showItem.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -175,16 +175,16 @@
                   <tbody>
                     <?php
                       $idx = 1;
-                      while ($user = $users->fetch_array()) {
-                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/pages/admin/edit.php?id=".$user['id']."'>edit</a>";
-                        $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$user['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                      while ($item = $items->fetch_array()) {
+                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/eoq/pages/item/edit.php?id=".$item['id']."'>edit</a>";
+                        $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$item['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr class='text-center'>";
                           echo "<td>".$idx."</td>";
-                          echo "<td>".ucwords($user['username'])."</td>";
-                          echo "<td>".ucwords($user['name'])."</td>";
-                          echo "<td>".$user['email']."</td>";
-                          echo "<td>".ucwords($user['role'])."</td>";
+                          echo "<td>".ucwords($item['code'])."</td>";
+                          echo "<td>".ucwords($item['name'])."</td>";
+                          echo "<td>".$item['total']."</td>";
+                          echo "<td>".ucwords($item['description'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                         $idx++;

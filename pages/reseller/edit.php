@@ -9,7 +9,6 @@
       $cabang = $data['branch'];
       $alamat = $data['address'];
   }
-
 ?>
 <!DOCTYPE html>
 <html>
