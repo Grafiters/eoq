@@ -82,7 +82,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
