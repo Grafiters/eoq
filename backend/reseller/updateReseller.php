@@ -1,20 +1,22 @@
 <?php
-    include_once("../../Connect.php");
+    include("../../Connect.php");
 
     if (isset($_POST['update'])) {
-        $id = $_POST['supplier_id'];
+        $id = $_POST['id'];
 
         $name=$_POST['name'];
         $phone=$_POST['phone'];
-        $address=$_POST['address'];
         $branch=$_POST['branch'];
+        $alamat=$_POST['address'];
 
-        $result = mysqli_query($conn, "UPDATE supplier SET name='$name',phone='$phone',address='$address',branch='$branch' WHERE supplier_id=$id");
+        $result = mysqli_query($conn, "UPDATE supplier SET name='$name',phone='$phone',branch='$branch',address='$alamat' WHERE id=$id");
 
         if($result){
-            header("Location: index.php");
+            header("Location: /eoq/pages/reseller/index.php");
+            echo "update succesfully";
         }
         else{
+            echo "update Error";
             echo "Error: " . $result . "<br>" . $conn->error;
         }
     }
