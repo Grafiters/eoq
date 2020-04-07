@@ -2,19 +2,17 @@
     include("../../Connect.php");
 
     if (isset($_POST['submit'])) {
-        $supplier=$_POST['supplier'];
-        $type = $_POST['type'];
+        $code = $_POST['code'];
         $name=$_POST['name'];
-        $price=$_POST['price'];
-        $stock=$_POST['stock'];
+        $total = $_POST['total'];
+        $keterangan=$_POST['keterangan'];
 
-    $result = mysqli_query($conn, "INSERT INTO item(supplier_id,type,name,price,stock)VALUES('$supplier','$type','$name','$price','$stock')");
+        $result = mysqli_query($conn, "INSERT INTO barang(code,name,total,keterangan)VALUES('$code','$name','$total','$keterangan')");
 
-    if($result){
-        echo "create admin success";
-    }else{
-        echo "Error: " . $result . "<br>" . $conn->error;
+        if($result){
+            echo "create admin success";
+        }else{
+            echo "Error: " . $result . "<br>" . $conn->error;
+        }
     }
-}
-
 ?>
