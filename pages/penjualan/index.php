@@ -60,7 +60,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="/index.php" class="nav-link">
+            <a href="/index.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Data Master
@@ -69,19 +69,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link" href="/pages/admin">
+                <a class="nav-link" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/item">
+                <a class="nav-link" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -89,31 +89,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/stock/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link active">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link active">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/perhitungan-eoq/" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/laporan/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
