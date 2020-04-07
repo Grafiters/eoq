@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -73,7 +75,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/pages/item">
+                <a class="nav-link" href="/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
@@ -87,7 +89,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/stock/index.php" class="nav-link">
+            <a href="/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
@@ -105,13 +107,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/perhitungan-eoq/" class="nav-link">
+            <a href="/pages/perhitugan-eoq/index.php" class="nav-link active">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/laporan/index.php" class="nav-link">
+            <a href="/pages/report/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -130,15 +132,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Daftar item</h1>
+            <h1>Daftar Perhitungan EOQ</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
-              <li class="breadcrumb-item">
-                <a href="/pages/item/index.php">Daftar Item</a>
-              </li>
-              <li class="breadcrumb-item active">Tambah Item</li>
+              <li class="breadcrumb-item active">Daftar Perhitungan EOQ</li>
             </ol>
           </div>
         </div>
@@ -150,36 +149,120 @@
       <div class="container-fluid">
         <div class="row">
           <!-- right column -->
-          <div class="col-md-8 mx-auto">
+          <div class="col-12">
             <!-- general form elements disabled -->
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Tambah Item</h3>
-              </div>
-              <!-- /.card-header -->
               <div class="card-body">
-                <form action="../../backend/admin/createAdmin.php" method="post">
-                  <div class="form-group">
-                    <label class="form-label" for="">Kode Item</label>
-                    <input class="form-control" type="text" name="code_item" required>
+
+                <!-- START of FORM -->
+                <form action="" class="w-50">
+                  <div class="form-group row">
+                    <label class="col-md-6 col-form-label" for="">Tanggal Perhitungan</label>
+                    <div class="col-md-6">
+                      <input class="form-control" type="date" name="tanggal">
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Nama Item</label>
-                    <input class="form-control" type="text" name="name_item" required>
+                  <div class="form-group row">
+                    <label class="col-md-6 col-form-label" for="">Data</label>
+                    <div class="col-md-6">
+                      <select class="form-control" name="data">
+                      <?php for ($i = 1; $i < 4; $i++) {
+                          $temp = 2017 + $i;
+                          echo "<option value='$temp'>Data $temp</option>";
+                      } ?>
+                      </select>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Satuan</label>
-                    <input class="form-control" type="number" name="satuan" required>
+                  <div class="form-group row">
+                    <label class="col-md-6 col-form-label" for="">Barang</label>
+                    <div class="col-md-6">
+                      <select class="form-control" name="data">
+                      <?php
+                        $barang = ['bio7', 'bio activa', 'bio moringa', 'm-king'];
+                        foreach ($barang as $n) {
+                          echo "<option value='$n'>$n</option>";
+                        }
+                      ?>
+                      </select>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label class="form-label" for="">Keterangan</label>
-                    <textarea id="keterangan" class="form-control" name="keterangan"></textarea>
+                  <div class="form-group row">
+                    <label class="col-md-6 col-form-label" for="">Kebutuhan Barang Tahunan</label>
+                    <div class="col-md-6">
+                      <input class="form-control" type="number" name="kebutuhan_tahunan">
+                    </div>
                   </div>
-                  <div class="form-group text-right">
-                    <input class="btn btn-warning" type="cancel" value="Cancel" />
-                    <input class="btn btn-success" type="submit" name="submit" value="Submit" />
+                  <div class="form-group row">
+                    <label class="col-md-6 col-form-label" for="">Biaya Dalam Sekali Pemesanan</label>
+                    <div class="col-md-6">
+                      <input class="form-control" type="number" name="biaya_sekali_pesan">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-6 col-form-label" for="">Biaya Penyimpanan Barang</label>
+                    <div class="col-md-6">
+                      <input class="form-control" type="number" name="biaya_simpan_barang">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-6 col-form-label" for="">Jumlah Hari Kerja Dalam Setahun</label>
+                    <div class="col-md-6">
+                      <input class="form-control" type="number" name="toatl_kerja">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-6 col-form-label" for="">Lead Time (Waktu Tunggu)</label>
+                    <div class="col-md-6">
+                      <input class="form-control" type="number" name="waktu_tunggu">
+                    </div>
+                  </div>
+                  <div class="form-group text-center">
+                    <div class="col-md-6 offset-md-6">
+                      <button class="btn btn-success" type="submit">
+                        Hitung
+                      </button>
+                    </div>
                   </div>
                 </form>
+                <!-- END of FORM -->
+                <!-- START TABLE -->
+                <table id="example1" class="table table-bordered table-hover text-center">
+                  <thead>
+                  <tr>
+                    <th>Tanggal Perhitungan</th>
+                    <th>Nama Barang</th>
+                    <th>Kebutuhan Tahunan</th>
+                    <th>Biaya Sekali Pesan</th>
+                    <th>Biaya Simpan Barang</th>
+                    <th>Hasil EOQ</th>
+                    <th>Hasil Biasa Pesan</th>
+                    <th>Hasil Biaya Simpan</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                      for ($i = 1; $i < 8; $i++) {
+                        $status = $i%2 ? 'hello' : 'bark';
+                        $btnEdit = "<a href='/pages/penjualan/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $action = $btnEdit.$btnDelete;
+                        echo "<tr>";
+                          echo "<td>Apr 06, 2020</td>";
+                          echo "<td>Bio7</td>";
+                          echo "<td>27.500</td>";
+                          echo "<td>Rp 130.000</td>";
+                          echo "<td>Rp 150</td>";
+                          echo "<td>6.909</td>";
+                          echo "<td>Rp 518.193</td>";
+                          echo "<td>Rp 518.175</td>";
+                          echo "<td>$action</td>";
+                        echo "</tr>";
+                      }
+                    ?>
+                  </tbody>
+                </table>
+                <!-- END TABLE -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -213,8 +296,19 @@
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="../../plugins/datatables/jquery.dataTables.js"></script>
+<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $("#example1").DataTable();
+  });
+</script>
 </body>
 </html>
 
