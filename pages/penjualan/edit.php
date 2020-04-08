@@ -1,3 +1,25 @@
+<?php
+  include('../../Connect.php');
+  $id = $_GET['id'];
+
+  $result = mysqli_query($conn, "SELECT pivot.id AS norut, penjualan.code AS kode, penjualan.created_at AS tanggal, supplier.name AS sname,
+  barang.name AS bname, barang.price AS btotal, pivot.jumlah AS jumlah, barang.price*pivot.jumlah AS bayar
+  FROM barang, penjualan, supplier, pivot WHERE penjualan.id=supplier.id=pivot.id=barang.id=$id");
+
+
+
+  while ($data = mysqli_fetch_array($result)) {
+    $norut = $data['norut'];
+    $code = $data['kode'];
+    $tanggal = $data['tanggal'];
+    $sname = $data['sname'];
+    $bname = $data['bname'];
+    $btotal = $data['btotal'];
+    $jumlah = $data['jumlah'];
+    $bayar = $data['bayar'];
+  }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -164,13 +186,13 @@
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Kode Penjualan</label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="text" disabled>
+                        <input class="form-control" type="text" value=<?php echo $code?> disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Tanggal Penjualan</label>
                       <div class="col-sm-8">
-                        <input type="date" name="tanggal" class="form-control" value="2020-04-04" disabled>
+                        <input type="date" name="tanggal" class="form-control" value=<?php echo $tanggal ?> disabled>
                       </div>
                     </div>
                   </div>
@@ -180,9 +202,7 @@
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Nama Supplier</label>
                       <div class="col-sm-8">
-                        <select id="supplier" class="form-control" name="supplier" disabled>
-                          <option value="JYB Group">JYB Group</option>
-                          <option value="Uni Max Power">Uni Max Power</option>
+                        <input type="text" name="supplier" class="form-control" value=<?php echo $sname ?> disabled>
                         </select>
                       </div>
                     </div>
@@ -202,41 +222,24 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Bio 7</td>
-                      <td>Rp 200.000</td>
-                      <td>150</td>
-                      <td>Rp 30.000.000</td>
-                      <td>
-                        <form action="/back-end/penjualan/delete.php?id=1">
-                          <button class="btn btn-sm btn-danger">delete</button>
-                        </form>
-                      </td>
-                    </tr>
-                    <!-- form tambah belanja -->
-                    <form action="/back-end/penjualan/create.php" method="POST">
+                    <form action="/eoq/backend/penjualan/updatePenjualan.php" method="post">
                       <tr>
-                        <td></td>
+                        <td><?php echo $id ?></td>
                         <td>
-                          <select id="barang" class="form-control" name="barang">
-                            <option value="bio7">Bio7</option>
-                            <option value="Bio Activa">Bio Activa</option>
-                            <option value="Bio Moringa">Bio Moringa</option>
-                            <option value="M-King">M-King</option>
-                          </select>
+                          <input id="price" name="name" class="form-control" type="text" value="<?php echo $bname ?>" >
                         </td>
                         <td>
-                          <input id="price" name="price" class="form-control" type="number" min="0">
+                          <input id="price" name="price" class="form-control" type="number" value="<?php echo $btotal?>">
                         </td>
                         <td>
-                          <input id="amount" name="amount" class="form-control" type="number" min="0">
+                          <input id="amount" name="amount" class="form-control" type="number" value="<?php echo $jumlah?>">
                         </td>
                         <td colspan="1">
-                          <input id="total" name="total" class="form-control" type="number" disabled>
+                          <input id="total" name="total" class="form-control" type="number" value=<?php echo $bayar ?> disabled>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-success" type="submit">
+                        <input type="hidden" name="id" value=<?php echo $_GET['id'];?> >
+                          <button class="btn btn-sm btn-success" type="submit" name="update">
                             submit
                           </button>
                         </td>
