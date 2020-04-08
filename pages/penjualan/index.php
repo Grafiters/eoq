@@ -1,3 +1,4 @@
+<?php include('../../backend/penjualan/showPenjualan.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -154,7 +155,7 @@
             <div class="card">
               <div class="card-header text-right border-bottom-0">
                 <h3 class="card-title">Daftar Penjualan</h3>
-                <a class="btn btn-success btn-sm" href="/pages/penjualan/create.php">
+                <a class="btn btn-success btn-sm" href="/eoq/pages/penjualan/create.php">
                   Tambah Penjualan
                 </a>
               </div>
@@ -172,16 +173,16 @@
                   </thead>
                   <tbody>
                     <?php
-                      for ($i = 1; $i < 100; $i++) {
-                        $status = $i%2 ? 'hello' : 'bark';
-                        $btnEdit = "<a href='/pages/penjualan/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                      $idx = 1;
+                      while ($buy = $buys->fetch_assoc()) {
+                        $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$buy['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$buy['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr>";
-                          echo "<td>$i</td>";
-                          echo "<td>hello</td>";
-                          echo "<td>foo bar</td>";
-                          echo "<td>$status</td>";
+                          echo "<td>$idx</td>";
+                          echo "<td>".ucwords($buy['kode'])."</td>";
+                          echo "<td>".ucwords($buy['tanggal'])."</td>";
+                          echo "<td>".ucwords($buy['bayar'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                       }
