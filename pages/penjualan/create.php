@@ -1,3 +1,30 @@
+<?php
+  include ("../../Connect.php");
+
+  // membuat code penjualan dari tabel penjualan
+  $query = $conn->query('SELECT MAX(id) as maxId FROM penjualan');
+  $hasil = $query->fetch_assoc();
+  $idCode = $hasil['maxId'];
+  
+  $char = "PJL";
+  $noUrut = (int)substr($idCode, 0, 2);
+  $noUrut++;
+  if ($noUrut<10) {
+      $code = $char."00".$noUrut;
+  }else if($noUrut<100){
+      $code = $char."0".$noUrut;
+  }else{
+      $code = $char.$noUrut;
+  }
+
+  // menampilkan nama supplier dari tabel supplier
+  $query_sup = $conn->query('SELECT supplier.id, supplier.name FROM supplier');
+
+  // menampilkan data nama barang dari tabel barang
+  $query_bar = $conn->query('SELECT barang.id, barang.name FROM barang');
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -157,6 +184,7 @@
                 <h3 class="card-title">Tambah Penjualan</h3>
               </div>
               <!-- /.card-header -->
+              <form action="/eoq/backend/penjualan/addPenjualan.php" method="post">
               <div class="card-body">
                 <div class="row align-items-end">
                   <!-- kode-pesan & tgl bayar -->
@@ -164,7 +192,7 @@
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Kode Penjualan</label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="text" disabled>
+                        <input  name="code" class="form-control" type="text" value="<?php echo $code ?>" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -178,13 +206,12 @@
                   <!-- Nama Supplier -->
                   <div class="col">
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Nama Supplier</label>
+                    <!-- menampilkan nama supplier dalam bentuk option-->
+                      <label class="form-label col-sm-4" for="">Nama Pembeli</label>
                       <div class="col-sm-8">
-                        <select id="supplier" class="form-control" name="supplier">
-                          <option value="JYB Group">JYB Group</option>
-                          <option value="Uni Max Power">Uni Max Power</option>
-                        </select>
+                        <input type="text" name="namepemb" class="form-control">
                       </div>
+                    <!-- akhir menapilkan nama supplier -->
                     </div>
                   </div>
                   <!-- END nama supplier -->
@@ -201,25 +228,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Bio 7</td>
-                      <td>Rp 200.000</td>
-                      <td>150</td>
-                      <td>Rp 30.000.000</td>
-                    </tr>
-                    <!-- form tambah belanja -->
-                    <form action="/back-end/penjualan/create.php" method="POST">
                       <tr>
-                        <td></td>
+                        <td>1</td>
+                        <!-- AWAL menampilkan nama barang dari tabel barang dengan menggunakan option -->
                         <td>
                           <select id="barang" class="form-control" name="barang">
-                            <option value="bio7">Bio7</option>
-                            <option value="Bio Activa">Bio Activa</option>
-                            <option value="Bio Moringa">Bio Moringa</option>
-                            <option value="M-King">M-King</option>
+                            
                           </select>
                         </td>
+                        <!-- AKHIR menampilkan nama barang dari tabel barang dengan menggunakan option -->
                         <td>
                           <input id="price" name="price" class="form-control" type="number" min="0">
                         </td>
@@ -235,17 +252,17 @@
                           <button class="btn btn-sm btn-warning" type="reset">
                             reset
                           </button>
-                          <button class="btn btn-sm btn-success" type="submit">
+                          <button class="btn btn-sm btn-success" type="submit" name="submit">
                             submit
                           </button>
                         </td>
                       </tr>
-                    </form>
                     <!-- END form tambah belanja -->
                   </tbody>
                 </table>
                 <!-- END tabel belanja -->
               </div>
+              </form>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
