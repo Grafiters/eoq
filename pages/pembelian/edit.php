@@ -1,3 +1,38 @@
+<?php
+include('../../Connect.php');
+
+$id = $_GET['id'];
+
+$query = "
+  SELECT
+    pivot_pembelian.id AS id,
+    barang.name AS nama,
+    barang.harga AS harga,
+    pivot_pembelian.total AS jumlah,
+    pivot_pembelian.total * barang.harga AS total
+  FROM pivot_pembelian
+  INNER JOIN barang
+  ON pivot_pembelian.barang_id=barang.id
+";
+$pembelians = $conn->query($query);
+
+$query = "
+SELECT
+  pembelian.id AS id,
+  pembelian.code AS kode,
+  supplier.name AS supplier,
+  pembelian.created_at AS tanggal
+FROM pembelian
+INNER JOIN supplier
+ON pembelian.supplier_id=supplier.id
+WHERE pembelian.id=$id
+";
+$pembelian = $conn->query($query)->fetch_assoc();
+
+$items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -162,15 +197,15 @@
                   <!-- kode-pesan & tgl bayar -->
                   <div class="col">
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Kode Pembelian</label>
+                      <label class="col-form-label col-sm-4" for="">Kode Pembelian</label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="text" disabled>
+                        <input class="form-control" type="text" value="<?= $pembelian['kode'] ?>" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Tanggal Pembelian</label>
+                      <label class="col-form-label col-sm-4" for="">Tanggal Pembelian</label>
                       <div class="col-sm-8">
-                        <input type="date" name="tanggal" class="form-control" value="2020-04-04" disabled>
+                        <input type="date" name="tanggal" class="form-control" value="<?= date_format(date_create($pembelian['tanggal']), 'Y-m-d') ?>" disabled>
                       </div>
                     </div>
                   </div>
@@ -178,11 +213,10 @@
                   <!-- Nama Supplier -->
                   <div class="col">
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Nama Supplier</label>
+                      <label class="col-form-label col-sm-4" for="">Nama Supplier</label>
                       <div class="col-sm-8">
                         <select id="supplier" class="form-control" name="supplier" disabled>
-                          <option value="JYB Group">JYB Group</option>
-                          <option value="Uni Max Power">Uni Max Power</option>
+                          <option><?= $pembelian['supplier'] ?></option>
                         </select>
                       </div>
                     </div>
@@ -202,46 +236,65 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Bio 7</td>
-                      <td>Rp 200.000</td>
-                      <td>150</td>
-                      <td>Rp 30.000.000</td>
-                      <td>
-                        <form action="/back-end/pembelian/delete.php?id=1">
-                          <button class="btn btn-sm btn-danger">delete</button>
-                        </form>
-                      </td>
-                    </tr>
+                    <?php
+                    $i = 1;
+                    while ($beli = $pembelians->fetch_array()) {
+                      $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/pembelian/delete.php?id=".$beli['id']."' method='post'>
+                        <button type='submit' class='btn btn-danger btn-sm'>
+                        delete
+                        </button>
+                      </form>";
+                      echo "<tr>";
+                        echo "<td>$i</td>";
+                        echo "<td>".$beli['nama']."</td>";
+                        echo "<td>Rp ".number_format($beli['harga'],0)."</td>";
+                        echo "<td>".$beli['jumlah']."</td>";
+                        echo "<td>Rp ".number_format($beli['total'], 0)."</td>";
+                        echo "<td>".$btnDelete."</td>";
+                      echo "</tr>";
+                      $i++;
+                    }
+                    ?>
+
                     <!-- form tambah belanja -->
-                    <form action="/back-end/pembelian/create.php" method="POST">
+                    <form action="/back-end/pembelian/edit.php?id=<?= $pembelian['id'] ?>" method="POST">
                       <tr>
-                        <td></td>
+                        <td><?= $i ?></td>
                         <td>
                           <select id="barang" class="form-control" name="barang">
-                            <option value="bio7">Bio7</option>
-                            <option value="Bio Activa">Bio Activa</option>
-                            <option value="Bio Moringa">Bio Moringa</option>
-                            <option value="M-King">M-King</option>
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $name = $item[2];
+                            echo "<option value='$id'>$name</option>";
+                          }
+                          ?>
                           </select>
                         </td>
                         <td>
-                          <input id="price" name="price" class="form-control" type="number" min="0">
+                          <select id="price" class="form-control" name="price" disabled>
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $price = $item[3];
+                            $harga = "Rp ".number_format($item[3], 0);
+                            echo "<option value='$id' price='$price'>$harga</option>";
+                          }
+                          ?>
+                          </select>
                         </td>
                         <td>
                           <input id="amount" name="amount" class="form-control" type="number" min="0">
                         </td>
-                        <td colspan="1">
-                          <input id="total" name="total" class="form-control" type="number" disabled>
+                        <td>
+                          <input id="total" name="total" class="form-control" type="text" disabled>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-success" type="submit">
-                            submit
-                          </button>
+                          <button class="btn btn-sm btn-success">submit</button>
                         </td>
                       </tr>
                     </form>
+
                     <!-- END form tambah belanja -->
                   </tbody>
                 </table>
@@ -276,18 +329,20 @@
 <!-- ./wrapper -->
 
 <script>
+const barang = document.getElementById('barang')
 const harga = document.getElementById('price')
 const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
-harga.addEventListener('change', function(e) {
-  const jumlahBeli = jumlah.value
-  const temp = jumlahBeli * e.target.value
-  total.setAttribute('value', temp)
+barang.addEventListener('change', function(e) {
+  harga.value = e.target.value
+  const price = harga.selectedOptions[0].attributes['price']['value']
+  const temp = price * jumlah.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
 jumlah.addEventListener('change', function(e) {
-  const hargaBeli = harga.value
-  const temp = hargaBeli * e.target.value
-  total.setAttribute('value', temp)
+  const price = harga.selectedOptions[0].attributes['price']['value']
+  const temp = price * e.target.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
 </script>
 
