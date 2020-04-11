@@ -1,6 +1,6 @@
 <?php
     $dbHost = 'localhost';
-    $dbName = 'eoq';
+    $dbName = 'eoq2';
     $dbUser = 'root';
     $dbPass = '';
 
