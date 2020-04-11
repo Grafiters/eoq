@@ -1,3 +1,23 @@
+<?php
+include('../../Connect.php');
+
+$query = "
+  SELECT
+    pembelian.id AS id,
+    pembelian.code AS kode,
+    supplier.name AS supplier,
+    pembelian.total AS total,
+    pembelian.created_at AS tanggal
+  FROM pembelian
+  INNER JOIN supplier
+  ON pembelian.supplier_id=supplier.id
+";
+
+$pembelians = $conn->query($query);
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +80,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="/index.php" class="nav-link active">
+            <a href="/index.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Data Master
@@ -101,7 +121,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a  class="nav-linkv active" href="/eoq/pages/pembelian/index.php">
+            <a  class="nav-link active" href="/eoq/pages/pembelian/index.php">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -150,11 +170,29 @@
         <div class="row">
           <!-- right column -->
           <div class="col-12">
+            <!-- START Message -->
+            <?php
+              if (isset($_GET['status'])) {
+                if ($_GET['status']) {
+                  $alert = "alert alert-primary alert-dismissible fade show";
+                } else {
+                  $alert = "alert alert-danger alert-dismissible fade show";
+                }
+                $message = $_GET['msg'];
+                echo " <div class='$alert' role='alert'>
+                  $message
+                  <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                  </button>
+                </div>";
+              }
+            ?>
+            <!-- END Message -->
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header text-right border-bottom-0">
                 <h3 class="card-title">Daftar Pembelian</h3>
-                <a class="btn btn-success btn-sm" href="/pages/pembelian/create.php">
+                <a class="btn btn-success btn-sm" href="/eoq/pages/pembelian/create.php">
                   Tambah Pembelian
                 </a>
               </div>
@@ -172,18 +210,23 @@
                   </thead>
                   <tbody>
                     <?php
-                      for ($i = 1; $i < 100; $i++) {
-                        $status = $i%2 ? 'hello' : 'bark';
-                        $btnEdit = "<a href='/pages/pembelian/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='../../backend/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                      $i = 1;
+                      while ($pembelian = $pembelians->fetch_array()) {
+                        $status = $i;
+                        $kode = $pembelian['kode'];
+                        $tanggal = date_format(date_create($pembelian['tanggal']), "D, d/m/Y");
+                        $totalHarga = number_format($pembelian['total'], 0);
+                        $btnEdit = "<a href='/eoq/pages/pembelian/edit.php?id=".$pembelian['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/pembelian/delete.php?id=".$pembelian['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr>";
                           echo "<td>$i</td>";
-                          echo "<td>hello</td>";
-                          echo "<td>foo bar</td>";
-                          echo "<td>$status</td>";
+                          echo "<td>$kode</td>";
+                          echo "<td>$tanggal</td>";
+                          echo "<td>Rp $totalHarga</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
+                        $i++;
                       }
                     ?>
                   </tbody>
@@ -236,4 +279,3 @@
 </script>
 </body>
 </html>
-
