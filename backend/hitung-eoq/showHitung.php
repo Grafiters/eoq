@@ -1,6 +1,6 @@
 <?php
     include ("../../Connect.php");
 
-    $result = $conn->query('SELECT barang.id, hasil.* FROM hasil, barang WHERE barang.id=hasil.id');
+    $result = $conn->query('SELECT barang.name AS name, hasil.* FROM hasil, barang');
     // var_dump($result);
 ?>
