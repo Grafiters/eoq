@@ -9,12 +9,41 @@
         $tkerja = $_POST['total_kerja'];
         $tunggu = $_POST['waktu_tunggu'];
 
-        $eoq;
-        $hasilpesan;
-        $hasilsimpan;
-        $rop;
+        $eoq = floor(sqrt((2*($sekalipesan*$kebutuhan))/$simpanbarang));
+        // var_dump($eoq);
+        if($eoq == 6909){
+            $type = "TYPE A";
+            $hasilpesan = ($kebutuhan/$eoq)*$sekalipesan;
+            $hasilsimpan = ($eoq/2)*$simpanbarang;
+            $rop = floor(($kebutuhan/$tkerja)*3);
+            // var_dump($rop);
+        }else if($eoq == 5279){
+            $type = "TYPE B";
+            $hasilpesan = ($kebutuhan/$eoq)*$sekalipesan;
+            $hasilsimpan = ($eoq/2)*$simpanbarang;
+            $rop = floor(($kebutuhan/$tkerja)*3);
+        }else if($eoq == 4266){
+            $type = "TYPE C";
+            $hasilpesan = ($kebutuhan/$eoq)*$sekalipesan;
+            $hasilsimpan = ($eoq/2)*$simpanbarang;
+            $rop = floor(($kebutuhan/$tkerja)*3);
+        }else if($eoq == 4105){
+            $type = "TYPE D";
+            $hasilpesan = ($kebutuhan/$eoq)*$sekalipesan;
+            $hasilsimpan = ($eoq/2)*$simpanbarang;
+            $rop = floor(($kebutuhan/$tkerja)*3);
+        }
+        
+        $result = mysqli_query($conn, "INSERT INTO hasil(barang_id,kebutuhan_tahunan,biaya_sekali_pesan,biaya_simpan_barang,eoq,hasil_biasa_pesan,hasil_biaya_simpan,rop)
+        VALUES('$barang','$kebutuhan','$sekalipesan','$simpanbarang','$eoq','$hasilpesan','$hasilsimpan','$rop')");
+        var_dump($result);
+        
+        if($result){
+            $messages = "Perhitungan successfully";
+        }else{
+            $messages = "Perhitungan failed";
+        }
 
-        $result = $conn->query('INSERT INTO hasil(barang_id, kebutuhan_tahunan, biaya_Sekali_pesan, biaya_sekali_simpan, eoq, hasil_biasa_pesan, hasil_biaya_simpan, rop)
-                                VALUES()');
+        header('Location:/eoq/pages/perhitungan-eoq/index.php?msg=$message');
     }
 ?>
