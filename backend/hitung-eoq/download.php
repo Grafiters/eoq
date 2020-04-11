@@ -23,15 +23,52 @@
             '<center></center><br>'.
             '<center>Hasil Perhitungan</center><br>'.
             '<center>Hasil dari perhitungan EOQ pada GTT Groub</center><br>'.
-            'Nama : '.$barang.'<br>'.
-            'Nama : '.$kebutuhan.'<br>'.
-            'Nama : '.$sekalipesan.'<br>'.
-            'Nama : '.$biayasimpan.'<br>'.
-            'Nama : '.$eoq.'<br>'.
-            'Nama : '.$hasilpesan.'<br>'.
-            'Nama : '.$hasilsimpan.'<br>'.
-            'Nama : '.$rop.'<br>'.
-            'Nama : '.$tanggal.'<br>'.
+            '<table class="table table-bordered">'.
+                '<thead>'.
+                    '<tr>'.
+                        '<th></th>'.
+                        '<th></th>'.
+                    '</tr>'.
+                '</thead>'.
+                '<tbody>'.
+                    '<tr>'.
+                        '<td>Tanggal Perhitugan EOQ</td>'.
+                        '<td>'.$tanggal.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Nama Barang</td>'.
+                        '<td>'.$barang.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Kebutuhan Tahunan</td>'.
+                        '<td>'.$kebutuhan.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Biaya Sekali Pakai</td>'.
+                        '<td> Rp '.$sekalipesan.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Biaya Simpan Barang</td>'.
+                        '<td> Rp '.$biayasimpan.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Hasil EOQ</td>'.
+                        '<td> Rp '.$eoq.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Hasil Biaya Pesan</td>'.
+                        '<td> Rp '.$hasilpesan.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>Hasil Biaya Simpan</td>'.
+                        '<td> Rp '.$hasilsimpan.'</td>'.
+                    '</tr>'.
+                    '<tr>'.
+                        '<td>ROP</td>'.
+                        '<td> Rp'.$rop.'</td>'.
+                    '</tr>'.
+                '</tbody>'.
+            '</table>'.
             '</body></html>';
     
     $document->load_html($html);
