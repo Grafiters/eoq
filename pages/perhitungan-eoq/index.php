@@ -223,7 +223,7 @@
                   </div>
                   <div class="form-group text-center">
                     <div class="col-md-6 offset-md-6">
-                      <button class="btn btn-success" type="submit">
+                      <button class="btn btn-success" type="submit" name="submit">
                         Hitung
                       </button>
                     </div>
@@ -234,6 +234,7 @@
                 <table id="example1" class="table table-bordered table-hover text-center">
                   <thead>
                   <tr>
+                    <th>No</th>
                     <th>Tanggal Perhitungan</th>
                     <th>Nama Barang</th>
                     <th>Kebutuhan Tahunan</th>
@@ -242,21 +243,29 @@
                     <th>Hasil EOQ</th>
                     <th>Hasil Biasa Pesan</th>
                     <th>Hasil Biaya Simpan</th>
+                    <th>Rop</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                   <?php
-                      $idx = 1;
+                      $idx = 0;
                       while ($eoq = $result->fetch_assoc()) {
-                        $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$eoq['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$eoq['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $btnEdit = "<a href='/eoq/pages/perhitungan-eoq/index.php?id=".$eoq['id']."' class='btn btn-sm btn-primary mx-1'>cetak</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/hitung-eoq/deleteHitung.php?id=".$eoq['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
+                        $idx++;
                         echo "<tr>";
                           echo "<td>$idx</td>";
-                          echo "<td>".ucwords($eoq['kode'])."</td>";
-                          echo "<td>".ucwords($eoq['tanggal'])."</td>";
-                          echo "<td>".ucwords($eoq['bayar'])."</td>";
+                          echo "<td>".ucwords($eoq['created_at'])."</td>";
+                          echo "<td>".ucwords($eoq['name'])."</td>";
+                          echo "<td>".ucwords($eoq['kebutuhan_tahunan'])."</td>";
+                          echo "<td>".ucwords($eoq['biaya_sekali_pesan'])."</td>";
+                          echo "<td>".ucwords($eoq['biaya_simpan_barang'])."</td>";
+                          echo "<td>".ucwords($eoq['eoq'])."</td>";
+                          echo "<td>".ucwords($eoq['hasil_biasa_pesan'])."</td>";
+                          echo "<td>".ucwords($eoq['hasil_biaya_simpan'])."</td>";
+                          echo "<td>".ucwords($eoq['rop'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                       }
