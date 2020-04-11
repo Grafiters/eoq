@@ -1,3 +1,13 @@
+<?php
+  include('../../../Connect.php');
+
+  if ($conn) {
+    $query = mysqli_query($conn, "SELECT pembelian.id AS id, pembelian.code AS kode, supplier.name AS supplier, pembelian.total AS total,pembelian.created_at AS tanggal FROM pembelian INNER JOIN supplier ON pembelian.supplier_id=supplier.id");
+  //   var_dump($buys);
+  }
+
+  var_dump($query);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,12 +28,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>KB001</td>
-                    <td>Senin, 20/04/2020</td>
-                    <td>Rp 2.700.000</td>
-                </tr>
+              <?php
+                  $i = 1;
+                  while ($pembelian = $query->fetch_array()) {
+                    $status = $i;
+                    $kode = $pembelian['kode'];
+                    $tanggal = date_format(date_create($pembelian['tanggal']), "D, d/m/Y");
+                    $totalHarga = number_format($pembelian['total'], 0);
+                    echo "<tr>";
+                      echo "<td>$i</td>";
+                      echo "<td>$kode</td>";
+                      echo "<td>$tanggal</td>";
+                      echo "<td>Rp $totalHarga</td>";
+                    echo "</tr>";
+                    $i++;
+                  }
+              ?>
             </tbody>
         </table>
     </div>
