@@ -9,6 +9,7 @@ $query = "
     barang.name AS nama,
     barang.harga AS harga,
     pivot_pembelian.total AS jumlah,
+    pivot_pembelian.pembelian_id AS pembelian,
     pivot_pembelian.total * barang.harga AS total
   FROM pivot_pembelian
   INNER JOIN barang
@@ -93,7 +94,7 @@ $conn->close();
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="/index.php" class="nav-link active">
+            <a href="/index.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Data Master
@@ -134,7 +135,7 @@ $conn->close();
             </a>
           </li>
           <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-linkv active">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link active">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
@@ -171,7 +172,7 @@ $conn->close();
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
               <li class="breadcrumb-item">
-                <a href="/pages/pembelian/index.php">Daftar Pembelian</a>
+                <a href="/eoq/pages/pembelian/index.php">Daftar Pembelian</a>
               </li>
               <li class="breadcrumb-item active">Edit Pembelian</li>
             </ol>
@@ -239,7 +240,7 @@ $conn->close();
                     <?php
                     $i = 1;
                     while ($beli = $pembelians->fetch_array()) {
-                      $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/pembelian/delete.php?id=".$beli['id']."' method='post'>
+                      $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/pembelian/deleteItem.php?id=".$beli['pembelian']."&pivot=".$beli['id']."' method='post'>
                         <button type='submit' class='btn btn-danger btn-sm'>
                         delete
                         </button>
@@ -257,7 +258,7 @@ $conn->close();
                     ?>
 
                     <!-- form tambah belanja -->
-                    <form action="/back-end/pembelian/edit.php?id=<?= $pembelian['id'] ?>" method="POST">
+                    <form action="/eoq/backend/pembelian/edit.php?id=<?= $pembelian['id'] ?>" method="POST">
                       <tr>
                         <td><?= $i ?></td>
                         <td>
@@ -272,7 +273,8 @@ $conn->close();
                           </select>
                         </td>
                         <td>
-                          <select id="price" class="form-control" name="price" disabled>
+                          <input type="text" name="price" id="payment" class="d-none">
+                          <select id="price" class="form-control" disabled>
                           <?php
                           foreach ($items as $item) {
                             $id = $item[0];
@@ -333,17 +335,23 @@ const barang = document.getElementById('barang')
 const harga = document.getElementById('price')
 const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
+const payment = document.getElementById('payment')
+payment.value = harga.selectedOptions[0].attributes['price']['value']
+
 barang.addEventListener('change', function(e) {
   harga.value = e.target.value
   const price = harga.selectedOptions[0].attributes['price']['value']
   const temp = price * jumlah.value
+  payment.value = price
   total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
+
 jumlah.addEventListener('change', function(e) {
   const price = harga.selectedOptions[0].attributes['price']['value']
   const temp = price * e.target.value
   total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
+
 </script>
 
 <!-- jQuery -->
