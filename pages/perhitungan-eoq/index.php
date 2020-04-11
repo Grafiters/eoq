@@ -1,3 +1,8 @@
+<?php
+  include ("../../Connect.php");
+  include ("../../backend/hitung-eoq/showHitung.php");
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,7 +112,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link active">
+            <a href="/eoq/pages/perhitungan-eoq/index.php" class="nav-link active">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
@@ -155,7 +160,7 @@
               <div class="card-body">
 
                 <!-- START of FORM -->
-                <form action="" class="w-50">
+                <form action="/eoq/backend/hitung-eoq/addHitung.php" method="post" class="w-50">
                   <div class="form-group row">
                     <label class="col-md-6 col-form-label" for="">Tanggal Perhitungan</label>
                     <div class="col-md-6">
@@ -176,11 +181,11 @@
                   <div class="form-group row">
                     <label class="col-md-6 col-form-label" for="">Barang</label>
                     <div class="col-md-6">
-                      <select class="form-control" name="data">
+                      <select class="form-control" name="barang">
                       <?php
-                        $barang = ['bio7', 'bio activa', 'bio moringa', 'm-king'];
-                        foreach ($barang as $n) {
-                          echo "<option value='$n'>$n</option>";
+                        $barang = $conn->query('SELECT * FROM barang');
+                        while ($brg = $barang->fetch_assoc() ) {
+                          echo '<option value="'.$brg['id'].'">'.$brg['name'].'</option>';
                         }
                       ?>
                       </select>
@@ -207,7 +212,7 @@
                   <div class="form-group row">
                     <label class="col-md-6 col-form-label" for="">Jumlah Hari Kerja Dalam Setahun</label>
                     <div class="col-md-6">
-                      <input class="form-control" type="number" name="toatl_kerja">
+                      <input class="form-control" type="number" name="total_kerja">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -241,25 +246,21 @@
                   </tr>
                   </thead>
                   <tbody>
-                    <?php
-                      for ($i = 1; $i < 8; $i++) {
-                        $status = $i%2 ? 'hello' : 'bark';
-                        $btnEdit = "<a href='/pages/penjualan/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                  <?php
+                      $idx = 1;
+                      while ($eoq = $result->fetch_assoc()) {
+                        $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$eoq['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$eoq['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr>";
-                          echo "<td>Apr 06, 2020</td>";
-                          echo "<td>Bio7</td>";
-                          echo "<td>27.500</td>";
-                          echo "<td>Rp 130.000</td>";
-                          echo "<td>Rp 150</td>";
-                          echo "<td>6.909</td>";
-                          echo "<td>Rp 518.193</td>";
-                          echo "<td>Rp 518.175</td>";
+                          echo "<td>$idx</td>";
+                          echo "<td>".ucwords($eoq['kode'])."</td>";
+                          echo "<td>".ucwords($eoq['tanggal'])."</td>";
+                          echo "<td>".ucwords($eoq['bayar'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                       }
-                    ?>
+                    ?>  
                   </tbody>
                 </table>
                 <!-- END TABLE -->
