@@ -217,7 +217,7 @@ $conn->close();
                         $tanggal = date_format(date_create($pembelian['tanggal']), "D, d/m/Y");
                         $totalHarga = number_format($pembelian['total'], 0);
                         $btnEdit = "<a href='/eoq/pages/pembelian/edit.php?id=".$pembelian['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='../../backend/admin/deleteAdmin.php?id=".$pembelian['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/pembelian/delete.php?id=".$pembelian['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr>";
                           echo "<td>$i</td>";
