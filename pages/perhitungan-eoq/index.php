@@ -251,7 +251,7 @@
                   <?php
                       $idx = 0;
                       while ($eoq = $result->fetch_assoc()) {
-                        $btnEdit = "<a href='/eoq/pages/perhitungan-eoq/index.php?id=".$eoq['id']."' class='btn btn-sm btn-primary mx-1'>cetak</a>";
+                        $btnEdit = "<a href='/eoq/backend/hitung-eoq/download.php?id=".$eoq['id']."' class='btn btn-sm btn-primary mx-1'>cetak</a>";
                         $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/hitung-eoq/deleteHitung.php?id=".$eoq['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         $idx++;
