@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `eoq2`
+-- Database: `eoq2` 
 --
 CREATE DATABASE IF NOT EXISTS `eoq2` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
 USE `eoq2`;
