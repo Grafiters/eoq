@@ -3,8 +3,9 @@
 
     if (isset($_POST['submit'])) {
         $name=$_POST['name'];
-        $total = $_POST['total'];
-        $keterangan=$_POST['keterangan'];
+        $total = (int) $_POST['total'];
+        $keterangan = $_POST['keterangan'];
+        $price = (int) $_POST['harga'];
 
         $query = $conn->query('SELECT MAX(id) as maxId FROM barang');
         $hasil = $query->fetch_assoc();
@@ -21,10 +22,10 @@
             $code = $char.$noUrut;
         }
 
-        $result = mysqli_query($conn, "INSERT INTO barang(code,name,total,keterangan)VALUES('$code','$name','$total','$keterangan')");
+        $result = $conn->query("INSERT INTO barang(code,name,total,harga,keterangan)VALUES('$code','$name','$total','$price','$keterangan')");
 
         if($result){
-            echo "create admin success";
+          header("location: /eoq/pages/item");
         }else{
             echo "Error: " . $result . "<br>" . $conn->error;
         }

@@ -69,19 +69,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link" href="/pages/admin">
+                <a class="nav-link" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/item">
+                <a class="nav-link" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -89,31 +89,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/stock/index.php" class="nav-link">
+            <a href="/eoq/pages/stock/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/perhitungan-eoq/" class="nav-link">
+            <a href="/eoq/pages/perhitungan-eoq/" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/laporan/index.php" class="nav-link active">
+            <a href="/eoq/pages/laporan/index.php" class="nav-link active">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -160,7 +160,7 @@
                 <div class="row justify-content-center align-items-center">
                   <div class="col-xs-12 col-sm-3">
                     <div class="card">
-                      <img class="card-img-top" src="/dist/img/pembelian.png" alt="">
+                      <img class="card-img-top" src="/eoq/dist/img/pembelian.png" alt="">
                       <div class="card-body">
                         <a class="btn btn-primary btn-block" href="/eoq/backend/pembelian/download.php">Laporan Pembelian</a>
                       </div>
@@ -168,7 +168,7 @@
                   </div>
                   <div class="col-xs-12 col-sm-3">
                     <div class="card">
-                      <img class="card-img-top" src="/dist/img/penjualan.png" alt="">
+                      <img class="card-img-top" src="/eoq/dist/img/penjualan.png" alt="">
                       <div class="card-body">
                         <a class="btn btn-primary btn-block" href="/eoq/backend/penjualan/download.php">Laporan Penjualan</a>
                       </div>
@@ -176,7 +176,7 @@
                   </div>
                   <div class="col-xs-12 col-sm-3">
                     <div class="card">
-                      <img class="card-img-top" src="/dist/img/stock.png" alt="">
+                      <img class="card-img-top" src="/eoq/dist/img/stock.png" alt="">
                       <div class="card-body">
                         <a class="btn btn-primary btn-block" href="">Laporan Stock</a>
                       </div>

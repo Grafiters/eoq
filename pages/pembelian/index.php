@@ -127,13 +127,13 @@ $conn->close();
             </a>
           </li>
           <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/perhitungan-eoq/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/laporan/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
