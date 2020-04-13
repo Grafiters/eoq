@@ -1,4 +1,8 @@
-<?php include('../../backend/reseller/showReseller.php');?>
+<?php
+    include("../../Connect.php");
+
+    $result = $conn->query("SELECT * FROM supplier");
+?>
 
 <!DOCTYPE html>
 <html>
@@ -171,6 +175,7 @@
                     <th>Phone</th>
                     <th>Cabang</th>
                     <th>Alamat</th>
+                    <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>

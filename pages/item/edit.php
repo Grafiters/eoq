@@ -7,7 +7,8 @@
       $code = $data['code'];
       $name = $data['name'];
       $total = $data['total'];
-      $description = $data['description'];
+      $harga = $data['harga'];
+      $description = $data['keterangan'];
   }
 ?>
 <!DOCTYPE html>
@@ -170,7 +171,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="/eoq/backend/item/updateitem.php?id=<?= $_GET['id'] ?>" method="post">
+                <form action="/eoq/backend/item/updateItem.php?id=<?= $_GET['id'] ?>" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Kode Item</label>
                     <input class="form-control" type="text" name="code" value="<?php echo $code ?>" required>
@@ -182,6 +183,10 @@
                   <div class="form-group">
                     <label class="form-label" for="">Satuan</label>
                     <input class="form-control" type="number" name="total" value="<?php echo $total ?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="">Harga</label>
+                    <input class="form-control" type="number" name="harga" value="<?= $harga ?>" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
