@@ -1,3 +1,8 @@
+<?php
+  include ("../../Connect.php");
+  include ("../../backend/hitung-eoq/showHitung.php");
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,7 +160,7 @@
               <div class="card-body">
 
                 <!-- START of FORM -->
-                <form action="" class="w-50">
+                <form action="/eoq/backend/hitung-eoq/addHitung.php" method="post" class="w-50">
                   <div class="form-group row">
                     <label class="col-md-6 col-form-label" for="">Tanggal Perhitungan</label>
                     <div class="col-md-6">
@@ -176,11 +181,11 @@
                   <div class="form-group row">
                     <label class="col-md-6 col-form-label" for="">Barang</label>
                     <div class="col-md-6">
-                      <select class="form-control" name="data">
+                      <select class="form-control" name="barang">
                       <?php
-                        $barang = ['bio7', 'bio activa', 'bio moringa', 'm-king'];
-                        foreach ($barang as $n) {
-                          echo "<option value='$n'>$n</option>";
+                        $barang = $conn->query('SELECT * FROM barang');
+                        while ($brg = $barang->fetch_assoc() ) {
+                          echo '<option value="'.$brg['id'].'">'.$brg['name'].'</option>';
                         }
                       ?>
                       </select>
@@ -207,7 +212,7 @@
                   <div class="form-group row">
                     <label class="col-md-6 col-form-label" for="">Jumlah Hari Kerja Dalam Setahun</label>
                     <div class="col-md-6">
-                      <input class="form-control" type="number" name="toatl_kerja">
+                      <input class="form-control" type="number" name="total_kerja">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -218,7 +223,7 @@
                   </div>
                   <div class="form-group text-center">
                     <div class="col-md-6 offset-md-6">
-                      <button class="btn btn-success" type="submit">
+                      <button class="btn btn-success" type="submit" name="submit">
                         Hitung
                       </button>
                     </div>
@@ -229,6 +234,7 @@
                 <table id="example1" class="table table-bordered table-hover text-center">
                   <thead>
                   <tr>
+                    <th>No</th>
                     <th>Tanggal Perhitungan</th>
                     <th>Nama Barang</th>
                     <th>Kebutuhan Tahunan</th>
@@ -237,29 +243,33 @@
                     <th>Hasil EOQ</th>
                     <th>Hasil Biasa Pesan</th>
                     <th>Hasil Biaya Simpan</th>
+                    <th>Rop</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    <?php
-                      for ($i = 1; $i < 8; $i++) {
-                        $status = $i%2 ? 'hello' : 'bark';
-                        $btnEdit = "<a href='/pages/penjualan/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                  <?php
+                      $idx = 0;
+                      while ($eoq = $result->fetch_assoc()) {
+                        $btnEdit = "<a href='/eoq/backend/hitung-eoq/download.php?id=".$eoq['id']."' class='btn btn-sm btn-primary mx-1'>cetak</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/hitung-eoq/deleteHitung.php?id=".$eoq['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
+                        $idx++;
                         echo "<tr>";
-                          echo "<td>Apr 06, 2020</td>";
-                          echo "<td>Bio7</td>";
-                          echo "<td>27.500</td>";
-                          echo "<td>Rp 130.000</td>";
-                          echo "<td>Rp 150</td>";
-                          echo "<td>6.909</td>";
-                          echo "<td>Rp 518.193</td>";
-                          echo "<td>Rp 518.175</td>";
+                          echo "<td>$idx</td>";
+                          echo "<td>".ucwords($eoq['created_at'])."</td>";
+                          echo "<td>".ucwords($eoq['name'])."</td>";
+                          echo "<td>".ucwords($eoq['kebutuhan_tahunan'])."</td>";
+                          echo "<td>".ucwords($eoq['biaya_sekali_pesan'])."</td>";
+                          echo "<td>".ucwords($eoq['biaya_simpan_barang'])."</td>";
+                          echo "<td>".ucwords($eoq['eoq'])."</td>";
+                          echo "<td>".ucwords($eoq['hasil_biasa_pesan'])."</td>";
+                          echo "<td>".ucwords($eoq['hasil_biaya_simpan'])."</td>";
+                          echo "<td>".ucwords($eoq['rop'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                       }
-                    ?>
+                    ?>  
                   </tbody>
                 </table>
                 <!-- END TABLE -->

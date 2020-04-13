@@ -1,3 +1,12 @@
+<?php
+    include('../../../Connect.php');
+    // $query = "SELECT * FROM user ORDER BY user_id DESC";
+
+    if ($conn) {
+      $buys = mysqli_query($conn, "SELECT pivot.id AS id, penjualan.code AS kode, penjualan.created_at AS tanggal, barang.price*pivot.jumlah AS bayar FROM barang, penjualan, pivot WHERE barang.id=penjualan.id=pivot.id ");
+    //   var_dump($buys);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,12 +27,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>KJ001</td>
-                    <td>Senin, 20/04/2020</td>
-                    <td>Rp 2.700.000</td>
-                </tr>
+            <?php
+                $idx = 1;
+                while ($buy = $buys->fetch_assoc()) {
+                  echo "<tr>";
+                    echo "<td>$idx</td>";
+                    echo "<td>".ucwords($buy['kode'])."</td>";
+                    echo "<td>".ucwords($buy['tanggal'])."</td>";
+                    echo "<td>".ucwords($buy['bayar'])."</td>";
+                  echo "</tr>";
+                }
+            ?>
             </tbody>
         </table>
     </div>
