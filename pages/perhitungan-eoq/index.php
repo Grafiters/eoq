@@ -60,7 +60,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="/index.php" class="nav-link active">
+            <a href="/index.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Data Master
@@ -89,7 +89,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/stock/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
@@ -107,13 +107,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link active">
+            <a href="/eoq/pages/perhitungan-eoq/index.php" class="nav-link active">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/laporan/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
