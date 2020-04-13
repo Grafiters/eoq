@@ -17,11 +17,14 @@
       $code = $char.$noUrut;
   }
 
-  // menampilkan nama supplier dari tabel supplier
-  $query_sup = $conn->query('SELECT supplier.id, supplier.name FROM supplier');
+  $result = $conn->query("SELECT * FROM barang ORDER BY created_at");
+  $res = $conn->query("SELECT * FROM supplier ORDER BY created_at");
+  if ($result->num_rows > 0) {
+    $items = $result->fetch_all();
+    $suppliers = $res->fetch_all();
+  }
 
-  // menampilkan data nama barang dari tabel barang
-  $query_bar = $conn->query('SELECT barang.id, barang.name FROM barang');
+  $conn->close();
 
 ?>
 
@@ -233,12 +236,26 @@
                         <!-- AWAL menampilkan nama barang dari tabel barang dengan menggunakan option -->
                         <td>
                           <select id="barang" class="form-control" name="barang">
-                            
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $name = $item[2];
+                            echo "<option value='$id'>$name</option>";
+                          }
+                          ?>
                           </select>
                         </td>
-                        <!-- AKHIR menampilkan nama barang dari tabel barang dengan menggunakan option -->
                         <td>
-                          <input id="price" name="price" class="form-control" type="number" min="0">
+                          <select id="price" class="form-control" name="price">
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $price = $item[3];
+                            $harga = "Rp ".number_format($item[3], 0);
+                            echo "<option value='$id' price='$price'>$harga</option>";
+                          }
+                          ?>
+                          </select>
                         </td>
                         <td>
                           <input id="amount" name="amount" class="form-control" type="number" min="0">

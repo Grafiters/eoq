@@ -176,7 +176,7 @@
                       $idx = 1;
                       while ($buy = $buys->fetch_assoc()) {
                         $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$buy['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$buy['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualan.php?id=".$buy['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr>";
                           echo "<td>$idx</td>";

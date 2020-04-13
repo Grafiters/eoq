@@ -2,22 +2,23 @@
   include('../../Connect.php');
   $id = $_GET['id'];
 
-  $result = mysqli_query($conn, "SELECT pivot.id AS norut, penjualan.code AS kode, penjualan.created_at AS tanggal, supplier.name AS sname,
-  barang.name AS bname, barang.price AS btotal, pivot.jumlah AS jumlah, barang.price*pivot.jumlah AS bayar
-  FROM barang, penjualan, supplier, pivot WHERE penjualan.id=supplier.id=pivot.id=barang.id=$id");
+  // var_dump($id);
 
-
-
-  while ($data = mysqli_fetch_array($result)) {
-    $norut = $data['norut'];
-    $code = $data['kode'];
+  $penjualan = $conn->query("SELECT pivot.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot, penjualan WHERE pivot.id='$id'");
+  while ($data = $penjualan->fetch_assoc()) {
+    $id = $data['id'];
+    $code = $data['code'];
     $tanggal = $data['tanggal'];
-    $sname = $data['sname'];
-    $bname = $data['bname'];
-    $btotal = $data['btotal'];
-    $jumlah = $data['jumlah'];
-    $bayar = $data['bayar'];
+    $pembeli = $data['name'];
   }
+  // var_dump($penjualan);
+  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id");
+  while ($data = $penjualans->fetch_assoc()) {
+    $barang = $data['barang'];
+    $harga = $data['harga'];
+    $jumlah = $data['jumlah'];
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -186,7 +187,7 @@
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Kode Penjualan</label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="text" value=<?php echo $code?> disabled>
+                        <input class="form-control" type="text" value="<?php echo $code ?>" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -200,9 +201,9 @@
                   <!-- Nama Supplier -->
                   <div class="col">
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Nama Supplier</label>
+                      <label class="form-label col-sm-4" for="">Nama Pembeli</label>
                       <div class="col-sm-8">
-                        <input type="text" name="supplier" class="form-control" value=<?php echo $sname ?> disabled>
+                        <input type="text" name="supplier" class="form-control" value="<?php echo $pembeli ?>" disabled>
                         </select>
                       </div>
                     </div>
@@ -222,23 +223,22 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <form action="/eoq/backend/penjualan/updatePenjualan.php" method="post">
+                    <form action="/eoq/backend/penjualan/updatePenjualan.php?id=<?= $id ?>" method="post">
                       <tr>
                         <td><?php echo $id ?></td>
                         <td>
-                          <input id="price" name="name" class="form-control" type="text" value="<?php echo $bname ?>" >
+                          <input id="barang" name="barang" class="form-control" type="text" value="<?php echo $barang ?>" disabled>
                         </td>
                         <td>
-                          <input id="price" name="price" class="form-control" type="number" value="<?php echo $btotal?>">
+                          <input id="price" name="price" class="form-control" type="number" value="<?php echo $harga ?>" disabled>
                         </td>
                         <td>
                           <input id="amount" name="amount" class="form-control" type="number" value="<?php echo $jumlah?>">
                         </td>
                         <td colspan="1">
-                          <input id="total" name="total" class="form-control" type="number" value=<?php echo $bayar ?> disabled>
+                          <input id="total" name="total" class="form-control" type="number" disabled>
                         </td>
                         <td>
-                        <input type="hidden" name="id" value=<?php echo $_GET['id'];?> >
                           <button class="btn btn-sm btn-success" type="submit" name="update">
                             submit
                           </button>
