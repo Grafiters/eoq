@@ -2,10 +2,8 @@
 include("../../Connect.php");
 
 if (isset($_POST['submit'])) {
-  $tanggal = $_POST['tanggal'];
   $name = $_POST['namepemb'];
   $barang = $_POST['barang'];
-  $price = $_POST['price'];
   $amount = $_POST['amount'];
 
   $query = $conn->query('SELECT MAX(id) as maxId FROM penjualan');
@@ -23,16 +21,27 @@ if (isset($_POST['submit'])) {
       $code = $char.$noUrut;
   }
 
-  $result_pjl = mysqli_query($conn, "INSERT INTO penjualan(pembeli,code,created_at)VALUES('$name','$code','$tanggal')");
+  $result_pjl = mysqli_query($conn, "INSERT INTO penjualan(pembeli,code)VALUES('$name','$code')");
+  // var_dump($result_pjl);
 
-  $querypjl = $conn->query('SELECT MAX(id) AS idNew FROM penjualan');
-  $hasilpjl = $querypjl->fetch_assoc();
-  $idTambah = $hasilpjl['idNew'];
-  $idTambah++;
-  
-  $result_pivot = mysqli_query($conn, "INSERT INTO pivot(penjualan_id,barang_id)VALUES('$idTambah','$barang','$amount')");
+  if($result_pjl){
+    $temp = $conn->query("SELECT id FROM penjualan WHERE code='$code'")->fetch_all();
+    $idTambah = $temp[0][0];
 
-  if($result_pjl && $result_pivot){
+    $result_pivot = mysqli_query($conn, "INSERT INTO pivot(penjualan_id,barang_id,jumlah)VALUES('$idTambah','$barang','$amount')");
+    var_dump($result_pivot);
+    if($result_pivot){
+      $barang = $conn->query("SELECT harga, total FROM barang WHERE id='$barangId'")->fetch_assoc();
+      $jumlah = $barang['total'] - $amount;
+      $query = "UPDATE barang SET total='$jumlah' WHERE id=$barang";
+      
+      $message = 'created successfuly';
+      $status = true;
+    }else{
+      $message = 'failed to created';
+      $status = false;
+    }
+    
     $message = 'created successfuly';
     $status = true;
   }else{
@@ -40,7 +49,7 @@ if (isset($_POST['submit'])) {
     $status = false;
   }
 
-  header("location: eoq/pages/penjualan/index.php?msg=$message&status=$status");
+  header("location: /eoq/pages/penjualan/index.php?msg=$message&status=$status");
   die();
 }
 

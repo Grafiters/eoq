@@ -3,7 +3,7 @@
     // $query = "SELECT * FROM user ORDER BY user_id DESC";
 
     if ($conn) {
-      $buys = mysqli_query($conn, "SELECT pivot.id AS id, penjualan.code AS kode, penjualan.created_at AS tanggal, barang.harga*pivot.jumlah AS bayar FROM barang, penjualan, pivot WHERE barang.id=penjualan.id=pivot.id ");
-    //   var_dump($buys);
+      $buys = mysqli_query($conn, "SELECT barang.id AS bid, pivot.id AS id, penjualan.total AS bayar, penjualan.code AS kode, penjualan.created_at AS tanggal FROM barang, penjualan, pivot WHERE pivot.barang_id=barang.id ");
+      // var_dump($buys);
     }
 ?>
