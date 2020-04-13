@@ -174,7 +174,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="../../backend/admin/createAdmin.php" method="post">
+                <form action="/eoq/backend/item/addItem.php" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Kode Item</label>
                     <input class="form-control" type="text" name="code" value=<?php echo $code ?> readonly>
@@ -186,6 +186,10 @@
                   <div class="form-group">
                     <label class="form-label" for="">Total</label>
                     <input class="form-control" type="number" name="total" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="">Harga</label>
+                    <input class="form-control" type="number" name="harga" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>

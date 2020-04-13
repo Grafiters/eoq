@@ -168,6 +168,7 @@
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Satuan</th>
+                    <th>Harga</th>
                     <th>Keterangan</th>
                     <th>Action</th>
                   </tr>
@@ -179,12 +180,14 @@
                         $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/eoq/pages/item/edit.php?id=".$item['id']."'>edit</a>";
                         $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$item['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
+                        $price = "Rp ".number_format($item['harga'], 0);
                         echo "<tr class='text-center'>";
                           echo "<td>".$idx."</td>";
                           echo "<td>".ucwords($item['code'])."</td>";
                           echo "<td>".ucwords($item['name'])."</td>";
                           echo "<td>".$item['total']."</td>";
-                          echo "<td>".ucwords($item['description'])."</td>";
+                          echo "<td>$price</td>";
+                          echo "<td>".ucwords($item['keterangan'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                         $idx++;
