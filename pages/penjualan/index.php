@@ -187,6 +187,7 @@
                           echo "<td>$bayar</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
+                        $idx++;
                       }
                     ?>
                   </tbody>

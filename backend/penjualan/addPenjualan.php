@@ -20,30 +20,34 @@ if (isset($_POST['submit'])) {
   }else{
       $code = $char.$noUrut;
   }
+  $harga = mysqli_query($conn, "SELECT harga FROM barang WHERE id='$barang'");
+  $getharga = mysqli_fetch_assoc($harga);
+  // var_dump($getharga);
+  $total = $getharga['harga'] * $amount;
 
-  $result_pjl = mysqli_query($conn, "INSERT INTO penjualan(pembeli,code)VALUES('$name','$code')");
-  // var_dump($result_pjl);
+  $result_pjl = mysqli_query($conn, "INSERT INTO penjualan(pembeli,code, total)VALUES('$name','$code','$total')");
+  // // var_dump($result_pjl);
 
   if($result_pjl){
-    $temp = $conn->query("SELECT id FROM penjualan WHERE code='$code'")->fetch_all();
-    $idTambah = $temp[0][0];
-
-    $result_pivot = mysqli_query($conn, "INSERT INTO pivot(penjualan_id,barang_id,jumlah)VALUES('$idTambah','$barang','$amount')");
+    $temp = $conn->query("SELECT id FROM penjualan WHERE code='$code'")->fetch_assoc();
+    $idTambah = $temp['id'];
+    var_dump($idTambah);
+    var_dump($barang);
+    $result_pivot = mysqli_query($conn, "INSERT INTO pivot(penjualan_id,barang_id,total)VALUES('$idTambah','$barang','$amount')");
     var_dump($result_pivot);
     if($result_pivot){
-      $barang = $conn->query("SELECT harga, total FROM barang WHERE id='$barangId'")->fetch_assoc();
+      $barang = $conn->query("SELECT id, harga, total FROM barang WHERE id='$barang'")->fetch_assoc();
       $jumlah = $barang['total'] - $amount;
-      $query = "UPDATE barang SET total='$jumlah' WHERE id=$barang";
-      
+      $barangId = $barang['id'];
+      $query = mysqli_query($conn, "UPDATE barang SET total='$jumlah' WHERE id=$barangId");
+      var_dump($query);
       $message = 'created successfuly';
       $status = true;
     }else{
       $message = 'failed to created';
       $status = false;
     }
-    
-    $message = 'created successfuly';
-    $status = true;
+  
   }else{
     $message = 'failed to created';
     $status = false;
