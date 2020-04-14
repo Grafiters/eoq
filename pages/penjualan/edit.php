@@ -4,7 +4,7 @@
 
   // var_dump($id);
 
-  $penjualan = $conn->query("SELECT pivot.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot, penjualan WHERE pivot.id='$id'");
+  $penjualan = $conn->query("SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'");
   while ($data = $penjualan->fetch_assoc()) {
     $id = $data['id'];
     $code = $data['code'];
@@ -12,8 +12,9 @@
     $pembeli = $data['name'];
   }
   // var_dump($penjualan);
-  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id");
+  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah FROM pivot INNER JOIN barang ON pivot.barang_id=barang.id");
   while ($data = $penjualans->fetch_assoc()) {
+    $pid = $data['id'];
     $barang = $data['barang'];
     $harga = $data['harga'];
     $jumlah = $data['jumlah'];
@@ -223,7 +224,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <form action="/eoq/backend/penjualan/updatePenjualan.php?id=<?= $id ?>" method="post">
+                    <form action="/eoq/backend/penjualan/updatePenjualan.php?id=<?= $pid ?>" method="post">
                       <tr>
                         <td><?php echo $id ?></td>
                         <td>

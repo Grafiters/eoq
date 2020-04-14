@@ -185,6 +185,7 @@
                           echo "<td>".ucwords($buy['bayar'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
+                        $idx++;
                       }
                     ?>
                   </tbody>

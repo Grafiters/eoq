@@ -2,6 +2,7 @@
 include('../../Connect.php');
 
 $id = $_GET['id'];
+var_dump($id);
 
 if (isset($_POST)) {
 //   $itemId = $_POST['barang'];
@@ -9,6 +10,7 @@ if (isset($_POST)) {
     $amount = $_POST['amount'];
 
     $pivot = $conn->query("SELECT * FROM pivot WHERE id=$id")->fetch_assoc();
+    var_dump($pivot);
     $nobarang = $pivot['barang_id'];
     $nopenjualan = $pivot['penjualan_id'];
     $ptotal = $pivot['total'];
