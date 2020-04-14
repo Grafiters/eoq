@@ -158,7 +158,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="../../backend/admin/createAdmin.php" method="post">
+                <form action="/eoq/backend/admin/createAdmin.php" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Username</label>
                     <input class="form-control" type="text" name="username" required>
@@ -173,7 +173,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Jabatan</label>
-                    <select class="form-control" id="jabatan" name="role">
+                    <select class="form-control" id="jabatan" name="status">
                       <option value="admin">Admin</option>
                       <option value="penjualan">Penjualan</option>
                       <option value="produksi">Produksi</option>

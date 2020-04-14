@@ -1,5 +1,8 @@
 <?php
-  include('../../admin/editAdmin.php');
+  include('../../Connect.php');
+  $id = $_GET['id'];
+  $user = $conn->query("SELECT * FROM user WHERE id=$id")->fetch_assoc();
+  $roles = ['admin', 'pengadaan', 'penjualan'];
 ?>
 <!DOCTYPE html>
 <html>
