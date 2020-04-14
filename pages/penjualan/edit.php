@@ -12,7 +12,9 @@
     $pembeli = $data['name'];
   }
   // var_dump($penjualan);
-  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id");
+  $query = "SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.jumlah AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id";
+  $penjualans = $conn->query($query);
+
   while ($data = $penjualans->fetch_assoc()) {
     $barang = $data['barang'];
     $harga = $data['harga'];
