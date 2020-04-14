@@ -178,11 +178,13 @@
                         $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$buy['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
                         $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualan.php?id=".$buy['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
+                        $bayar = "Rp ".number_format($buy['bayar'], 0);
+                        $tanggal = date_format(date_create($buy['tanggal']), 'D, d/M/Y');
                         echo "<tr>";
                           echo "<td>$idx</td>";
                           echo "<td>".ucwords($buy['kode'])."</td>";
-                          echo "<td>".ucwords($buy['tanggal'])."</td>";
-                          echo "<td>".ucwords($buy['bayar'])."</td>";
+                          echo "<td>$tanggal</td>";
+                          echo "<td>$bayar</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                         $idx++;

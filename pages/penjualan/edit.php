@@ -12,6 +12,9 @@
     $pembeli = $data['name'];
   }
   // var_dump($penjualan);
+  //$query = "SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.jumlah AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id";
+  //$penjualans = $conn->query($query);
+
   $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah FROM pivot INNER JOIN barang ON pivot.barang_id=barang.id");
   while ($data = $penjualans->fetch_assoc()) {
     $pid = $data['id'];

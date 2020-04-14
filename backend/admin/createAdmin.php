@@ -4,7 +4,7 @@ include("../../Connect.php");
 if (isset($_POST['submit'])) {
   $username=$_POST['username'];
   $name=$_POST['name'];
-  $telp=$_POST['tlep'];
+  $telp=$_POST['phone'];
   $email=$_POST['email'];
   $password=hash('sha512', $_POST['password']);
   $status=$_POST['status'];
@@ -15,7 +15,12 @@ if (isset($_POST['submit'])) {
   $inname = substr($username,0,2);
   $code = $inrole.$inname;
 
-  $result = mysqli_query($conn, "INSERT INTO user(username,name,email,phone,password,role,code)VALUES('$username','$name','$email','$telp','$hashpas','$status','$code')");
+  $query = "INSERT INTO user(username,name,email,phone,password,role,code)VALUES('$username','$name','$email','$telp','$hashpas','$status','$code')";
+
+  // var_dump($query);
+  // die();
+
+  $result = $conn->query($query);
 
   if($result){
     $message = 'Sukses membuat admin';
@@ -25,8 +30,7 @@ if (isset($_POST['submit'])) {
     $status = false;
   }
 
-  header("location: /pages/admin?msg=$message&status=$status");
-  die();
+  header("location: /eoq/pages/admin?msg=$message&status=$status");
 }
 
 ?>
