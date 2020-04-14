@@ -4,25 +4,20 @@
 
   // var_dump($id);
 
-  $penjualan = $conn->query("SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'");
-  while ($data = $penjualan->fetch_assoc()) {
+  $query = $conn->query("SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'");
+  while ($data = $query->fetch_assoc()) {
     $id = $data['id'];
     $code = $data['code'];
     $tanggal = $data['tanggal'];
     $pembeli = $data['name'];
   }
+  $penjualan = $query->fetch_assoc();
   // var_dump($penjualan);
   //$query = "SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.jumlah AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id";
   //$penjualans = $conn->query($query);
 
-  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah FROM pivot INNER JOIN barang ON pivot.barang_id=barang.id");
-  while ($data = $penjualans->fetch_assoc()) {
-    $pid = $data['id'];
-    $barang = $data['barang'];
-    $harga = $data['harga'];
-    $jumlah = $data['jumlah'];
-  }
-
+  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah, pivot.penjualan_id AS penjualan, pivot.total*barang.harga AS bayar FROM pivot INNER JOIN barang ON pivot.barang_id=barang.id");
+  $items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
 ?>
 
 <!DOCTYPE html>
@@ -227,17 +222,54 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <form action="/eoq/backend/penjualan/updatePenjualan.php?id=<?= $pid ?>" method="post">
+                  <?php
+                  $i = 1;
+                  while ($beli = $penjualans->fetch_array()) {
+                    $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualaan.php?id=".$beli['penjualan']."&pivot=".$beli['id']."' method='post'>
+                      <button type='submit' class='btn btn-danger btn-sm'>
+                      delete
+                      </button>
+                    </form>";
+                    echo "<tr>";
+                      echo "<td>$i</td>";
+                      echo "<td>".$beli['barang']."</td>";
+                      echo "<td>Rp ".number_format($beli['harga'],0)."</td>";
+                      echo "<td>".$beli['jumlah']."</td>";
+                      echo "<td>Rp ".number_format($beli['bayar'], 0)."</td>";
+                      echo "<td>".$btnDelete."</td>";
+                    echo "</tr>";
+                    $i++;
+                  }
+                  ?>
+                    <form action="/eoq/backend/penjualan/updatePenjualan.php?id=<?= $id ?>" method="post">
                       <tr>
                         <td><?php echo $id ?></td>
                         <td>
-                          <input id="barang" name="barang" class="form-control" type="text" value="<?php echo $barang ?>" disabled>
+                          <select id="barang" class="form-control" name="barang">
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $name = $item[2];
+                            echo "<option value='$id'>$name</option>";
+                          }
+                          ?>
+                          </select>
                         </td>
                         <td>
-                          <input id="price" name="price" class="form-control" type="number" value="<?php echo $harga ?>" disabled>
+                          <input type="text" name="price" id="payment" class="d-none">
+                          <select id="price" class="form-control" disabled>
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $price = $item[3];
+                            $harga = "Rp ".number_format($item[3], 0);
+                            echo "<option value='$id' price='$price'>$harga</option>";
+                          }
+                          ?>
+                          </select>
                         </td>
                         <td>
-                          <input id="amount" name="amount" class="form-control" type="number" value="<?php echo $jumlah?>">
+                          <input id="amount" name="amount" class="form-control" type="number">
                         </td>
                         <td colspan="1">
                           <input id="total" name="total" class="form-control" type="number" disabled>
