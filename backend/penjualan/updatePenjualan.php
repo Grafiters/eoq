@@ -20,7 +20,7 @@ if (isset($_POST)) {
     // var_dump($barang);
     $satuan = $barang['harga'];
     $jumlah = $barang['total'];
-    $totalpenjualan = $satuan * $amount;
+    $totalpenjualan = $jumlah + ($satuan * $amount);
     $penjualanup = $conn->query("UPDATE penjualan SET total=$totalpenjualan WHERE id=$id");
     if($penjualanup){
        if($pivot == NULL){
