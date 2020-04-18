@@ -5,10 +5,9 @@ if (isset($_POST['submit'])) {
   $username=$_POST['username'];
   $name=$_POST['name'];
   $telp=$_POST['phone'];
-  // $email=$_POST['email'];
+  $email=$_POST['email'];
   $password=hash('sha512', $_POST['password']);
   $status=$_POST['status'];
-  // var_dump($status);
   
   // $hashpas = hash('sha512',$password);
 
@@ -16,8 +15,8 @@ if (isset($_POST['submit'])) {
   $inname = substr($username,0,2);
   $code = $inrole.$inname;
 
-  $query = "INSERT INTO user(username,name,phone,password,role,code)VALUES('$username','$name','$telp','$password','$status','$code')";
-  // var_dump($query);
+  $query = "INSERT INTO user(username,name,email,phone,password,role,code)VALUES('$username','$name','$email','$telp','$password','$status','$code')";
+
   // var_dump($query);
   // die();
 
@@ -31,7 +30,7 @@ if (isset($_POST['submit'])) {
     $status = false;
   }
 
-  // header("location: /eoq/pages/admin?msg=$message&status=$status");
+  header("location: /eoq/pages/admin?msg=$message&status=$status");
 }
 
 ?>
