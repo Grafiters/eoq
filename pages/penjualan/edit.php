@@ -225,7 +225,7 @@
                   <?php
                   $i = 1;
                   while ($beli = $penjualans->fetch_array()) {
-                    $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualaan.php?id=".$beli['penjualan']."&pivot=".$beli['id']."' method='post'>
+                    $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deleteitem.php?id=".$beli['penjualan']."&pivot=".$beli['id']."' method='post'>
                       <button type='submit' class='btn btn-danger btn-sm'>
                       delete
                       </button>
