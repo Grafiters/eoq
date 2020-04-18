@@ -179,10 +179,10 @@
                       <option value="produksi">Produksi</option>
                     </select>
                   </div>
-                  <!-- <div class="form-group">
+                  <div class="form-group">
                     <label class="form-label" for="">Email</label>
                     <input class="form-control" type="email" name="email" required>
-                  </div> -->
+                  </div>
                   <div class="form-group">
                     <label class="form-label" for="">Password</label>
                     <input class="form-control" type="password" name="password" required>

@@ -177,7 +177,7 @@
                       $idx = 1;
                       while ($user = $users->fetch_array()) {
                         $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/pages/admin/edit.php?id=".$user['id']."'>edit</a>";
-                        $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$user['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $btnDelete = "<form class='d-inline' action='/eoq/backend/admin/deleteAdmin.php?id=".$user['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr class='text-center'>";
                           echo "<td>".$idx."</td>";
