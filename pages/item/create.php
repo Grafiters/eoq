@@ -193,7 +193,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
-                    <textarea id="keterangan" class="form-control" name="keterangan"></textarea>
+                    <textarea id="description" class="form-control" name="description"></textarea>
                   </div>
                   <div class="form-group text-right">
                     <input class="btn btn-warning" type="cancel" value="Cancel" />
