@@ -4,8 +4,10 @@
 
    $user_check = $_POST['username'];
    $pass_check = $_POST['password'];
+   $hashpass = hash('sha512',$pass_check);
 
-   $ses_sql = mysqli_query($conn,"select * from user where username = '$user_check' and password ='$pass_check'");
+   $ses_sql = mysqli_query($conn,"SELECT * FROM user WHERE username = '$user_check' and password ='$hashpass'");
+   // var_dump($ses_sql);
 
    $row = mysqli_num_rows($ses_sql);
 
@@ -14,21 +16,21 @@
       if($result['role'] == "admin"){
          $_SESSION['username'] = $user_check;
          $_SESSION['role'] = "admin";
-         echo "admin";
-         header("Location:/eoq/pages/admin/index.php");
+         $role = "admin";
+         header("Location: /eoq/pages/admin/index.php");
          //    header("Location: ../index2.php", true);
          //    die();
       }else if($result['role'] == "pengadaan"){
          $_SESSION['username'] = $user_check;
          $_SESSION['role'] = "pengadaan";
-         echo "pengadaan";
+         $role = "pengadaan";
          header("Location:/eoq/pages/admin/index.php");
          //    header("Location: ../index2.php", true);
          //    die();
-      }else if($result['role'] == "suplier"){
+      }else if($result['role'] == "penjualan"){
          $_SESSION['username'] = $user_check;
-         $_SESSION['role'] = "suplier";
-         echo "suplier";
+         $_SESSION['role'] = "penjualan";
+         $role = "penjualan";
          header("Location:/eoq/pages/penjualan/index.php");
          //    header("Location: ../index2.php", true);
          //    die();
