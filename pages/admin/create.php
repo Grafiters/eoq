@@ -172,21 +172,17 @@
                     <input class="form-control" type="text" name="phone" required>
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="">jabatan</label>
-                    <input class="form-control" type="text" name="role" required>
-                  </div>
-                  <!-- <div class="form-group">
                     <label class="form-label" for="">Jabatan</label>
                     <select class="form-control" id="jabatan" name="status">
                       <option value="admin">Admin</option>
                       <option value="penjualan">Penjualan</option>
-                      <option value="produksi">Produksi</option>
+                      <option value="pengadaan">Pengadaan</option>
                     </select>
-                  </div> -->
-                  <!-- <div class="form-group">
+                  </div>
+                  <div class="form-group">
                     <label class="form-label" for="">Email</label>
                     <input class="form-control" type="email" name="email" required>
-                  </div> -->
+                  </div>
                   <div class="form-group">
                     <label class="form-label" for="">Password</label>
                     <input class="form-control" type="password" name="password" required>
