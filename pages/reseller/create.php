@@ -1,3 +1,12 @@
+<?php
+  session_start();
+  
+  if(!$_SESSION['role']=="admin"){
+    $messages = "Anda Tidak Mempunyai Access Untuk Melakukan Aksi Ini";
+    header("Location: /eoq/pages/item/index.php?msg=$messages");
+  }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
