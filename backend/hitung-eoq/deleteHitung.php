@@ -2,7 +2,8 @@
     include_once("../../Connect.php");
 
     $id = $_GET['id'];
-    $result = mysqli_query($conn, "DELETE FROM hasil WHERE id=$id"); 
+    $query = "DELETE FROM hasil WHERE id=$id";
+    $result = $conn->query($query); 
 
     header("Location:/eoq/pages/perhitungan-eoq/index.php");
 ?>
