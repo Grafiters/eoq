@@ -4,7 +4,7 @@
     if (isset($_POST['submit'])) {
         $name=$_POST['name'];
         $total = (int) $_POST['total'];
-        $keterangan = $_POST['keterangan'];
+        $description = $_POST['description'];
         $price = (int) $_POST['harga'];
 
         $query = $conn->query('SELECT MAX(id) as maxId FROM barang');
@@ -22,7 +22,7 @@
             $code = $char.$noUrut;
         }
 
-        $result = $conn->query("INSERT INTO barang(code,name,total,harga,keterangan)VALUES('$code','$name','$total','$price','$keterangan')");
+        $result = $conn->query("INSERT INTO barang(code,name,total,harga,description)VALUES('$code','$name','$total','$price','$description')");
 
         if($result){
           header("location: /eoq/pages/item");

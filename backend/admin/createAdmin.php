@@ -4,33 +4,33 @@ include("../../Connect.php");
 if (isset($_POST['submit'])) {
   $username=$_POST['username'];
   $name=$_POST['name'];
-  $telp=$_POST['phone'];
+  $phone=$_POST['phone'];
   $email=$_POST['email'];
   $password=hash('sha512', $_POST['password']);
-  $status=$_POST['status'];
+  $role=$_POST['status'];
   
-  $hashpas = hash('sha512',$password);
+  // $hashpas = hash('sha512',$password);
 
-  $inrole = substr($status,0,2);
+  $inrole = substr($role,0,2);
   $inname = substr($username,0,2);
   $code = $inrole.$inname;
 
-  $query = "INSERT INTO user(username,name,email,phone,password,role,code)VALUES('$username','$name','$email','$telp','$hashpas','$status','$code')";
-
-  // var_dump($query);
+  $query = "INSERT INTO user(username,name,email,phone,password,role,code)VALUES('$username','$name','$email','$phone','$password','$role','$code')";
+  var_dump($query);
   // die();
-
+  
   $result = $conn->query($query);
+  // var_dump($result);
 
   if($result){
     $message = 'Sukses membuat admin';
-    $status = true;
+    // $role = true;
+    header("location: /eoq/pages/admin?msg=$message&status=$status");
   }else{
     $message = 'Gagal membuat admin';
-    $status = false;
+    // $role = false;
   }
 
-  header("location: /eoq/pages/admin?msg=$message&status=$status");
 }
 
 ?>

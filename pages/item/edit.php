@@ -8,7 +8,7 @@
       $name = $data['name'];
       $total = $data['total'];
       $harga = $data['harga'];
-      $description = $data['keterangan'];
+      $description = $data['description'];
   }
 ?>
 <!DOCTYPE html>
@@ -190,7 +190,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
-                    <textarea id="keterangan" class="form-control" name="keterangan"><?php echo $description ?></textarea>
+                    <textarea id="description" class="form-control" name="description"><?php echo $description ?></textarea>
                   </div>
                   <input type="hidden" name="id" value=<?php echo $_GET['id'];?> >
                   <div class="form-group text-right">

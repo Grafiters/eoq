@@ -2,7 +2,7 @@
   include('../../Connect.php');
   $id = $_GET['id'];
   $user = $conn->query("SELECT * FROM user WHERE id=$id")->fetch_assoc();
-  $roles = ['admin', 'pengadaan', 'penjualan'];
+  // $roles = ['admin', 'pengadaan', 'penjualan'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -164,7 +164,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="/admin/updateAdmin.php?id=<?= $_GET['id'] ?>" method="post">
+                <form action="/eoq/backend/admin/updateAdmin.php?id=<?= $_GET['id'] ?>" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Username</label>
                     <input class="form-control" type="text" name="username" value="<?= $user['username'] ?>" required>
@@ -173,24 +173,16 @@
                     <label class="form-label" for="">Nama</label>
                     <input class="form-control" type="text" name="name" value="<?= $user['name'] ?>" required>
                   </div>
+       
                   <div class="form-group">
                     <label class="form-label" for="">Jabatan</label>
-                    <select class="form-control" id="jabatan" name="status">
-                    <?php
-                      foreach ($roles as $role) {
-                        $selected = '';
-                        if ($role == $user['status']) {
-                          $selected = 'selected';
-                        }
-                        echo "<option value='$role' $selected>$role</option>";
-                      }
-                    ?>
-                    </select>
+                    <input class="form-control" type="text" name="role" value="<?= $user['role'] ?>" required>
                   </div>
+<!--        
                   <div class="form-group">
                     <label class="form-label" for="">Email</label>
                     <input class="form-control" type="email" name="email" value="<?= $user['email'] ?>" required>
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <label class="form-label" for="">Password</label>
                     <input class="form-control" type="password" name="password">

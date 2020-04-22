@@ -1,4 +1,12 @@
-<?php include('../../backend/admin/showAdmin.php'); ?>
+<?php
+  session_start();
+  
+  if($_SESSION['username']==""){
+    header('Location: /eoq/pages/auth/login.php');
+  }
+
+  include('../../backend/admin/showAdmin.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +59,7 @@
           <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
         </div>
       </div>
 
@@ -119,6 +127,12 @@
               <p>Laporan</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/eoq/backend/session/logout.php" class="nav-link">
+              <i class="nav-icon fas fa-scroll"></i>
+              <p>Logout</p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -176,8 +190,8 @@
                     <?php
                       $idx = 1;
                       while ($user = $users->fetch_array()) {
-                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/pages/admin/edit.php?id=".$user['id']."'>edit</a>";
-                        $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$user['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='edit.php?id=".$user['id']."'>edit</a>";
+                        $btnDelete = "<form class='d-inline' action='/eoq/backend/admin/deleteAdmin.php?id=".$user['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         echo "<tr class='text-center'>";
                           echo "<td>".$idx."</td>";
@@ -185,7 +199,11 @@
                           echo "<td>".ucwords($user['name'])."</td>";
                           echo "<td>".$user['email']."</td>";
                           echo "<td>".ucwords($user['role'])."</td>";
-                          echo "<td>$action</td>";
+                          if ($_SESSION['role']!="admin") {
+                            // echo "<td>$action</td>";
+                          }else{
+                            echo "<td>$action</td>";
+                          }
                         echo "</tr>";
                         $idx++;
                       }

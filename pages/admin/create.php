@@ -176,7 +176,7 @@
                     <select class="form-control" id="jabatan" name="status">
                       <option value="admin">Admin</option>
                       <option value="penjualan">Penjualan</option>
-                      <option value="produksi">Produksi</option>
+                      <option value="pengadaan">Pengadaan</option>
                     </select>
                   </div>
                   <div class="form-group">

@@ -178,7 +178,7 @@
                       $idx = 1;
                       while ($item = $items->fetch_array()) {
                         $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/eoq/pages/item/edit.php?id=".$item['id']."'>edit</a>";
-                        $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$item['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                        $btnDelete = "<form class='d-inline' action='/eoq/backend/item/deleteitem.php?id=".$item['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         $price = "Rp ".number_format($item['harga'], 0);
                         echo "<tr class='text-center'>";
@@ -187,7 +187,7 @@
                           echo "<td>".ucwords($item['name'])."</td>";
                           echo "<td>".$item['total']."</td>";
                           echo "<td>$price</td>";
-                          echo "<td>".ucwords($item['keterangan'])."</td>";
+                          echo "<td>".ucwords($item['description'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                         $idx++;
