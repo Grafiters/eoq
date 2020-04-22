@@ -129,7 +129,7 @@
             }
           ?>
           <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/laporan/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>

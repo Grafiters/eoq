@@ -1,14 +1,12 @@
 <?php
     require_once ('../dompdf/autoload.inc.php');
-    
-    // var_dump($query);
 
     use Dompdf\Dompdf;
     $document = new Dompdf();
-    $page = file_get_contents("../../pages/laporan/pdf/pembelian.php");
+    $page = file_get_contents('../../pages/laporan/pdf/pembelian.php');
     
     $document->load_html($page);
-    $document->setPaper('A4', 'lanscape');
+    // $document->setPaper('A4', 'lanscape');
     $document->render();
-    $document->stream('Eoq', array("Attachment"=>0));
+    // $document->stream('Eoq', array("Attachment"=>0));
 ?>

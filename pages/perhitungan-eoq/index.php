@@ -1,6 +1,13 @@
 <?php
   include ("../../Connect.php");
   include ("../../backend/hitung-eoq/showHitung.php");
+  session_start();
+  if($_SESSION['username']==""){
+    header('Location: /eoq/pages/auth/login.php');
+  }else if(!$_SESSION['role']=="pengadaan" || !$_SESSION['role']=="admin"){
+    $messages = "Permission Denied";
+    header("Location: /eoq/pages/admin/index.php?msg=$messages");
+  }
 ?>
 
 <!DOCTYPE html>
@@ -99,12 +106,17 @@
               <p>Stok</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
-              <i class="nav-icon fas fa-cart-plus"></i>
-              <p>Penjualan</p>
-            </a>
-          </li>
+          <?php
+            if ($_SESSION['role']=="penjualan" || $_SESSION['role']=="admin") { ?>
+              <li class="nav-item">
+                <a href="/eoq/pages/penjualan/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-cart-plus"></i>
+                  <p>Penjualan</p>
+                </a>
+              </li>
+          <?php
+            }
+          ?>
           <li class="nav-item">
             <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
