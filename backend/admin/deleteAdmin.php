@@ -6,5 +6,5 @@
     $result = $conn->query($query);
     // var_dump($result);
 
-    header("Location: /eoq/pages/admin/index.php");
+    header("Location:/eoq/pages/admin/index.php");
 ?>

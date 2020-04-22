@@ -172,13 +172,17 @@
                     <input class="form-control" type="text" name="phone" required>
                   </div>
                   <div class="form-group">
+                    <label class="form-label" for="">jabatan</label>
+                    <input class="form-control" type="text" name="role" required>
+                  </div>
+                  <!-- <div class="form-group">
                     <label class="form-label" for="">Jabatan</label>
                     <select class="form-control" id="jabatan" name="status">
                       <option value="admin">Admin</option>
                       <option value="penjualan">Penjualan</option>
                       <option value="produksi">Produksi</option>
                     </select>
-                  </div>
+                  </div> -->
                   <!-- <div class="form-group">
                     <label class="form-label" for="">Email</label>
                     <input class="form-control" type="email" name="email" required>

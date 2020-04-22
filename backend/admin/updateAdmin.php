@@ -6,20 +6,20 @@
 
         $username=$_POST['username'];
         $name=$_POST['name'];
-        $email=$_POST['email'];
+        // $email=$_POST['email'];
         $password=$_POST['password'];
-        $status=$_POST['status'];
+        $role=$_POST['role'];
 
         if ($password=='') {
-          $result = mysqli_query($conn, "UPDATE user SET username='$username',name='$name',email='$email',status='$status' WHERE user_id=$id");
+          $result = mysqli_query($conn, "UPDATE user SET username='$username',name='$name',role='$role' WHERE id=$id");
         } else {
-          $result = mysqli_query($conn, "UPDATE user SET username='$username',name='$name',email='$email',password='$password',status='$status' WHERE user_id=$id");
+          $result = mysqli_query($conn, "UPDATE user SET username='$username',name='$name',password='$password',role='$role' WHERE id=$id");
         }
 
 
         if($result){
-            header("Location: /pages/admin");
-            die();
+            header("Location:/eoq/pages/admin/index.php");
+            die(); 
         } else {
             echo "Error: " . $result . "<br>" . $conn->error;
         }
