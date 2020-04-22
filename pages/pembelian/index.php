@@ -1,5 +1,12 @@
 <?php
 include('../../Connect.php');
+session_start();
+if($_SESSION['username']==""){
+  header('Location: /eoq/pages/auth/login.php');
+}else if(!$_SESSION['role']=="pengadaan" || !$_SESSION['role']=="admin"){
+  $messages = "Permission Denied";
+  header("Location: /eoq/pages/admin/index.php?msg=$messages");
+}
 
 $query = "
   SELECT
@@ -70,7 +77,7 @@ $conn->close();
           <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
         </div>
       </div>
 
@@ -114,12 +121,17 @@ $conn->close();
               <p>Stok</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
-              <i class="nav-icon fas fa-cart-plus"></i>
-              <p>Penjualan</p>
-            </a>
-          </li>
+          <?php
+            if ($_SESSION['role']=="penjualan" || $_SESSION['role']=="admin") { ?>
+              <li class="nav-item">
+                <a href="/eoq/pages/penjualan/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-cart-plus"></i>
+                  <p>Penjualan</p>
+                </a>
+              </li>
+          <?php
+            }
+          ?>
           <li class="nav-item">
             <a  class="nav-link active" href="/eoq/pages/pembelian/index.php">
               <i class="nav-icon fas fa-box"></i>
