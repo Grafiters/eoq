@@ -249,24 +249,23 @@
                   </thead>
                   <tbody>
                   <?php
-                      $idx = 0;
-                      while ($eoq = $result->fetch_assoc()) {
-                        $btnEdit = "<a href='/eoq/backend/hitung-eoq/download.php?id=".$eoq['id']."' class='btn btn-sm btn-primary mx-1'>cetak</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/hitung-eoq/deleteHitung.php?id=".$eoq['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                      foreach ($result->fetch_all(MYSQLI_BOTH) as $key => $eoq) {
+                        $btnEdit = "<a href='/eoq/backend/hitung-eoq/download.php?id=".$eoq[0]."' class='btn btn-sm btn-primary mx-1'>cetak</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/hitung-eoq/deleteHitung.php?id=".$eoq[0]."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
-                        $idx++;
+                        $idx = $key + 1;
                         echo "<tr>";
-                          echo "<td>$idx</td>";
-                          echo "<td>".ucwords($eoq['created_at'])."</td>";
-                          echo "<td>".ucwords($eoq['name'])."</td>";
-                          echo "<td>".ucwords($eoq['kebutuhan_tahunan'])."</td>";
-                          echo "<td>".ucwords($eoq['biaya_sekali_pesan'])."</td>";
-                          echo "<td>".ucwords($eoq['biaya_simpan_barang'])."</td>";
-                          echo "<td>".ucwords($eoq['eoq'])."</td>";
-                          echo "<td>".ucwords($eoq['hasil_biasa_pesan'])."</td>";
-                          echo "<td>".ucwords($eoq['hasil_biaya_simpan'])."</td>";
-                          echo "<td>".ucwords($eoq['rop'])."</td>";
-                          echo "<td>$action</td>";
+                        echo "<td>$idx</td>";
+                        echo "<td>".date_format(date_create($eoq['created_at']), "l, d-m-Y")."</td>";
+                        echo "<td>".ucwords($eoq['name'])."</td>";
+                        echo "<td>".ucwords($eoq['kebutuhan_tahunan'])."</td>";
+                        echo "<td>".ucwords($eoq['biaya_sekali_pesan'])."</td>";
+                        echo "<td>".ucwords($eoq['biaya_simpan_barang'])."</td>";
+                        echo "<td>".ucwords($eoq['eoq'])."</td>";
+                        echo "<td>".ucwords($eoq['hasil_biasa_pesan'])."</td>";
+                        echo "<td>".ucwords($eoq['hasil_biaya_simpan'])."</td>";
+                        echo "<td>".ucwords($eoq['rop'])."</td>";
+                        echo "<td>$action</td>";
                         echo "</tr>";
                       }
                     ?>  

@@ -2,7 +2,6 @@
 include('../../Connect.php');
 
 $id = $_GET['id'];
-var_dump($id);
 
 if (isset($_POST)) {
     $itemId = $_POST['barang'];
