@@ -6,7 +6,6 @@
   }
 
   include('../../backend/admin/showAdmin.php');
-  // include('../../backend/session/session.php');
 ?>
 <!DOCTYPE html>
 <html>
@@ -200,7 +199,11 @@
                           echo "<td>".ucwords($user['name'])."</td>";
                           echo "<td>".$user['email']."</td>";
                           echo "<td>".ucwords($user['role'])."</td>";
-                          echo "<td>$action</td>";
+                          if ($_SESSION['role']!="admin") {
+                            // echo "<td>$action</td>";
+                          }else{
+                            echo "<td>$action</td>";
+                          }
                         echo "</tr>";
                         $idx++;
                       }
