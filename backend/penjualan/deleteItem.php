@@ -5,7 +5,6 @@
         $idpivot = $_GET['pivot'];
 
         $penjualan = $conn->query("SELECT total FROM penjualan WHERE id=$idpenjualan")->fetch_assoc();
-        var_dump($penjualan);
         $pivot = $conn->query("SELECT total, barang_id FROM pivot_pembelian WHERE id=$idpivot")->fetch_assoc();
         $idbarang = $pivot['barang_id'];
         $barang = $conn->query("SELECT harga, total FROM barang pivot WHERE id=$idpivot")->fetch_assoc();
@@ -20,7 +19,7 @@
             if($resultPivot){
                 $totalBarang = $barang['total'] + $pivot['total'];
                 $query = "UPDATE barang SET total=$totalBarang";
-                $resultBarang = $conn->query($quqery);
+                $resultBarang = $conn->query($query);
 
                 if($resultBarang){
                     $status = true;

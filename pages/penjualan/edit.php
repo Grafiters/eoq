@@ -236,7 +236,7 @@
                   <?php
                   $i = 1;
                   while ($beli = $penjualans->fetch_array()) {
-                    $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deleteitem.php?id=".$beli['penjualan']."&pivot=".$beli['id']."' method='post'>
+                    $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deleteItem.php?id=".$beli['penjualan']."&pivot=".$beli['id']."' method='post'>
                       <button type='submit' class='btn btn-danger btn-sm'>
                       delete
                       </button>
@@ -283,7 +283,7 @@
                           <input id="amount" name="amount" class="form-control" type="number">
                         </td>
                         <td colspan="1">
-                          <input id="total" name="total" class="form-control" type="number" disabled>
+                          <input id="total" name="total" class="form-control" type="text" disabled>
                         </td>
                         <td>
                           <button class="btn btn-sm btn-success" type="submit" name="update">
@@ -326,21 +326,25 @@
 <!-- ./wrapper -->
 
 <script>
+const barang = document.getElementById('barang')
 const harga = document.getElementById('price')
 const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
-harga.addEventListener('change', function(e) {
-  const jumlahBeli = jumlah.value
-  const temp = jumlahBeli * e.target.value
-  total.setAttribute('value', temp)
-})
-jumlah.addEventListener('change', function(e) {
-  const hargaBeli = harga.value
-  const temp = hargaBeli * e.target.value
-  total.setAttribute('value', temp)
-})
-</script>
 
+barang.addEventListener('change', function(e) {
+  harga.value = e.target.value
+  const price = harga.selectedOptions[0].attributes['price']['value']
+  const temp = price * jumlah.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
+})
+
+jumlah.addEventListener('change', function(e) {
+  const hargaBeli = harga.selectedOptions[0].attributes['price']['value']
+  const temp = hargaBeli * e.target.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
+})
+
+</script>
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
