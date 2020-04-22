@@ -187,7 +187,7 @@
                           echo "<td>".ucwords($item['name'])."</td>";
                           echo "<td>".$item['total']."</td>";
                           echo "<td>$price</td>";
-                          echo "<td>".ucwords($item['keterangan'])."</td>";
+                          echo "<td>".ucwords($item['description'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                         $idx++;
