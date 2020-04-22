@@ -67,19 +67,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link active" href="/pages/admin">
+                <a class="nav-link active" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/item">
+                <a class="nav-link" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -87,31 +87,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -158,7 +158,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="../../backend/admin/createAdmin.php" method="post">
+                <form action="/eoq/backend/admin/createAdmin.php" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Username</label>
                     <input class="form-control" type="text" name="username" required>
@@ -172,17 +172,21 @@
                     <input class="form-control" type="text" name="phone" required>
                   </div>
                   <div class="form-group">
+                    <label class="form-label" for="">jabatan</label>
+                    <input class="form-control" type="text" name="role" required>
+                  </div>
+                  <!-- <div class="form-group">
                     <label class="form-label" for="">Jabatan</label>
-                    <select class="form-control" id="jabatan" name="role">
+                    <select class="form-control" id="jabatan" name="status">
                       <option value="admin">Admin</option>
                       <option value="penjualan">Penjualan</option>
                       <option value="produksi">Produksi</option>
                     </select>
-                  </div>
-                  <div class="form-group">
+                  </div> -->
+                  <!-- <div class="form-group">
                     <label class="form-label" for="">Email</label>
                     <input class="form-control" type="email" name="email" required>
-                  </div>
+                  </div> -->
                   <div class="form-group">
                     <label class="form-label" for="">Password</label>
                     <input class="form-control" type="password" name="password" required>

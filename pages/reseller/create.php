@@ -59,34 +59,63 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="/index.php" class="nav-link">
+          <li class="nav-item has-treeview menu-open">
+            <a href="/index.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>Dashboard</p>
+              <p>
+                Data Master
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a class="nav-link" href="/eoq/pages/admin">
+                  <i class="far fa-user nav-icon"></i>
+                  <p>Data User</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/eoq/pages/item">
+                  <i class="fas fa-box nav-icon"></i>
+                  <p>Data Barang</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/eoq/pages/reseller/index.php">
+                  <i class="fas fa-user-tie nav-icon"></i>
+                  <p>Data Reseller</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
+              <i class="nav-icon fas fa-warehouse"></i>
+              <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="../admin/index.php" class="nav-link">
-              <i class="nav-icon fas fa-user-circle"></i>
-              <p>Admin</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="../admin/index.php" class="nav-link active">
-              <i class="nav-icon fas fa-user-circle"></i>
-              <p>Reseller</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+              <i class="nav-icon fas fa-calculator"></i>
+              <p>Perhitungan EOQ</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+              <i class="nav-icon fas fa-scroll"></i>
+              <p>Laporan</p>
             </a>
           </li>
         </ul>
@@ -128,7 +157,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="eoq/backend/reseller/createSuplier.php" method="post">
+                <form action="/eoq/backend/reseller/addReseller.php" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Nama</label>
                     <input class="form-control" type="text" name="name" required>
@@ -139,7 +168,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Cabang</label>
-                    <input class="form-control" type="email" name="bramch" required>
+                    <input class="form-control" type="text" name="branch" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Alamat</label>

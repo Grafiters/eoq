@@ -1,3 +1,19 @@
+<?php
+  include ('../../Connect.php');
+  $query = $conn->query('SELECT MAX(id) as maxId FROM barang');
+  // var_dump($query);
+  $hasil = $query->fetch_assoc();
+  $idCode = $hasil['maxId'];
+  
+  $char = "AB";
+  $noUrut = (int)substr($idCode, 0, 2);
+  $noUrut++;
+  if ($noUrut<10) {
+      $code = $char."0".$noUrut;
+  }else{
+      $code = $char.$noUrut.strtoupper($cutName);
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,19 +83,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link " href="/pages/admin">
+                <a class="nav-link" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/pages/item">
+                <a class="nav-link active" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -87,31 +103,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -158,22 +174,26 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="../../backend/admin/createAdmin.php" method="post">
+                <form action="/eoq/backend/item/addItem.php" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Kode Item</label>
-                    <input class="form-control" type="text" name="code_item" required>
+                    <input class="form-control" type="text" name="code" value=<?php echo $code ?> readonly>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Nama Item</label>
-                    <input class="form-control" type="text" name="name_item" required>
+                    <input class="form-control" type="text" name="name" required>
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="">Satuan</label>
-                    <input class="form-control" type="text" name="satuan" required>
+                    <label class="form-label" for="">Total</label>
+                    <input class="form-control" type="number" name="total" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="">Harga</label>
+                    <input class="form-control" type="number" name="harga" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
-                    <input class="form-control" type="text" name="keterangan" required>
+                    <textarea id="description" class="form-control" name="description"></textarea>
                   </div>
                   <div class="form-group text-right">
                     <input class="btn btn-warning" type="cancel" value="Cancel" />

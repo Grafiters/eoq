@@ -1,3 +1,16 @@
+<?php
+include('../../Connect.php');
+
+$result = $conn->query("SELECT * FROM barang ORDER BY created_at");
+$res = $conn->query("SELECT * FROM supplier ORDER BY created_at");
+if ($result->num_rows > 0) {
+  $items = $result->fetch_all();
+  $suppliers = $res->fetch_all();
+}
+
+$conn->close();
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,19 +80,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link" href="/pages/admin">
+                <a class="nav-link" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/item">
+                <a class="nav-link" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -87,31 +100,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link active">
+            <a  class="nav-link active" href="/eoq/pages/pembelian/index.php">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -136,7 +149,7 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
               <li class="breadcrumb-item">
-                <a href="/pages/pembelian/index.php">Daftar Pembelian</a>
+                <a href="/eoq/pages/pembelian/index.php">Daftar Pembelian</a>
               </li>
               <li class="breadcrumb-item active">Tambah Pembelian</li>
             </ol>
@@ -170,7 +183,7 @@
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Tanggal Pembelian</label>
                       <div class="col-sm-8">
-                        <input type="date" name="tanggal" class="form-control">
+                        <input type="date" name="tanggal" class="form-control" disabled>
                       </div>
                     </div>
                   </div>
@@ -178,17 +191,23 @@
                   <!-- Nama Supplier -->
                   <div class="col">
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Nama Supplier</label>
+                      <label class="col-form-label col-sm-4" for="">Nama Pembeli</label>
                       <div class="col-sm-8">
-                        <select id="supplier" class="form-control" name="supplier">
-                          <option value="JYB Group">JYB Group</option>
-                          <option value="Uni Max Power">Uni Max Power</option>
+                        <select id="supplier" class="form-control">
+                          <?php
+                            foreach ($suppliers as $supplier) {
+                              $id = $supplier[0];
+                              $name = ucwords($supplier[2]);
+                              echo "<option value='$id'>$name</option>";
+                            }
+                          ?>
                         </select>
                       </div>
                     </div>
                   </div>
                   <!-- END nama supplier -->
                 </div>
+
                 <!-- tabel belanja -->
                 <table class="table table-hover table-borderless text-center">
                   <thead>
@@ -201,33 +220,39 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Bio 7</td>
-                      <td>Rp 200.000</td>
-                      <td>150</td>
-                      <td>Rp 30.000.000</td>
-                    </tr>
                     <!-- form tambah belanja -->
-                    <form action="/back-end/penjualan/create.php" method="POST">
+                    <form action="/eoq/backend/pembelian/add.php" method="POST">
+                      <input type="text" name="supplier" id="real-supplier" class="d-none">
                       <tr>
-                        <td></td>
+                        <td>1</td>
                         <td>
                           <select id="barang" class="form-control" name="barang">
-                            <option value="bio7">Bio7</option>
-                            <option value="Bio Activa">Bio Activa</option>
-                            <option value="Bio Moringa">Bio Moringa</option>
-                            <option value="M-King">M-King</option>
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $name = $item[2];
+                            echo "<option value='$id'>$name</option>";
+                          }
+                          ?>
                           </select>
                         </td>
                         <td>
-                          <input id="price" name="price" class="form-control" type="number" min="0">
+                          <select id="price" class="form-control" name="price" disabled>
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $price = $item[3];
+                            $harga = "Rp ".number_format($item[3], 0);
+                            echo "<option value='$id' price='$price'>$harga</option>";
+                          }
+                          ?>
+                          </select>
                         </td>
                         <td>
                           <input id="amount" name="amount" class="form-control" type="number" min="0">
                         </td>
                         <td>
-                          <input id="total" name="total" class="form-control" type="number" disabled>
+                          <input id="total" name="total" class="form-control" type="text" disabled>
                         </td>
                       </tr>
                       <tr>
@@ -245,6 +270,7 @@
                   </tbody>
                 </table>
                 <!-- END tabel belanja -->
+
               </div>
               <!-- /.card-body -->
             </div>
@@ -275,18 +301,26 @@
 <!-- ./wrapper -->
 
 <script>
+const barang = document.getElementById('barang')
 const harga = document.getElementById('price')
 const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
-harga.addEventListener('change', function(e) {
-  const jumlahBeli = jumlah.value
-  const temp = jumlahBeli * e.target.value
-  total.setAttribute('value', temp)
+const supplier = document.getElementById('supplier')
+const real = document.getElementById('real-supplier')
+real.value = supplier.value
+barang.addEventListener('change', function(e) {
+  harga.value = e.target.value
+  const price = harga.selectedOptions[0].attributes['price']['value']
+  const temp = price * jumlah.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
 jumlah.addEventListener('change', function(e) {
-  const hargaBeli = harga.value
-  const temp = hargaBeli * e.target.value
-  total.setAttribute('value', temp)
+  const price = harga.selectedOptions[0].attributes['price']['value']
+  const temp = price * e.target.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
+})
+supplier.addEventListener('change', function(e) {
+  real.value = e.target.value
 })
 </script>
 

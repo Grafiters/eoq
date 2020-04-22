@@ -1,4 +1,4 @@
-<?php include('../../backend/admin/showAdmin.php'); ?>
+<?php include('../../backend/item/showItem.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,19 +70,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link " href="/pages/admin">
+                <a class="nav-link" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/pages/item">
+                <a class="nav-link active" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -90,37 +90,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="../reseller/index.php" class="nav-link">
-              <i class="nav-icon fas fa-user-circle"></i>
-              <p>Reseller</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="../penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="../pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -174,6 +168,7 @@
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Satuan</th>
+                    <th>Harga</th>
                     <th>Keterangan</th>
                     <th>Action</th>
                   </tr>
@@ -181,16 +176,18 @@
                   <tbody>
                     <?php
                       $idx = 1;
-                      while ($user = $users->fetch_array()) {
-                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/pages/admin/edit.php?id=".$user['id']."'>edit</a>";
-                        $btnDelete = "<form class='d-inline' action='/admin/deleteAdmin.php?id=".$user['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                      while ($item = $items->fetch_array()) {
+                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/eoq/pages/item/edit.php?id=".$item['id']."'>edit</a>";
+                        $btnDelete = "<form class='d-inline' action='/eoq/backend/item/deleteitem.php?id=".$item['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
+                        $price = "Rp ".number_format($item['harga'], 0);
                         echo "<tr class='text-center'>";
                           echo "<td>".$idx."</td>";
-                          echo "<td>".ucwords($user['username'])."</td>";
-                          echo "<td>".ucwords($user['name'])."</td>";
-                          echo "<td>".$user['email']."</td>";
-                          echo "<td>".ucwords($user['role'])."</td>";
+                          echo "<td>".ucwords($item['code'])."</td>";
+                          echo "<td>".ucwords($item['name'])."</td>";
+                          echo "<td>".$item['total']."</td>";
+                          echo "<td>$price</td>";
+                          echo "<td>".ucwords($item['keterangan'])."</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
                         $idx++;

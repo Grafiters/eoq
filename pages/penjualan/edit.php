@@ -1,3 +1,25 @@
+<?php
+  include('../../Connect.php');
+  $id = $_GET['id'];
+
+  // var_dump($id);
+
+  $query = $conn->query("SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'");
+  while ($data = $query->fetch_assoc()) {
+    $id = $data['id'];
+    $code = $data['code'];
+    $tanggal = $data['tanggal'];
+    $pembeli = $data['name'];
+  }
+  $penjualan = $query->fetch_assoc();
+  // var_dump($penjualan);
+  //$query = "SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.jumlah AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id";
+  //$penjualans = $conn->query($query);
+
+  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah, pivot.penjualan_id AS penjualan, pivot.total*barang.harga AS bayar FROM pivot INNER JOIN barang ON pivot.barang_id=barang.id");
+  $items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +80,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="/index.php" class="nav-link">
+            <a href="/index.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Data Master
@@ -67,19 +89,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link" href="/pages/admin">
+                <a class="nav-link" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/item">
+                <a class="nav-link" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -87,31 +109,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link active">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link active">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -164,13 +186,13 @@
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Kode Penjualan</label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="text" disabled>
+                        <input class="form-control" type="text" value="<?php echo $code ?>" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Tanggal Penjualan</label>
                       <div class="col-sm-8">
-                        <input type="date" name="tanggal" class="form-control" value="2020-04-04" disabled>
+                        <input type="date" name="tanggal" class="form-control" value=<?php echo $tanggal ?> disabled>
                       </div>
                     </div>
                   </div>
@@ -178,11 +200,9 @@
                   <!-- Nama Supplier -->
                   <div class="col">
                     <div class="form-group row">
-                      <label class="form-label col-sm-4" for="">Nama Supplier</label>
+                      <label class="form-label col-sm-4" for="">Nama Pembeli</label>
                       <div class="col-sm-8">
-                        <select id="supplier" class="form-control" name="supplier" disabled>
-                          <option value="JYB Group">JYB Group</option>
-                          <option value="Uni Max Power">Uni Max Power</option>
+                        <input type="text" name="supplier" class="form-control" value="<?php echo $pembeli ?>" disabled>
                         </select>
                       </div>
                     </div>
@@ -202,41 +222,60 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Bio 7</td>
-                      <td>Rp 200.000</td>
-                      <td>150</td>
-                      <td>Rp 30.000.000</td>
-                      <td>
-                        <form action="/back-end/penjualan/delete.php?id=1">
-                          <button class="btn btn-sm btn-danger">delete</button>
-                        </form>
-                      </td>
-                    </tr>
-                    <!-- form tambah belanja -->
-                    <form action="/back-end/penjualan/create.php" method="POST">
+                  <?php
+                  $i = 1;
+                  while ($beli = $penjualans->fetch_array()) {
+                    $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deleteitem.php?id=".$beli['penjualan']."&pivot=".$beli['id']."' method='post'>
+                      <button type='submit' class='btn btn-danger btn-sm'>
+                      delete
+                      </button>
+                    </form>";
+                    echo "<tr>";
+                      echo "<td>$i</td>";
+                      echo "<td>".$beli['barang']."</td>";
+                      echo "<td>Rp ".number_format($beli['harga'],0)."</td>";
+                      echo "<td>".$beli['jumlah']."</td>";
+                      echo "<td>Rp ".number_format($beli['bayar'], 0)."</td>";
+                      echo "<td>".$btnDelete."</td>";
+                    echo "</tr>";
+                    $i++;
+                  }
+                  ?>
+                    <form action="/eoq/backend/penjualan/updatePenjualan.php?id=<?= $id ?>" method="post">
                       <tr>
-                        <td></td>
+                        <td><?php echo $id ?></td>
                         <td>
                           <select id="barang" class="form-control" name="barang">
-                            <option value="bio7">Bio7</option>
-                            <option value="Bio Activa">Bio Activa</option>
-                            <option value="Bio Moringa">Bio Moringa</option>
-                            <option value="M-King">M-King</option>
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $name = $item[2];
+                            echo "<option value='$id'>$name</option>";
+                          }
+                          ?>
                           </select>
                         </td>
                         <td>
-                          <input id="price" name="price" class="form-control" type="number" min="0">
+                          <input type="text" name="price" id="payment" class="d-none">
+                          <select id="price" class="form-control" disabled>
+                          <?php
+                          foreach ($items as $item) {
+                            $id = $item[0];
+                            $price = $item[3];
+                            $harga = "Rp ".number_format($item[3], 0);
+                            echo "<option value='$id' price='$price'>$harga</option>";
+                          }
+                          ?>
+                          </select>
                         </td>
                         <td>
-                          <input id="amount" name="amount" class="form-control" type="number" min="0">
+                          <input id="amount" name="amount" class="form-control" type="number">
                         </td>
                         <td colspan="1">
                           <input id="total" name="total" class="form-control" type="number" disabled>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-success" type="submit">
+                          <button class="btn btn-sm btn-success" type="submit" name="update">
                             submit
                           </button>
                         </td>

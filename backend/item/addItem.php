@@ -2,19 +2,32 @@
     include("../../Connect.php");
 
     if (isset($_POST['submit'])) {
-        $supplier=$_POST['supplier'];
-        $type = $_POST['type'];
         $name=$_POST['name'];
-        $price=$_POST['price'];
-        $stock=$_POST['stock'];
+        $total = (int) $_POST['total'];
+        $description = $_POST['description'];
+        $price = (int) $_POST['harga'];
 
-    $result = mysqli_query($conn, "INSERT INTO item(supplier_id,type,name,price,stock)VALUES('$supplier','$type','$name','$price','$stock')");
+        $query = $conn->query('SELECT MAX(id) as maxId FROM barang');
+        $hasil = $query->fetch_assoc();
+        $idCode = $hasil['maxId'];
 
-    if($result){
-        echo "create admin success";
-    }else{
-        echo "Error: " . $result . "<br>" . $conn->error;
+        $char = "ITM";
+        $noUrut = (int)substr($idCode, 0, 2);
+        $noUrut++;
+        if ($noUrut<10) {
+            $code = $char."00".$noUrut;
+        }else if($noUrut<100){
+            $code = $char."0".$noUrut;
+        }else{
+            $code = $char.$noUrut;
+        }
+
+        $result = $conn->query("INSERT INTO barang(code,name,total,harga,description)VALUES('$code','$name','$total','$price','$description')");
+
+        if($result){
+          header("location: /eoq/pages/item");
+        }else{
+            echo "Error: " . $result . "<br>" . $conn->error;
+        }
     }
-}
-
 ?>

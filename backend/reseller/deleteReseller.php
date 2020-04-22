@@ -1,8 +1,8 @@
 <?php
     include_once("../../Connect.php");
 
-    $id = $_GET['supplier_id'];
-    $result = mysqli_query($conn, "DELETE FROM supplier WHERE supplier_id=$id"); 
+    $id = $_GET['id'];
+    $result = mysqli_query($conn, "DELETE FROM supplier WHERE id=$id"); 
 
-    header("Location:index.php");
+    header("Location: /eoq/pages/reseller/index.php");
 ?>

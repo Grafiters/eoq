@@ -1,3 +1,4 @@
+<?php include('../../backend/penjualan/showPenjualan.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,7 +61,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item has-treeview menu-open">
-            <a href="/index.php" class="nav-link">
+            <a href="/index.php" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Data Master
@@ -69,19 +70,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link" href="/pages/admin">
+                <a class="nav-link" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/item">
+                <a class="nav-link" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -89,31 +90,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link active">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link active">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -154,7 +155,7 @@
             <div class="card">
               <div class="card-header text-right border-bottom-0">
                 <h3 class="card-title">Daftar Penjualan</h3>
-                <a class="btn btn-success btn-sm" href="/pages/penjualan/create.php">
+                <a class="btn btn-success btn-sm" href="/eoq/pages/penjualan/create.php">
                   Tambah Penjualan
                 </a>
               </div>
@@ -172,18 +173,21 @@
                   </thead>
                   <tbody>
                     <?php
-                      for ($i = 1; $i < 100; $i++) {
-                        $status = $i%2 ? 'hello' : 'bark';
-                        $btnEdit = "<a href='/pages/penjualan/edit.php?id=".$i."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/admin/deleteAdmin.php?id=".$user['user_id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                      $idx = 1;
+                      while ($buy = $buys->fetch_assoc()) {
+                        $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$buy['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualan.php?id=".$buy['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
+                        $bayar = "Rp ".number_format($buy['bayar'], 0);
+                        $tanggal = date_format(date_create($buy['tanggal']), 'D, d/M/Y');
                         echo "<tr>";
-                          echo "<td>$i</td>";
-                          echo "<td>hello</td>";
-                          echo "<td>foo bar</td>";
-                          echo "<td>$status</td>";
+                          echo "<td>$idx</td>";
+                          echo "<td>".ucwords($buy['kode'])."</td>";
+                          echo "<td>$tanggal</td>";
+                          echo "<td>$bayar</td>";
                           echo "<td>$action</td>";
                         echo "</tr>";
+                        $idx++;
                       }
                     ?>
                   </tbody>

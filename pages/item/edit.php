@@ -1,5 +1,15 @@
 <?php
-  include('../../admin/editAdmin.php');
+  include('../../Connect.php');
+
+  $id = $_GET['id'];
+  $result = mysqli_query($conn, "SELECT * FROM barang WHERE id=$id");
+  while ($data = mysqli_fetch_array($result)) {
+      $code = $data['code'];
+      $name = $data['name'];
+      $total = $data['total'];
+      $harga = $data['harga'];
+      $description = $data['description'];
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -70,19 +80,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a class="nav-link" href="/pages/admin">
+                <a class="nav-link" href="/eoq/pages/admin">
                   <i class="far fa-user nav-icon"></i>
                   <p>Data User</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/pages/item">
+                <a class="nav-link active" href="/eoq/pages/item">
                   <i class="fas fa-box nav-icon"></i>
                   <p>Data Barang</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/pages/reseller">
+                <a class="nav-link" href="/eoq/pages/reseller/index.php">
                   <i class="fas fa-user-tie nav-icon"></i>
                   <p>Data Reseller</p>
                 </a>
@@ -90,31 +100,31 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>Stok</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/penjualan/index.php" class="nav-link">
+            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
               <i class="nav-icon fas fa-cart-plus"></i>
               <p>Penjualan</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
               <p>Pembelian</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-calculator"></i>
               <p>Perhitungan EOQ</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
             </a>
@@ -161,23 +171,28 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="/item/updateitem.php?id=<?= $_GET['id'] ?>" method="post">
+                <form action="/eoq/backend/item/updateItem.php?id=<?= $_GET['id'] ?>" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Kode Item</label>
-                    <input class="form-control" type="text" name="code_item" value="<?= $user['code_item'] ?>" required>
+                    <input class="form-control" type="text" name="code" value="<?php echo $code ?>" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Nama Item</label>
-                    <input class="form-control" type="text" name="name_item" value="<?= $user['name_item'] ?>" required>
+                    <input class="form-control" type="text" name="name" value="<?php echo $name ?>" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Satuan</label>
-                    <input class="form-control" type="text" name="satuan" value="<?= $user['satuan'] ?>" required>
+                    <input class="form-control" type="number" name="total" value="<?php echo $total ?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="">Harga</label>
+                    <input class="form-control" type="number" name="harga" value="<?= $harga ?>" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
-                    <input class="form-control" type="text" name="keterangan" value="<?= $user['keterangan'] ?>" required>
+                    <textarea id="description" class="form-control" name="description"><?php echo $description ?></textarea>
                   </div>
+                  <input type="hidden" name="id" value=<?php echo $_GET['id'];?> >
                   <div class="form-group text-right">
                     <a class="btn btn-warning" href="/pages/item">Back</a>
                     <input type="submit" name="update" class="btn btn-primary" value="Submit">
