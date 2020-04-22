@@ -25,8 +25,7 @@ if (isset($_POST['submit'])) {
   // var_dump($getharga);
   $total = $getharga['harga'] * $amount;
 
-  $result_pjl = mysqli_query($conn, "INSERT INTO penjualan(pembeli,code, total)VALUES('$name','$code','$total')");
-  // // var_dump($result_pjl);
+  $result_pjl = $conn->query("INSERT INTO penjualan(pembeli,code, total)VALUES('$name','$code','$total')");
 
   if($result_pjl){
     $temp = $conn->query("SELECT id FROM penjualan WHERE code='$code'")->fetch_assoc();

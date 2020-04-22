@@ -4,19 +4,30 @@
 
   // var_dump($id);
 
-  $query = $conn->query("SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'");
-  while ($data = $query->fetch_assoc()) {
+  $query = "SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'";
+  $result = $conn->query($query);
+  while ($data = $result->fetch_assoc()) {
     $id = $data['id'];
     $code = $data['code'];
     $tanggal = $data['tanggal'];
     $pembeli = $data['name'];
   }
-  $penjualan = $query->fetch_assoc();
+  $penjualan = $result->fetch_assoc();
   // var_dump($penjualan);
   //$query = "SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.jumlah AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id";
   //$penjualans = $conn->query($query);
 
-  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah, pivot.penjualan_id AS penjualan, pivot.total*barang.harga AS bayar FROM pivot INNER JOIN barang ON pivot.barang_id=barang.id");
+  $query = "SELECT
+      pivot.id AS id,
+      barang.name AS barang,
+      barang.code AS code,
+      barang.harga AS harga,
+      pivot.total AS jumlah,
+      pivot.penjualan_id AS penjualan,
+      pivot.total*barang.harga AS bayar
+    FROM pivot
+    INNER JOIN barang ON pivot.barang_id=barang.id";
+  $penjualans = $conn->query($query);
   $items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
 ?>
 
