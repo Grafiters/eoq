@@ -43,7 +43,9 @@ if (isset($_POST)) {
             }
         }else{
             $totalbarang = $penjualan['total'] + $amount;
-            $pivotup = $conn->query("UPDATE pivot SET total=$amount WHERE id=".$pivot['id']);
+            $temp = $amount + $pivot['total'];
+            
+            $pivotup = $conn->query("UPDATE pivot SET total=$temp WHERE id=".$pivot['id']);
             // var_dump($pivotup);
             if($pivotup){
                 $totalbarang = $jumlah - $amount;

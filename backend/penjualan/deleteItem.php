@@ -5,11 +5,12 @@
         $idpivot = $_GET['pivot'];
 
         $penjualan = $conn->query("SELECT total FROM penjualan WHERE id=$idpenjualan")->fetch_assoc();
-        $pivot = $conn->query("SELECT total, barang_id FROM pivot_pembelian WHERE id=$idpivot")->fetch_assoc();
-        $idbarang = $pivot['barang_id'];
-        $barang = $conn->query("SELECT harga, total FROM barang pivot WHERE id=$idpivot")->fetch_assoc();
+        $pivot = $conn->query("SELECT total, barang_id FROM pivot WHERE id=$idpivot")->fetch_assoc();
+        $idBarang = $pivot['barang_id'];
+        $barang = $conn->query("SELECT harga, total FROM barang WHERE id=$idBarang")->fetch_assoc();
 
-        $totalHarga = $penjualan['total'] - ($barang['harga'] * $pivot['total']);
+        $temp = ($barang['harga'] * $pivot['total']);
+        $totalHarga = $penjualan['total'] - $temp;
         $resultPenjualan = $conn->query("UPDATE penjualan SET total = $totalHarga WHERE id=$idpenjualan");
 
         if($resultPenjualan){
@@ -18,7 +19,7 @@
 
             if($resultPivot){
                 $totalBarang = $barang['total'] + $pivot['total'];
-                $query = "UPDATE barang SET total=$totalBarang";
+                $query = "UPDATE barang SET total=$totalBarang WHERE id=$idBarang";
                 $resultBarang = $conn->query($query);
 
                 if($resultBarang){
