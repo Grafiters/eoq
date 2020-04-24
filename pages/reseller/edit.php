@@ -1,5 +1,11 @@
 <?php
   include('../../Connect.php');
+  session_start();
+  
+  if(!$_SESSION['role']=="admin"){
+    $messages = "Anda Tidak Mempunyai Access Untuk Melakukan Aksi Ini";
+    header("Location: /eoq/pages/item/index.php?msg=$messages");
+  }
   $id = $_GET['id'];
   $result = mysqli_query($conn, "SELECT * FROM supplier WHERE id=$id");
   while ($data = mysqli_fetch_array($result)) {

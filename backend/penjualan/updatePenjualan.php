@@ -2,7 +2,6 @@
 include('../../Connect.php');
 
 $id = $_GET['id'];
-var_dump($id);
 
 if (isset($_POST)) {
     $itemId = $_POST['barang'];
@@ -20,7 +19,8 @@ if (isset($_POST)) {
     // var_dump($barang);
     $satuan = $barang['harga'];
     $jumlah = $barang['total'];
-    $totalpenjualan = $jumlah + ($satuan * $amount);
+    $totalpenjualan = $penjualan['total'] + ($satuan * $amount);
+    
     $penjualanup = $conn->query("UPDATE penjualan SET total=$totalpenjualan WHERE id=$id");
     if($penjualanup){
        if($pivot == NULL){
@@ -42,8 +42,10 @@ if (isset($_POST)) {
                 $status = false;
             }
         }else{
-            $totalbarang = $jumlah + $amount;
-            $pivotup = $conn->query("UPDATE pivot SET total=$amount WHERE id=".$pivot['id']);
+            $totalbarang = $penjualan['total'] + $amount;
+            $temp = $amount + $pivot['total'];
+            
+            $pivotup = $conn->query("UPDATE pivot SET total=$temp WHERE id=".$pivot['id']);
             // var_dump($pivotup);
             if($pivotup){
                 $totalbarang = $jumlah - $amount;

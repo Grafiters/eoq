@@ -1,3 +1,12 @@
+<?php
+   session_start();
+  
+   if(!$_SESSION['role']=="admin"){
+    //  echo "Anda Tidak Memiliki Access Dalam Operasi Ini";
+   }
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +57,7 @@
           <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
         </div>
       </div>
 
@@ -92,24 +101,31 @@
               <p>Stok</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
-              <i class="nav-icon fas fa-cart-plus"></i>
-              <p>Penjualan</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
-              <i class="nav-icon fas fa-box"></i>
-              <p>Pembelian</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
-              <i class="nav-icon fas fa-calculator"></i>
-              <p>Perhitungan EOQ</p>
-            </a>
-          </li>
+          <?php
+            if ($_SESSION['role']=="penjualan" || $_SESSION['role']=="admin") { ?>
+              <li class="nav-item">
+                <a href="/eoq/pages/penjualan/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-cart-plus"></i>
+                  <p>Penjualan</p>
+                </a>
+              </li>
+            <?php }
+            if($_SESSION['role']=="pengadaan" || $_SESSION['role']=="admin"){ ?>
+              <li class="nav-item">
+                <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-box"></i>
+                  <p>Pembelian</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/eoq/pages/perhitungan-eoq/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-calculator"></i>
+                  <p>Perhitungan EOQ</p>
+                </a>
+              </li>
+          <?php
+            }
+          ?>
           <li class="nav-item">
             <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
@@ -172,21 +188,17 @@
                     <input class="form-control" type="text" name="phone" required>
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="">jabatan</label>
-                    <input class="form-control" type="text" name="role" required>
-                  </div>
-                  <!-- <div class="form-group">
                     <label class="form-label" for="">Jabatan</label>
                     <select class="form-control" id="jabatan" name="status">
                       <option value="admin">Admin</option>
                       <option value="penjualan">Penjualan</option>
-                      <option value="produksi">Produksi</option>
+                      <option value="pengadaan">Pengadaan</option>
                     </select>
-                  </div> -->
-                  <!-- <div class="form-group">
+                  </div>
+                  <div class="form-group">
                     <label class="form-label" for="">Email</label>
                     <input class="form-control" type="email" name="email" required>
-                  </div> -->
+                  </div>
                   <div class="form-group">
                     <label class="form-label" for="">Password</label>
                     <input class="form-control" type="password" name="password" required>

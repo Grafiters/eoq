@@ -4,19 +4,30 @@
 
   // var_dump($id);
 
-  $query = $conn->query("SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'");
-  while ($data = $query->fetch_assoc()) {
+  $query = "SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'";
+  $result = $conn->query($query);
+  while ($data = $result->fetch_assoc()) {
     $id = $data['id'];
     $code = $data['code'];
     $tanggal = $data['tanggal'];
     $pembeli = $data['name'];
   }
-  $penjualan = $query->fetch_assoc();
+  $penjualan = $result->fetch_assoc();
   // var_dump($penjualan);
   //$query = "SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.jumlah AS jumlah FROM pivot, barang, penjualan WHERE pivot.barang_id=barang.id";
   //$penjualans = $conn->query($query);
 
-  $penjualans = $conn->query("SELECT pivot.id AS id, barang.name AS barang, barang.code AS code, barang.harga AS harga, pivot.total AS jumlah, pivot.penjualan_id AS penjualan, pivot.total*barang.harga AS bayar FROM pivot INNER JOIN barang ON pivot.barang_id=barang.id");
+  $query = "SELECT
+      pivot.id AS id,
+      barang.name AS barang,
+      barang.code AS code,
+      barang.harga AS harga,
+      pivot.total AS jumlah,
+      pivot.penjualan_id AS penjualan,
+      pivot.total*barang.harga AS bayar
+    FROM pivot
+    INNER JOIN barang ON pivot.barang_id=barang.id";
+  $penjualans = $conn->query($query);
   $items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
 ?>
 
@@ -225,7 +236,7 @@
                   <?php
                   $i = 1;
                   while ($beli = $penjualans->fetch_array()) {
-                    $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deleteitem.php?id=".$beli['penjualan']."&pivot=".$beli['id']."' method='post'>
+                    $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deleteItem.php?id=".$beli['penjualan']."&pivot=".$beli['id']."' method='post'>
                       <button type='submit' class='btn btn-danger btn-sm'>
                       delete
                       </button>
@@ -272,7 +283,7 @@
                           <input id="amount" name="amount" class="form-control" type="number">
                         </td>
                         <td colspan="1">
-                          <input id="total" name="total" class="form-control" type="number" disabled>
+                          <input id="total" name="total" class="form-control" type="text" disabled>
                         </td>
                         <td>
                           <button class="btn btn-sm btn-success" type="submit" name="update">
@@ -315,21 +326,25 @@
 <!-- ./wrapper -->
 
 <script>
+const barang = document.getElementById('barang')
 const harga = document.getElementById('price')
 const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
-harga.addEventListener('change', function(e) {
-  const jumlahBeli = jumlah.value
-  const temp = jumlahBeli * e.target.value
-  total.setAttribute('value', temp)
-})
-jumlah.addEventListener('change', function(e) {
-  const hargaBeli = harga.value
-  const temp = hargaBeli * e.target.value
-  total.setAttribute('value', temp)
-})
-</script>
 
+barang.addEventListener('change', function(e) {
+  harga.value = e.target.value
+  const price = harga.selectedOptions[0].attributes['price']['value']
+  const temp = price * jumlah.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
+})
+
+jumlah.addEventListener('change', function(e) {
+  const hargaBeli = harga.selectedOptions[0].attributes['price']['value']
+  const temp = hargaBeli * e.target.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
+})
+
+</script>
 <!-- jQuery -->
 <script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->

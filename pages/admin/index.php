@@ -1,4 +1,12 @@
-<?php include('../../backend/admin/showAdmin.php'); ?>
+<?php
+  session_start();
+  
+  if($_SESSION['username']==""){
+    header('Location: /eoq/pages/auth/login.php');
+  }
+
+  include('../../backend/admin/showAdmin.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +59,7 @@
           <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
         </div>
       </div>
 
@@ -95,28 +103,41 @@
               <p>Stok</p>
             </a>
           </li>
+          <?php
+            if ($_SESSION['role']=="penjualan" || $_SESSION['role']=="admin") { ?>
+              <li class="nav-item">
+                <a href="/eoq/pages/penjualan/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-cart-plus"></i>
+                  <p>Penjualan</p>
+                </a>
+              </li>
+            <?php }
+            if($_SESSION['role']=="pengadaan" || $_SESSION['role']=="admin"){ ?>
+              <li class="nav-item">
+                <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-box"></i>
+                  <p>Pembelian</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/eoq/pages/perhitungan-eoq/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-calculator"></i>
+                  <p>Perhitungan EOQ</p>
+                </a>
+              </li>
+          <?php
+            }
+          ?>
           <li class="nav-item">
-            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
-              <i class="nav-icon fas fa-cart-plus"></i>
-              <p>Penjualan</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
-              <i class="nav-icon fas fa-box"></i>
-              <p>Pembelian</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/perhitungan-eoq/index.php" class="nav-link">
-              <i class="nav-icon fas fa-calculator"></i>
-              <p>Perhitungan EOQ</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+            <a href="/eoq/pages/laporan/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
               <p>Laporan</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/eoq/backend/session/logout.php" class="nav-link">
+              <i class="nav-icon fas fa-scroll"></i>
+              <p>Logout</p>
             </a>
           </li>
         </ul>
@@ -185,7 +206,11 @@
                           echo "<td>".ucwords($user['name'])."</td>";
                           echo "<td>".$user['email']."</td>";
                           echo "<td>".ucwords($user['role'])."</td>";
-                          echo "<td>$action</td>";
+                          if ($_SESSION['role']!="admin") {
+                            // echo "<td>$action</td>";
+                          }else{
+                            echo "<td>$action</td>";
+                          }
                         echo "</tr>";
                         $idx++;
                       }

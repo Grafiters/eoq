@@ -1,4 +1,11 @@
-<?php include('../../backend/item/showItem.php'); ?>
+<?php
+  include('../../backend/item/showItem.php'); 
+  session_start();
+  
+  if($_SESSION['username']==""){
+    header('Location: /eoq/pages/auth/login.php');
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +58,7 @@
           <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
         </div>
       </div>
 
@@ -95,24 +102,32 @@
               <p>Stok</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/penjualan/index.php" class="nav-link">
-              <i class="nav-icon fas fa-cart-plus"></i>
-              <p>Penjualan</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
-              <i class="nav-icon fas fa-box"></i>
-              <p>Pembelian</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/eoq/pages/pembelian/index.php" class="nav-link">
-              <i class="nav-icon fas fa-calculator"></i>
-              <p>Perhitungan EOQ</p>
-            </a>
-          </li>
+          <?php
+            if($_SESSION['role']=="penjualan" || $_SESSION['role']=="admin"){ ?>
+              <li class="nav-item">
+                <a href="/eoq/pages/penjualan/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-cart-plus"></i>
+                  <p>Penjualan</p>
+                </a>
+              </li>
+          <?php
+            }
+            if($_SESSION['role']=="pengadaan" || $_SESSION['role']=="admin"){ ?>
+              <li class="nav-item">
+                <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-box"></i>
+                  <p>Pembelian</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/eoq/pages/pembelian/index.php" class="nav-link">
+                  <i class="nav-icon fas fa-calculator"></i>
+                  <p>Perhitungan EOQ</p>
+                </a>
+              </li>
+          <?php
+            }
+          ?>
           <li class="nav-item">
             <a href="/eoq/pages/pembelian/index.php" class="nav-link">
               <i class="nav-icon fas fa-scroll"></i>
@@ -155,9 +170,13 @@
             <div class="card">
               <div class="card-header text-right border-bottom-0">
                 <h3 class="card-title">Daftar Barang</h3>
-                <a class="btn btn-success btn-sm" href="create.php">
+                <?php if($_SESSION['role']=="admin"){ ?>
+                  <a class="btn btn-success btn-sm" href="create.php">
                   Tambah Barang
                 </a>
+                <?php
+                }
+                ?>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -187,8 +206,10 @@
                           echo "<td>".ucwords($item['name'])."</td>";
                           echo "<td>".$item['total']."</td>";
                           echo "<td>$price</td>";
-                          echo "<td>".ucwords($item['keterangan'])."</td>";
-                          echo "<td>$action</td>";
+                          echo "<td>".ucwords($item['description'])."</td>";
+                          if ($_SESSION['role']=="admin") {
+                            echo "<td>$action</td>";
+                          }
                         echo "</tr>";
                         $idx++;
                       }

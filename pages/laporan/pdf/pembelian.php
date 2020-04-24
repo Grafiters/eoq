@@ -6,7 +6,7 @@
   //   var_dump($buys);
   }
 
-  var_dump($query);
+  // var_dump($query);
 ?>
 <!DOCTYPE html>
 <html lang="en">

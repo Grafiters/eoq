@@ -246,7 +246,7 @@
                           </select>
                         </td>
                         <td>
-                          <select id="price" class="form-control" name="price">
+                          <select id="price" class="form-control" name="price" disabled>
                           <?php
                           foreach ($items as $item) {
                             $id = $item[0];
@@ -258,10 +258,10 @@
                           </select>
                         </td>
                         <td>
-                          <input id="amount" name="amount" class="form-control" type="number" min="0">
+                          <input id="amount" name="amount" class="form-control" type="number">
                         </td>
                         <td>
-                          <input id="total" name="total" class="form-control" type="number" disabled>
+                          <input id="total" name="total" class="form-control" type="text" disabled>
                         </td>
                       </tr>
                       <tr>
@@ -309,19 +309,24 @@
 <!-- ./wrapper -->
 
 <script>
+const barang = document.getElementById('barang')
 const harga = document.getElementById('price')
 const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
-harga.addEventListener('change', function(e) {
-  const jumlahBeli = jumlah.value
-  const temp = jumlahBeli * e.target.value
-  total.setAttribute('value', temp)
+
+barang.addEventListener('change', function(e) {
+  harga.value = e.target.value
+  const price = harga.selectedOptions[0].attributes['price']['value']
+  const temp = price * jumlah.value
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
+
 jumlah.addEventListener('change', function(e) {
-  const hargaBeli = harga.value
+  const hargaBeli = harga.selectedOptions[0].attributes['price']['value']
   const temp = hargaBeli * e.target.value
-  total.setAttribute('value', temp)
+  total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
+
 </script>
 
 <!-- jQuery -->
