@@ -90,7 +90,7 @@
                 <form action="/eoq/backend/item/updateItem.php?id=<?= $_GET['id'] ?>" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Kode Item</label>
-                    <input class="form-control" type="text" name="code" value="<?php echo $code ?>" required>
+                    <input class="form-control" type="text" name="code" value="<?php echo $code ?>" disabled>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Nama Item</label>

@@ -1,4 +1,7 @@
-<?php include('../../backend/penjualan/showPenjualan.php'); ?>
+<?php 
+  session_start();
+  include('../../backend/penjualan/showPenjualan.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
