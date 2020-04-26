@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 172.18.0.2
--- Generation Time: Apr 11, 2020 at 06:06 AM
--- Server version: 5.7.29
--- PHP Version: 7.4.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 26, 2020 at 03:20 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,10 +19,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `eoq2` 
+-- Database: `eoq2`
 --
-CREATE DATABASE IF NOT EXISTS `eoq2` DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci;
-USE `eoq2`;
 
 -- --------------------------------------------------------
 
@@ -36,8 +35,8 @@ CREATE TABLE `barang` (
   `harga` int(11) UNSIGNED NOT NULL,
   `total` int(10) UNSIGNED NOT NULL COMMENT 'total akan berubah sesuai dengan transaksi yang dilakukan',
   `description` tinytext COLLATE latin1_spanish_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
@@ -45,9 +44,9 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `code`, `name`, `harga`, `total`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'ITM001', 'baju bagus', 20000, 140, 'ini barang terbaru', '2020-04-10 12:21:08', '2020-04-11 05:57:17'),
-(2, 'ITM002', 'celana bagus', 50000, 122, 'ini celana dari B&J', '2020-04-10 12:21:46', '2020-04-11 05:58:52'),
-(3, 'ITM003', 'topi keren', 30000, 138, 'ini topi keren banget dah', '2020-04-11 04:21:03', '2020-04-11 05:57:17');
+(1, 'ITM001', 'baju bagus', 20000, 60, 'ini barang terbaru', '2020-04-10 12:21:08', '2020-04-26 13:10:00'),
+(2, 'ITM002', 'celana bagus', 50000, 0, 'ini celana dari B&J', '2020-04-10 12:21:46', '2020-04-22 16:16:12'),
+(3, 'ITM003', 'topi keren', 30000, 74, 'ini topi keren banget dah', '2020-04-11 04:21:03', '2020-04-26 13:10:44');
 
 -- --------------------------------------------------------
 
@@ -65,9 +64,16 @@ CREATE TABLE `hasil` (
   `hasil_biasa_pesan` int(11) NOT NULL,
   `hasil_biaya_simpan` int(11) NOT NULL,
   `rop` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `upcated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `upcated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Dumping data for table `hasil`
+--
+
+INSERT INTO `hasil` (`id`, `barang_id`, `kebutuhan_tahunan`, `biaya_sekali_pesan`, `biaya_simpan_barang`, `eoq`, `hasil_biasa_pesan`, `hasil_biaya_simpan`, `rop`, `created_at`, `upcated_at`) VALUES
+(1, 2, 27540, 130000, 150, 6909, 518194, 518175, 275, '2020-04-13 11:59:36', '2020-04-13 11:59:36');
 
 -- --------------------------------------------------------
 
@@ -80,9 +86,18 @@ CREATE TABLE `pembelian` (
   `supplier_id` int(11) NOT NULL,
   `code` varchar(10) COLLATE latin1_spanish_ci NOT NULL COMMENT 'KB + 3 digit id => KB001',
   `total` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Dumping data for table `pembelian`
+--
+
+INSERT INTO `pembelian` (`id`, `supplier_id`, `code`, `total`, `created_at`, `updated_at`) VALUES
+(24, 2, 'KB001', 3400000, '2020-04-14 14:21:02', '2020-04-14 16:27:48'),
+(25, 1, 'KB025', 420000, '2020-04-14 14:21:35', '2020-04-14 14:21:35'),
+(26, 2, 'KB026', 500000, '2020-04-14 14:22:09', '2020-04-14 14:22:09');
 
 -- --------------------------------------------------------
 
@@ -94,9 +109,17 @@ CREATE TABLE `penjualan` (
   `id` int(11) NOT NULL,
   `pembeli` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
   `code` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `total` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Dumping data for table `penjualan`
+--
+
+INSERT INTO `penjualan` (`id`, `pembeli`, `code`, `total`, `created_at`, `updated_at`) VALUES
+(25, 'alone', 'PJL001', 800012, '2020-04-18 12:37:57', '2020-04-26 13:10:00');
 
 -- --------------------------------------------------------
 
@@ -108,10 +131,18 @@ CREATE TABLE `pivot` (
   `id` int(11) NOT NULL,
   `penjualan_id` int(11) NOT NULL,
   `barang_id` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `total` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Dumping data for table `pivot`
+--
+
+INSERT INTO `pivot` (`id`, `penjualan_id`, `barang_id`, `total`, `created_at`, `updated_at`) VALUES
+(14, 25, 2, 4, '2020-04-18 12:40:38', '2020-04-22 16:16:12'),
+(15, 25, 1, 5, '2020-04-26 13:10:00', '2020-04-26 13:10:00');
 
 -- --------------------------------------------------------
 
@@ -123,10 +154,20 @@ CREATE TABLE `pivot_pembelian` (
   `id` int(11) NOT NULL,
   `barang_id` int(11) NOT NULL,
   `pembelian_id` int(11) NOT NULL,
-  `total` int(10) UNSIGNED NOT NULL DEFAULT '1',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `total` int(10) UNSIGNED NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Dumping data for table `pivot_pembelian`
+--
+
+INSERT INTO `pivot_pembelian` (`id`, `barang_id`, `pembelian_id`, `total`, `created_at`, `updated_at`) VALUES
+(31, 1, 24, 45, '2020-04-14 14:21:02', '2020-04-14 14:21:22'),
+(32, 3, 25, 14, '2020-04-14 14:21:35', '2020-04-14 14:21:35'),
+(33, 2, 26, 10, '2020-04-14 14:22:09', '2020-04-14 14:22:09'),
+(34, 2, 24, 50, '2020-04-14 16:27:48', '2020-04-14 16:27:48');
 
 -- --------------------------------------------------------
 
@@ -141,8 +182,8 @@ CREATE TABLE `supplier` (
   `phone` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
   `branch` varchar(10) COLLATE latin1_spanish_ci NOT NULL,
   `address` tinytext COLLATE latin1_spanish_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
 
 --
@@ -163,13 +204,23 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
   `name` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
+  `email` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
   `phone` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
   `password` text COLLATE latin1_spanish_ci NOT NULL COMMENT 'password pake hash(sha512)',
-  `role` enum('admin, pengadaan, penjualan') COLLATE latin1_spanish_ci NOT NULL,
+  `role` varchar(15) COLLATE latin1_spanish_ci NOT NULL,
   `code` varchar(5) COLLATE latin1_spanish_ci NOT NULL COMMENT 'generate dari inisial role + inisial name contoh ADMMSN',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `name`, `email`, `phone`, `password`, `role`, `code`, `created_at`, `updated_at`) VALUES
+(5, 'alone', 'bayu grafit', 'alone@gmail.com', '82322597622', 'daa67b90f64327797922e7a20c9d4b796669f55eef51b7e7c3ca6738889bf06c59d0406cd84f0c969e8c0f3139bc35f44d19f998983b4d3fab7dda1c1f03e709', 'admin', 'adal', '2020-04-18 14:23:03', '2020-04-18 14:23:03'),
+(6, 'alone', 'bayu grafit', 'bayugrafit@gmail.com', '823225967622', '6a497431e3bb80a79e9b2d4d4a4ac1c7e7ef414563b1e0260b1491ebde37837a4439dcecbd2035b30b8642e5afff6c083639b81e6aa54602cafa2522ead2e93d', 'penjualan', 'peal', '2020-04-22 10:06:02', '2020-04-22 10:06:02'),
+(10, 'bayu', 'alone grafit', 'bayu@gmail.com', '82322597652', 'e078fb2f9bcffc21714c61fcc0a513233037e7174ff421a61ae9f8eb61113c97788197490773a07cc310978695046ade4d7a70650d347a158227d80f9c300a07', 'pengadaan', 'peba', '2020-04-22 12:44:52', '2020-04-22 12:44:52');
 
 --
 -- Indexes for dumped tables
@@ -243,31 +294,31 @@ ALTER TABLE `barang`
 -- AUTO_INCREMENT for table `hasil`
 --
 ALTER TABLE `hasil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `pivot`
 --
 ALTER TABLE `pivot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `pivot_pembelian`
 --
 ALTER TABLE `pivot_pembelian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -279,7 +330,7 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
