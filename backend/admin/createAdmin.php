@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
   $code = $inrole.$inname;
 
   $query = "INSERT INTO user(username,name,email,phone,password,role,code)VALUES('$username','$name','$email','$phone','$password','$role','$code')";
-  var_dump($query);
+  // var_dump($query);
   // die();
   
   $result = $conn->query($query);
