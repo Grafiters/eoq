@@ -7,7 +7,6 @@
    $hashpass = hash('sha512',$pass_check);
 
    $ses_sql = mysqli_query($conn,"SELECT * FROM user WHERE username = '$user_check' and password ='$hashpass'");
-   // var_dump($ses_sql);
 
    $row = mysqli_num_rows($ses_sql);
 
