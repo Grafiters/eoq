@@ -1,12 +1,3 @@
-<?php
-    include('../../../Connect.php');
-    // $query = "SELECT * FROM user ORDER BY user_id DESC";
-
-    if ($conn) {
-      $buys = mysqli_query($conn, "SELECT pivot.id AS id, penjualan.code AS kode, penjualan.created_at AS tanggal, barang.price*pivot.jumlah AS bayar FROM barang, penjualan, pivot WHERE barang.id=penjualan.id=pivot.id ");
-    //   var_dump($buys);
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,9 +6,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1 class="text-center">Laporan Penjualan</h1>
-        <table class="table table-bordered text-center">
+        <table class="d-print table table-bordered text-center">
             <thead>
                 <tr>
                     <th>No</th>
@@ -29,13 +20,14 @@
             <tbody>
             <?php
                 $idx = 1;
-                while ($buy = $buys->fetch_assoc()) {
+                while ($buy = $result->fetch_assoc()) {
                   echo "<tr>";
                     echo "<td>$idx</td>";
                     echo "<td>".ucwords($buy['kode'])."</td>";
-                    echo "<td>".ucwords($buy['tanggal'])."</td>";
-                    echo "<td>".ucwords($buy['bayar'])."</td>";
+                    echo "<td>".date_format(date_create($buy['tanggal']), "l, d-m-Y")."</td>";
+                    echo "<td>Rp ".number_format($buy['total'], 0)."</td>";
                   echo "</tr>";
+                  $idx++;
                 }
             ?>
             </tbody>
