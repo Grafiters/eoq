@@ -1,13 +1,3 @@
-<?php
-  include('../../../Connect.php');
-
-  if ($conn) {
-    $query = mysqli_query($conn, "SELECT pembelian.id AS id, pembelian.code AS kode, supplier.name AS supplier, pembelian.total AS total,pembelian.created_at AS tanggal FROM pembelian INNER JOIN supplier ON pembelian.supplier_id=supplier.id");
-  //   var_dump($buys);
-  }
-
-  // var_dump($query);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +20,7 @@
             <tbody>
               <?php
                   $i = 1;
-                  while ($pembelian = $query->fetch_array()) {
+                  while ($pembelian = $result->fetch_array()) {
                     $status = $i;
                     $kode = $pembelian['kode'];
                     $tanggal = date_format(date_create($pembelian['tanggal']), "D, d/m/Y");
