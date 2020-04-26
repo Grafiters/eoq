@@ -1,5 +1,6 @@
 <?php
   include ("../../Connect.php");
+  session_start();
 
   // membuat code penjualan dari tabel penjualan
   $query = $conn->query('SELECT MAX(id) as maxId FROM penjualan');

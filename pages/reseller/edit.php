@@ -88,7 +88,7 @@
                 <form action="../../backend/reseller/updateReseller.php" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Code</label>
-                    <input class="form-control" type="readonly" value="<?php echo $code ?>">
+                    <input class="form-control" type="readonly" value="<?php echo $code ?>" disabled>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Nama</label>
