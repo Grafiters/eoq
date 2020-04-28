@@ -4,19 +4,18 @@ require '../../vendor/autoload.php';
 
 if ($conn) {
   $query = "
-      SELECT
-        pembelian.id AS id,
-        pembelian.code AS kode,
-        supplier.name AS supplier,
-        pembelian.total AS total,
-        pembelian.created_at AS tanggal
-      FROM pembelian
-      INNER JOIN supplier
-      ON pembelian.supplier_id=supplier.id
+  SELECT
+    pivot.id AS id,
+    penjualan.code AS kode,
+    penjualan.created_at AS tanggal,
+    penjualan.total AS total
+  FROM penjualan
+  INNER JOIN pivot
+  ON pivot.penjualan_id=penjualan.id
   ";
   $result = $conn->query($query);
-  
 }
+// var_dump($result);
 ob_start();
 ?>
 

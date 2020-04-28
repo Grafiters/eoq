@@ -1,4 +1,4 @@
-<?php 
+<?php
   $cur = $_SERVER['REQUEST_URI'];
  ?>
 <!-- Main Sidebar Container -->

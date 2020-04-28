@@ -1,5 +1,6 @@
 <?php
   include('../../Connect.php');
+  session_start();
   $id = $_GET['id'];
 
   // var_dump($id);

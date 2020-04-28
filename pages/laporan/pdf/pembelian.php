@@ -20,7 +20,7 @@
             <tbody>
               <?php
                   $i = 1;
-                  while ($pembelian = $result->fetch_array()) {
+                  while ($pembelian = $buys->fetch_array()) {
                     $status = $i;
                     $kode = $pembelian['kode'];
                     $tanggal = date_format(date_create($pembelian['tanggal']), "D, d/m/Y");
