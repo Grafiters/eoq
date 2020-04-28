@@ -18,9 +18,10 @@ $query = "
   FROM pivot_pembelian
   INNER JOIN barang
   ON pivot_pembelian.barang_id=barang.id
+  WHERE pivot_pembelian.pembelian_id = $id;
 ";
 $pembelians = $conn->query($query);
-
+// var_dump($pembelians);
 $query = "
 SELECT
   pembelian.id AS id,
@@ -33,7 +34,6 @@ ON pembelian.supplier_id=supplier.id
 WHERE pembelian.id=$id
 ";
 $pembelian = $conn->query($query)->fetch_assoc();
-
 $items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
 
 $conn->close();

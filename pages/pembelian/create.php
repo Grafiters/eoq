@@ -8,12 +8,18 @@ if($_SESSION['username']==""){
   header("Location: /eoq/pages/admin/index.php?msg=$messages");
 }
 
+$res = $conn->query("SELECT MAX(id) as maxid FROM pembelian")->fetch_assoc();
+
+  // Proses
+$code = "KB".sprintf("%03d", $res['maxid']+1);
+
 $result = $conn->query("SELECT * FROM barang ORDER BY created_at");
 $res = $conn->query("SELECT * FROM supplier ORDER BY created_at");
 if ($result->num_rows > 0) {
   $items = $result->fetch_all();
   $suppliers = $res->fetch_all();
 }
+// $getid = $conn->query("SELECT MAX(id) as lastid FROM pembelian");
 
 $conn->close();
 
@@ -93,7 +99,7 @@ $conn->close();
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Kode Pembelian</label>
                       <div class="col-sm-8">
-                        <input class="form-control" type="text" disabled>
+                        <input class="form-control" type="text" value="<?php echo $code ?>" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -107,7 +113,7 @@ $conn->close();
                   <!-- Nama Supplier -->
                   <div class="col">
                     <div class="form-group row">
-                      <label class="col-form-label col-sm-4" for="">Nama Pembeli</label>
+                      <label class="col-form-label col-sm-4" for="">Nama Supplier</label>
                       <div class="col-sm-8">
                         <select id="supplier" class="form-control">
                           <?php

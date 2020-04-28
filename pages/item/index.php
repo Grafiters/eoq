@@ -90,7 +90,9 @@
                     <th>Satuan</th>
                     <th>Harga</th>
                     <th>Keterangan</th>
-                    <th>Action</th>
+                    <?php if ($_SESSION['role']=='admin') : ?>
+                      <th>Action</th>
+                    <?php endif; ?>
                   </tr>
                   </thead>
                   <tbody>
