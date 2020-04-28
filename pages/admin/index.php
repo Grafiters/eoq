@@ -91,11 +91,9 @@
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Status</th>
-                    <?php
-                      if ($_SESSION['role']=='admin') {
-                        echo "<th>Action</th>";
-                      }
-                    ?>
+                    <?php if ($_SESSION['role']=='admin') : ?>
+                      <th>Action</th>
+                    <?php endif; ?>
                   </tr>
                   </thead>
                   <tbody>
