@@ -13,9 +13,11 @@ if (isset($_POST)) {
 
   // Proses
   $code = "KB".sprintf("%03d", $res['maxid']+1);
+  // var_dump($code);
   $totalHarga = $amount * $barang['harga'];
   $query = "INSERT INTO pembelian(supplier_id, code, total)VALUES('$supplier', '$code', '$totalHarga')";
   $pembelian = $conn->query($query);
+
 
   if ($pembelian) {
 
@@ -48,7 +50,10 @@ if (isset($_POST)) {
     $status = $pembelian;
     $message = "Pembelian gagal dibuat";
   }
+  $getid = $conn->query("SELECT MAX(id) as id FROM pembelian")->fetch_assoc();
+  $newid = $getid['id'];
+  // var_dump($newid);
 
-  header("location: /eoq/pages/pembelian?msg=$message&status=$status");
+  header("location: /eoq/pages/pembelian/edit.php?msg=$message&status=$statusg&id=$newid");
 }
 ?>

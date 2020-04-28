@@ -69,7 +69,7 @@ if (isset($_POST)) {
     $message = "Gagal Menyimpan transaksi baru";
   }
 
-  header("location: /eoq/pages/pembelian?msg=$message&status=$status");
+  header("location: /eoq/pages/pembelian?msg=$message&status=$status&id=$id");
 }
 
 ?>
