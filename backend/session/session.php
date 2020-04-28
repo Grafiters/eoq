@@ -23,14 +23,14 @@
          $_SESSION['username'] = $user_check;
          $_SESSION['role'] = "pengadaan";
          $role = "pengadaan";
-         header("Location:/eoq/pages/admin/index.php");
+         header("Location: /eoq/pages/admin/index.php");
          //    header("Location: ../index2.php", true);
          //    die();
       }else if($result['role'] == "penjualan"){
          $_SESSION['username'] = $user_check;
          $_SESSION['role'] = "penjualan";
          $role = "penjualan";
-         header("Location:/eoq/pages/penjualan/index.php");
+         header("Location: /eoq/pages/penjualan/index.php");
          //    header("Location: ../index2.php", true);
          //    die();
       }else{
