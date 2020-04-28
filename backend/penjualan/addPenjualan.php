@@ -28,17 +28,22 @@ if (isset($_POST['submit'])) {
   $result_pjl = $conn->query("INSERT INTO penjualan(pembeli,code, total)VALUES('$name','$code','$total')");
 
   if($result_pjl){
+
     $temp = $conn->query("SELECT id FROM penjualan WHERE code='$code'")->fetch_assoc();
     $idTambah = $temp['id'];
     $result_pivot = mysqli_query($conn, "INSERT INTO pivot(penjualan_id,barang_id,total)VALUES('$idTambah','$barang','$amount')");
+
     if($result_pivot){
+
       $barang = $conn->query("SELECT id, harga, total FROM barang WHERE id='$barang'")->fetch_assoc();
       $jumlah = $barang['total'] - $amount;
       $barangId = $barang['id'];
       $query = mysqli_query($conn, "UPDATE barang SET total='$jumlah' WHERE id=$barangId");
       $message = 'created successfuly';
       $status = true;
+
     }else{
+
       $message = 'failed to created';
       $status = false;
     }
@@ -48,7 +53,9 @@ if (isset($_POST['submit'])) {
     $status = false;
   }
 
-  header("location: /eoq/pages/penjualan/index.php?msg=$message&status=$status");
+  $query = $conn->query('SELECT MAX(id) as id FROM penjualan')->fetch_assoc();
+  $newid = $query['id'];
+  header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status&id=$newid");
   die();
 }
 
