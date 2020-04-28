@@ -1,7 +1,10 @@
 <?php
-  session_start();
-?>
+session_start();
 
+if($_SESSION['username']==""){
+  header('Location: /eoq/pages/auth/login.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
