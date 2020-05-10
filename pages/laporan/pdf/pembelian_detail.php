@@ -20,6 +20,27 @@
     <br />
     <h5 class="text-center">Data Pembelian</h5>
     <br />
+    <table class="table-borderless">
+      <tr>
+        <td>Tanggal Pembelian</td>
+        <td>
+          <?= ": ".date_format(date_create($temp['tanggal']), "d F Y") ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Kode Pembelian</td>
+        <td>
+          <?= ": ".ucwords($temp['kode']) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Nama Supplier</td>
+        <td>
+          <?= ": ".ucwords($temp['pembeli']) ?>
+        </td>
+      </tr>
+    </table>
+    <br />
     <table class="d-print table table-bordered text-center">
       <thead>
         <tr>
@@ -44,6 +65,9 @@
       ?>
       </tbody>
     </table>
+    <p class="text-right">
+      <b>Total Bayar: </b> <?= "Rp ".number_format(1000, 0) ?>
+    </p>
     <br/>
     <p>Admin/Bagian Pengadaan</p>
     <br/>

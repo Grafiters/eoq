@@ -1,8 +1,11 @@
+<?php
+$temp = $result->fetch_all(MYSQLI_BOTH);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Pembelian</title>
+    <title>Laporan Penjualan</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
@@ -18,7 +21,28 @@
   </div>
   <div>
     <br />
-    <h5 class="text-center">Data Pembelian</h5>
+    <h5 class="text-center">Data Penjualan</h5>
+    <br />
+    <table class="table-borderless">
+      <tr>
+        <td>Tanggal Penjualan</td>
+        <td>
+          <?= ": ".date_format(date_create($temp['tanggal']), "d F Y") ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Kode Penjualan</td>
+        <td>
+          <?= ": ".ucwords($temp['kode']) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Nama Pembeli</td>
+        <td>
+          <?= ": ".ucwords($temp['pembeli']) ?>
+        </td>
+      </tr>
+    </table>
     <br />
     <table class="d-print table table-bordered text-center">
       <thead>
@@ -32,7 +56,7 @@
       <tbody>
       <?php
           $idx = 1;
-          while ($buy = $buys->fetch_assoc()) {
+          while ($buy = $result->fetch_assoc()) {
             echo "<tr>";
               echo "<td>$idx</td>";
               echo "<td>".ucwords($buy['kode'])."</td>";
@@ -44,6 +68,9 @@
       ?>
       </tbody>
     </table>
+    <p class="text-right">
+      <b>Total Bayar: </b> <?= "Rp ".number_format(1000, 0) ?>
+    </p>
     <br/>
     <p>Admin/Bagian Pengadaan</p>
     <br/>

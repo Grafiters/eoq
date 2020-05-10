@@ -1,6 +1,3 @@
-<?php
-$temp = $result->fetch_all(MYSQLI_BOTH);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,27 +19,6 @@ $temp = $result->fetch_all(MYSQLI_BOTH);
   <div>
     <br />
     <h5 class="text-center">Data Penjualan</h5>
-    <br />
-    <table class="table-borderless">
-      <tr>
-        <td>Tanggal Penjualan</td>
-        <td>
-          <?= ": ".date_format(date_create($temp['tanggal']), "d F Y") ?>
-        </td>
-      </tr>
-      <tr>
-        <td>Kode Penjualan</td>
-        <td>
-          <?= ": ".ucwords($temp['kode']) ?>
-        </td>
-      </tr>
-      <tr>
-        <td>Nama Pembeli</td>
-        <td>
-          <?= ": ".ucwords($temp['pembeli']) ?>
-        </td>
-      </tr>
-    </table>
     <br />
     <table class="d-print table table-bordered text-center">
       <thead>
@@ -68,9 +44,6 @@ $temp = $result->fetch_all(MYSQLI_BOTH);
       ?>
       </tbody>
     </table>
-    <p class="text-right">
-      <b>Total Bayar: </b> <?= "Rp ".number_format(1000, 0) ?>
-    </p>
     <br/>
     <p>Admin/Bagian Pengadaan</p>
     <br/>
