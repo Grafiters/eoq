@@ -56,10 +56,7 @@
             <h1>Daftar Perhitungan EOQ</h1>
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
-              <li class="breadcrumb-item active">Daftar Perhitungan EOQ</li>
-            </ol>
+            <?php include('../breadcrumbs/index.php') ?>
           </div>
         </div>
       </div><!-- /.container-fluid -->

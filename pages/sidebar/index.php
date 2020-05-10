@@ -68,13 +68,13 @@
         </li>
         <?php if ($_SESSION['role']=="admin" or $_SESSION['role']=="pengadaan") : ?>
         <li class="nav-item">
-          <a href="/eoq/pages/pembelian/index.php" class="nav-link <?= strpos($cur, 'eoq/pages/pembelian/') ? 'active' : '' ?>">
+          <a href="/eoq/pages/pembelian" class="nav-link <?= strpos($cur, 'eoq/pages/pembelian/') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-box"></i>
             <p>Pembelian</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="/eoq/pages/perhitungan-eoq/index.php" class="nav-link <?= strpos($cur, 'eoq/pages/perhitungan-eoq/') ? 'active' : '' ?>">
+          <a href="/eoq/pages/perhitungan-eoq" class="nav-link <?= strpos($cur, 'eoq/pages/perhitungan-eoq/') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-calculator"></i>
             <p>Perhitungan EOQ</p>
           </a>
@@ -89,7 +89,7 @@
         </li>
         <?php endif; ?>
         <li class="nav-item">
-          <a href="/eoq/pages/laporan/index.php" class="nav-link <?= strpos($cur, 'eoq/pages/laporan/') ? 'active' : '' ?>">
+          <a href="/eoq/pages/laporan" class="nav-link <?= strpos($cur, 'eoq/pages/laporan/') ? 'active' : '' ?>">
             <i class="nav-icon fas fa-scroll"></i>
             <p>Laporan</p>
           </a>
