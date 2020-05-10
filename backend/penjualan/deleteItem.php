@@ -39,7 +39,9 @@
             $message = "Failed to Update Pivot";
         }
     
-    header("location: /eoq/pages/penjualan?msg=$message&status=$status");
+    $query = $conn->query('SELECT MAX(id) as id FROM penjualan')->fetch_assoc();
+    $newid = $query['id'];
+    header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status&id=$idpenjualan&pivot=$idpivot");
 
     }
 ?>

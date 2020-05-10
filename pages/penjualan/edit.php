@@ -27,7 +27,8 @@
       pivot.penjualan_id AS penjualan,
       pivot.total*barang.harga AS bayar
     FROM pivot
-    INNER JOIN barang ON pivot.barang_id=barang.id";
+    INNER JOIN barang ON pivot.barang_id=barang.id
+    WHERE pivot.penjualan_id=$id";
   $penjualans = $conn->query($query);
   $items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
 ?>

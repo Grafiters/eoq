@@ -42,7 +42,7 @@ if (isset($_POST)) {
     $message = "Gagal meng-update pembelian";
   }
 
-  header("location: /eoq/pages/pembelian?msg=$message&status=$status");
+  header("location: /eoq/pages/pembelian/edit.php?msg=$message&status=$status&id=$idPembelian&pivoy=$idPivot");
 
 }
 
