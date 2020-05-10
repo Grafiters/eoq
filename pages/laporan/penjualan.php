@@ -1,30 +1,11 @@
 <?php
-include('../../Connect.php');
 session_start();
+include('../../backend/penjualan/showPenjualan.php');
+
 if($_SESSION['username']==""){
   header('Location: /eoq/pages/auth/login.php');
-}else if(!$_SESSION['role']=="pengadaan" || !$_SESSION['role']=="admin"){
-  $messages = "Permission Denied";
-  header("Location: /eoq/pages/admin/index.php?msg=$messages");
 }
-
-$query = "
-  SELECT
-    pembelian.id AS id,
-    pembelian.code AS kode,
-    supplier.name AS supplier,
-    pembelian.total AS total,
-    pembelian.created_at AS tanggal
-  FROM pembelian
-  INNER JOIN supplier
-  ON pembelian.supplier_id=supplier.id
-";
-
-$pembelians = $conn->query($query);
-
-$conn->close();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +49,7 @@ $conn->close();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Daftar Pembelian</h1>
+            <h1>Daftar Penjualan</h1>
           </div>
           <div class="col-sm-6">
             <?php include('../breadcrumbs/index.php') ?>
@@ -83,36 +64,16 @@ $conn->close();
         <div class="row">
           <!-- right column -->
           <div class="col-12">
-            <!-- START Message -->
-            <?php
-              if (isset($_GET['status'])) {
-                if ($_GET['status']) {
-                  $alert = "alert alert-primary alert-dismissible fade show";
-                } else {
-                  $alert = "alert alert-danger alert-dismissible fade show";
-                }
-                $message = $_GET['msg'];
-                echo " <div class='$alert' role='alert'>
-                  $message
-                  <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                  </button>
-                </div>";
-              }
-            ?>
-            <!-- END Message -->
             <!-- general form elements disabled -->
             <div class="card">
-              <div class="card-header text-left border-bottom-0">
-                <a class="btn btn-success btn-sm" href="/eoq/backend/pembelian/download.php">
+                <div class="card-header text-left border-bottom-0">
+                <a class="btn btn-success btn-sm" href="/eoq/backend/penjualan/download.php">
                   Cetak Seluruh Laporan
                 </a>
-                <button class="btn btn-success btn-sm" href="/eoq/pages/pembelian/create.php" data-toggle="modal" data-target="#exampleModal">
+                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
                   Cetak Laporan By Tanggal
                 </button>
               </div>
-
-              <!-- Modal -->
               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
@@ -123,7 +84,7 @@ $conn->close();
                       </button>
                     </div>
                     <div class="modal-body">
-                      <form action="/eoq/backend/pembelian/downloadtgl.php" method="post">
+                      <form action="/eoq/backend/penjualan/downloadtgl.php" method="post">
                         <table>
                           <tr>
                             <td><div class="form-groub">Dari Tanggal</div></td>
@@ -163,29 +124,28 @@ $conn->close();
                   <thead>
                   <tr>
                     <th>No</th>
-                    <th>Kode Pembelian</th>
-                    <th>Tanggal Pembelian</th>
+                    <th>Kode Penjualan</th>
+                    <th>Tanggal Penjualan</th>
                     <th>Total Bayar</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
-                      $i = 1;
-                      while ($pembelian = $pembelians->fetch_array()) {
-                        $status = $i;
-                        $kode = $pembelian['kode'];
-                        $tanggal = date_format(date_create($pembelian['tanggal']), "D, d/m/Y");
-                        $totalHarga = number_format($pembelian['total'], 0);
-                        $btnEdit = "<a href='/eoq/pages/pembelian/edit.php?id=".$pembelian['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
-                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/pembelian/delete.php?id=".$pembelian['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
+                      foreach ($buys->fetch_all(MYSQLI_BOTH) as $key => $buy) {
+                        $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$buy[0]."' class='btn btn-sm btn-primary mx-1'>edit</a>";
+                        $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualan.php?id=".$buy[0]."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
+                        $bayar = "Rp ".number_format($buy['bayar'], 0);
+                        $tanggal = date_format(date_create($buy['tanggal']), 'l, d F Y');
+                        $idx = $key + 1;
                         echo "<tr>";
-                          echo "<td>$i</td>";
-                          echo "<td>$kode</td>";
+                          echo "<td>$idx</td>";
+                          echo "<td>".ucwords($buy['kode'])."</td>";
                           echo "<td>$tanggal</td>";
-                          echo "<td>Rp $totalHarga</td>";
+                          echo "<td>$bayar</td>";
+                          echo "<td>$action</td>";
                         echo "</tr>";
-                        $i++;
                       }
                     ?>
                   </tbody>
@@ -238,3 +198,4 @@ $conn->close();
 </script>
 </body>
 </html>
+

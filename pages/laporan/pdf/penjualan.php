@@ -23,6 +23,7 @@
     <table class="d-print table table-bordered text-center">
       <thead>
         <tr>
+          <th>No.</th>
           <th>Nama Barang</th>
           <th>Harga Satuan</th>
           <th>Jumlah Beli</th>
@@ -35,6 +36,7 @@
           while ($buy = $result->fetch_assoc()) {
             echo "<tr>";
               echo "<td>$idx</td>";
+              echo "<td>".ucwords($buy['barang'])."</td>";
               echo "<td>".ucwords($buy['kode'])."</td>";
               echo "<td>".date_format(date_create($buy['tanggal']), "l, d-m-Y")."</td>";
               echo "<td>Rp ".number_format($buy['total'], 0)."</td>";
