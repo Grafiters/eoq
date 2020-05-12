@@ -1,3 +1,6 @@
+<?php
+$temp = $result->fetch_all(MYSQLI_BOTH);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,19 +27,19 @@
       <tr>
         <td>Tanggal Penjualan</td>
         <td>
-          <?= ": ".date_format(date_create($temp[0]['tanggal']), "d F Y") ?>
+          <?= ": ".date_format(date_create($temp['tanggal']), "d F Y") ?>
         </td>
       </tr>
       <tr>
         <td>Kode Penjualan</td>
         <td>
-          <?= ": ".ucwords($temp[0]['kode']) ?>
+          <?= ": ".ucwords($temp['kode']) ?>
         </td>
       </tr>
       <tr>
         <td>Nama Pembeli</td>
         <td>
-          <?= ": ".ucwords($temp[0]['pembeli']) ?>
+          <?= ": ".ucwords($temp['pembeli']) ?>
         </td>
       </tr>
     </table>
@@ -44,7 +47,6 @@
     <table class="d-print table table-bordered text-center">
       <thead>
         <tr>
-          <th>No.</th>
           <th>Nama Barang</th>
           <th>Harga Satuan</th>
           <th>Jumlah Beli</th>
@@ -53,27 +55,24 @@
       </thead>
       <tbody>
       <?php
-          foreach ($temp as $id => $buy) {
-            $subtotal = $buy['harga'] * $buy['total'];
-            $total += $subtotal;
+          $idx = 1;
+          while ($buy = $result->fetch_assoc()) {
             echo "<tr>";
-              echo "<td>".ucwords($buy['barang'])."</td>";
-              echo "<td>Rp ".number_format($buy['harga'], 0)."</td>";
-              echo "<td>".$buy['total']."</td>";
-              echo "<td>Rp ".number_format($subtotal, 0)."</td>";
+              echo "<td>$idx</td>";
+              echo "<td>".ucwords($buy['kode'])."</td>";
+              echo "<td>".date_format(date_create($buy['tanggal']), "l, d-m-Y")."</td>";
+              echo "<td>Rp ".number_format($buy['total'], 0)."</td>";
             echo "</tr>";
+            $idx++;
           }
       ?>
       </tbody>
     </table>
     <p class="text-right">
-      <b>Total Bayar: </b> <?= "Rp ".number_format($total, 0) ?>
+      <b>Total Bayar: </b> <?= "Rp ".number_format(1000, 0) ?>
     </p>
     <br/>
-    <p class="mx-5">
-      <?= ucwords($_SESSION['username']) ?>
-    </p>
-    <br/>
+    <p>Admin/Bagian Pengadaan</p>
     <br/>
     <br/>
     <p>TTD dan Nama Terang</p>

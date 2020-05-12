@@ -75,7 +75,7 @@ if($_SESSION['username']==""){
                     <div class="card">
                       <img class="card-img-top" src="/eoq/dist/img/pembelian.png" alt="">
                       <div class="card-body">
-                        <a class="btn btn-primary btn-block" href="/eoq/backend/pembelian/download.php">Laporan Pembelian</a>
+                        <a class="btn btn-primary btn-block" href="/eoq/pages/laporan/pembelian.php">Laporan Pembelian</a>
                       </div>
                     </div>
                   </div>
@@ -83,7 +83,7 @@ if($_SESSION['username']==""){
                     <div class="card">
                       <img class="card-img-top" src="/eoq/dist/img/penjualan.png" alt="">
                       <div class="card-body">
-                        <a class="btn btn-primary btn-block" href="/eoq/backend/penjualan/download.php">Laporan Penjualan</a>
+                        <a class="btn btn-primary btn-block" href="/eoq/pages/laporan/penjualan.php">Laporan Penjualan</a>
                       </div>
                     </div>
                   </div>
