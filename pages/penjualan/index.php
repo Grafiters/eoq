@@ -87,9 +87,10 @@ if($_SESSION['username']==""){
                   <tbody>
                     <?php
                       foreach ($buys->fetch_all(MYSQLI_BOTH) as $key => $buy) {
+                        $btnPrint = "<a href='/eoq/backend/penjualan/detailLaporan.php?id=".$buy[0]."' class='btn btn-sm btn-success mx-1'>print</a>";
                         $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$buy[0]."' class='btn btn-sm btn-primary mx-1'>edit</a>";
                         $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualan.php?id=".$buy[0]."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
-                        $action = $btnEdit.$btnDelete;
+                        $action = $btnPrint.$btnEdit.$btnDelete;
                         $bayar = "Rp ".number_format($buy['bayar'], 0);
                         $tanggal = date_format(date_create($buy['tanggal']), 'l, d F Y');
                         $idx = $key + 1;

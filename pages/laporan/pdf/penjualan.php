@@ -1,6 +1,3 @@
-<?php
-$temp = $result->fetch_all(MYSQLI_BOTH);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,19 +24,19 @@ $temp = $result->fetch_all(MYSQLI_BOTH);
       <tr>
         <td>Tanggal Penjualan</td>
         <td>
-          <?= ": ".date_format(date_create($temp['tanggal']), "d F Y") ?>
+          <?= ": ".date_format(date_create($temp[0]['tanggal']), "d F Y") ?>
         </td>
       </tr>
       <tr>
         <td>Kode Penjualan</td>
         <td>
-          <?= ": ".ucwords($temp['kode']) ?>
+          <?= ": ".ucwords($temp[0]['kode']) ?>
         </td>
       </tr>
       <tr>
         <td>Nama Pembeli</td>
         <td>
-          <?= ": ".ucwords($temp['pembeli']) ?>
+          <?= ": ".ucwords($temp[0]['pembeli']) ?>
         </td>
       </tr>
     </table>
@@ -55,24 +52,27 @@ $temp = $result->fetch_all(MYSQLI_BOTH);
       </thead>
       <tbody>
       <?php
-          $idx = 1;
-          while ($buy = $result->fetch_assoc()) {
+          foreach ($temp as $id => $buy) {
+            $subtotal = $buy['harga'] * $buy['total'];
+            $total += $subtotal;
             echo "<tr>";
-              echo "<td>$idx</td>";
-              echo "<td>".ucwords($buy['kode'])."</td>";
-              echo "<td>".date_format(date_create($buy['tanggal']), "l, d-m-Y")."</td>";
-              echo "<td>Rp ".number_format($buy['total'], 0)."</td>";
+              echo "<td>".ucwords($buy['barang'])."</td>";
+              echo "<td>Rp ".number_format($buy['harga'], 0)."</td>";
+              echo "<td>".$buy['total']."</td>";
+              echo "<td>Rp ".number_format($subtotal, 0)."</td>";
             echo "</tr>";
-            $idx++;
           }
       ?>
       </tbody>
     </table>
     <p class="text-right">
-      <b>Total Bayar: </b> <?= "Rp ".number_format(1000, 0) ?>
+      <b>Total Bayar: </b> <?= "Rp ".number_format($total, 0) ?>
     </p>
     <br/>
-    <p>Admin/Bagian Pengadaan</p>
+    <p class="mx-5">
+      <?= ucwords($_SESSION['username']) ?>
+    </p>
+    <br/>
     <br/>
     <br/>
     <p>TTD dan Nama Terang</p>
