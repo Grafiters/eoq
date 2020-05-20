@@ -66,11 +66,57 @@ if($_SESSION['username']==""){
           <div class="col-12">
             <!-- general form elements disabled -->
             <div class="card">
-              <div class="card-header text-right border-bottom-0">
-                <h3 class="card-title">Daftar Penjualan</h3>
-                <a class="btn btn-success btn-sm" href="/eoq/pages/penjualan/create.php">
-                  Tambah Penjualan
+                <div class="card-header text-left border-bottom-0">
+                <a class="btn btn-success btn-sm" href="/eoq/backend/penjualan/download.php">
+                  Cetak Seluruh Laporan
                 </a>
+                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
+                  Cetak Laporan By Tanggal
+                </button>
+              </div>
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/eoq/backend/penjualan/downloadtgl.php" method="post">
+                        <table>
+                          <tr>
+                            <td><div class="form-groub">Dari Tanggal</div></td>
+                            <td><div class="form-groub">:</div></td>
+                            <td>
+                              <div class="form-groub">
+                                <input type="date" class="form-control" name="tgl_awal" required>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><div class="form-groub">Sampai</div></td>
+                            <td><div class="form-groub">:</div></td>
+                            <td>
+                              <div class="form-groub">
+                                <input type="date" class="form-control" name="tgl_akhir" required>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </table>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary" name="cetak">Save changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -87,10 +133,9 @@ if($_SESSION['username']==""){
                   <tbody>
                     <?php
                       foreach ($buys->fetch_all(MYSQLI_BOTH) as $key => $buy) {
-                        $btnPrint = "<a href='/eoq/backend/penjualan/detailLaporan.php?id=".$buy[0]."' class='btn btn-sm btn-success mx-1'>print</a>";
                         $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$buy[0]."' class='btn btn-sm btn-primary mx-1'>edit</a>";
                         $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualan.php?id=".$buy[0]."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
-                        $action = $btnPrint.$btnEdit.$btnDelete;
+                        $action = $btnEdit.$btnDelete;
                         $bayar = "Rp ".number_format($buy['bayar'], 0);
                         $tanggal = date_format(date_create($buy['tanggal']), 'l, d F Y');
                         $idx = $key + 1;

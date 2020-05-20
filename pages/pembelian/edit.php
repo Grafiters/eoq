@@ -18,9 +18,10 @@ $query = "
   FROM pivot_pembelian
   INNER JOIN barang
   ON pivot_pembelian.barang_id=barang.id
+  WHERE pivot_pembelian.pembelian_id = $id;
 ";
 $pembelians = $conn->query($query);
-
+// var_dump($pembelians);
 $query = "
 SELECT
   pembelian.id AS id,
@@ -33,7 +34,6 @@ ON pembelian.supplier_id=supplier.id
 WHERE pembelian.id=$id
 ";
 $pembelian = $conn->query($query)->fetch_assoc();
-
 $items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
 
 $conn->close();
@@ -82,13 +82,7 @@ $conn->close();
             <h1>Edit Pembelian</h1>
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
-              <li class="breadcrumb-item">
-                <a href="/eoq/pages/pembelian/index.php">Daftar Pembelian</a>
-              </li>
-              <li class="breadcrumb-item active">Edit Pembelian</li>
-            </ol>
+            <?php include('../breadcrumbs/index.php') ?>
           </div>
         </div>
       </div><!-- /.container-fluid -->

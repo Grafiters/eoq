@@ -24,19 +24,19 @@
       <tr>
         <td>Tanggal Pembelian</td>
         <td>
-          <?= ": ".date_format(date_create($temp[0]['tanggal']), "d F Y") ?>
+          <?= ": ".date_format(date_create($temp['tanggal']), "d F Y") ?>
         </td>
       </tr>
       <tr>
         <td>Kode Pembelian</td>
         <td>
-          <?= ": ".ucwords($temp[0]['kode']) ?>
+          <?= ": ".ucwords($temp['kode']) ?>
         </td>
       </tr>
       <tr>
         <td>Nama Supplier</td>
         <td>
-          <?= ": ".ucwords($temp[0]['supplier']) ?>
+          <?= ": ".ucwords($temp['pembeli']) ?>
         </td>
       </tr>
     </table>
@@ -52,28 +52,24 @@
       </thead>
       <tbody>
       <?php
-          $subtotal = 0;
-          $total = 0;
-          foreach ($temp as $idx => $buy) {
-            $foo = $idx+1;
-            $subtotal = $buy['harga'] * $buy['total'];
-            $total += $subtotal;
+          $idx = 1;
+          while ($buy = $buys->fetch_assoc()) {
             echo "<tr>";
-              echo "<td>$foo</td>";
-              echo "<td>Rp ".number_format($buy['harga'], 0)."</td>";
-              echo "<td>".ucwords($buy['total'])."</td>";
-              echo "<td>Rp ".number_format($subtotal, 0)."</td>";
+              echo "<td>$idx</td>";
+              echo "<td>".ucwords($buy['kode'])."</td>";
+              echo "<td>".date_format(date_create($buy['tanggal']), "l, d-m-Y")."</td>";
+              echo "<td>Rp ".number_format($buy['total'], 0)."</td>";
             echo "</tr>";
+            $idx++;
           }
       ?>
       </tbody>
     </table>
     <p class="text-right">
-      <b>Total Bayar: </b> <?= "Rp ".number_format($total, 0) ?>
+      <b>Total Bayar: </b> <?= "Rp ".number_format(1000, 0) ?>
     </p>
     <br/>
-    <p class="mx-5"><?= ucwords($_SESSION['username']) ?></p>
-    <br/>
+    <p>Admin/Bagian Pengadaan</p>
     <br/>
     <br/>
     <p>TTD dan Nama Terang</p>

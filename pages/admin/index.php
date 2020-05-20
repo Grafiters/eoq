@@ -52,10 +52,7 @@
             <h1>Daftar Admin</h1>
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
-              <li class="breadcrumb-item active">Daftar Admin</li>
-            </ol>
+            <?php include('../breadcrumbs/index.php') ?>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -71,9 +68,15 @@
             <div class="card">
               <div class="card-header text-right border-bottom-0">
                 <h3 class="card-title">Daftar Admin</h3>
-                <a class="btn btn-success btn-sm" href="create.php">
-                  Tambah Admin
-                </a>
+                <?php
+                if ($_SESSION['role']=='admin') {
+                  echo "
+                  <a class='btn btn-success btn-sm' href='create.php'>
+                    Tambah Admin
+                  </a>
+                  "; 
+                }
+                ?>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -85,7 +88,9 @@
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    <?php if ($_SESSION['role']=='admin') : ?>
+                      <th>Action</th>
+                    <?php endif; ?>
                   </tr>
                   </thead>
                   <tbody>
@@ -101,9 +106,7 @@
                           echo "<td>".ucwords($user['name'])."</td>";
                           echo "<td>".$user['email']."</td>";
                           echo "<td>".ucwords($user['role'])."</td>";
-                          if ($_SESSION['role']!="admin") {
-                            // echo "<td>$action</td>";
-                          }else{
+                          if ($_SESSION['role']=="admin") {
                             echo "<td>$action</td>";
                           }
                         echo "</tr>";

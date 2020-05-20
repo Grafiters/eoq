@@ -6,12 +6,15 @@ if ($conn) {
   $query = "
   SELECT
     pivot.id AS id,
+    barang.name AS barang,
     penjualan.code AS kode,
     penjualan.created_at AS tanggal,
     penjualan.total AS total
   FROM penjualan
   INNER JOIN pivot
   ON pivot.penjualan_id=penjualan.id
+  INNER JOIN barang
+  ON pivot.barang_id=barang.id
   ";
   $result = $conn->query($query);
 }

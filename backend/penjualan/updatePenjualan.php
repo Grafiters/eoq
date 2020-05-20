@@ -76,7 +76,7 @@ if (isset($_POST)) {
     // }
   
 
-  header("location: /eoq/pages/penjualan?msg=$message&status=$status");
+  header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status&id=$id");
 }
 
 ?>

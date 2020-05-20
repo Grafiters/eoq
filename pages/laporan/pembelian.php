@@ -103,11 +103,59 @@ $conn->close();
             <!-- END Message -->
             <!-- general form elements disabled -->
             <div class="card">
-              <div class="card-header text-right border-bottom-0">
-                <h3 class="card-title">Daftar Pembelian</h3>
-                <a class="btn btn-success btn-sm" href="/eoq/pages/pembelian/create.php">
-                  Tambah Pembelian
+              <div class="card-header text-left border-bottom-0">
+                <a class="btn btn-success btn-sm" href="/eoq/backend/pembelian/download.php">
+                  Cetak Seluruh Laporan
                 </a>
+                <button class="btn btn-success btn-sm" href="/eoq/pages/pembelian/create.php" data-toggle="modal" data-target="#exampleModal">
+                  Cetak Laporan By Tanggal
+                </button>
+              </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/eoq/backend/pembelian/downloadtgl.php" method="post">
+                        <table>
+                          <tr>
+                            <td><div class="form-groub">Dari Tanggal</div></td>
+                            <td><div class="form-groub">:</div></td>
+                            <td>
+                              <div class="form-groub">
+                                <input type="date" class="form-control" name="tgl_awal" required>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><div class="form-groub">Sampai</div></td>
+                            <td><div class="form-groub">:</div></td>
+                            <td>
+                              <div class="form-groub">
+                                <input type="date" class="form-control" name="tgl_akhir" required>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                        </table>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary" name="cetak">Save changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -118,7 +166,6 @@ $conn->close();
                     <th>Kode Pembelian</th>
                     <th>Tanggal Pembelian</th>
                     <th>Total Bayar</th>
-                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -129,16 +176,14 @@ $conn->close();
                         $kode = $pembelian['kode'];
                         $tanggal = date_format(date_create($pembelian['tanggal']), "D, d/m/Y");
                         $totalHarga = number_format($pembelian['total'], 0);
-                        $btnPrint = "<a href='/eoq/backend/pembelian/detailLaporan.php?id=".$pembelian['id']."' class='btn btn-success btn-sm mx-1 text-white'>cetak</a>";
                         $btnEdit = "<a href='/eoq/pages/pembelian/edit.php?id=".$pembelian['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
                         $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/pembelian/delete.php?id=".$pembelian['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
-                        $action = $btnPrint.$btnEdit.$btnDelete;
+                        $action = $btnEdit.$btnDelete;
                         echo "<tr>";
                           echo "<td>$i</td>";
                           echo "<td>$kode</td>";
                           echo "<td>$tanggal</td>";
                           echo "<td>Rp $totalHarga</td>";
-                          echo "<td>$action</td>";
                         echo "</tr>";
                         $i++;
                       }

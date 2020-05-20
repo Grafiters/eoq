@@ -1,7 +1,10 @@
 <?php
-  session_start();
-?>
+session_start();
 
+if($_SESSION['username']==""){
+  header('Location: /eoq/pages/auth/login.php');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,10 +51,7 @@
             <h1>Laporan</h1>
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/index.php">Dashboard</a></li>
-              <li class="breadcrumb-item active">Laporan</li>
-            </ol>
+            <?php include('../breadcrumbs/index.php') ?>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -75,7 +75,7 @@
                     <div class="card">
                       <img class="card-img-top" src="/eoq/dist/img/pembelian.png" alt="">
                       <div class="card-body">
-                        <a class="btn btn-primary btn-block" href="/eoq/backend/pembelian/download.php">Laporan Pembelian</a>
+                        <a class="btn btn-primary btn-block" href="/eoq/pages/laporan/pembelian.php">Laporan Pembelian</a>
                       </div>
                     </div>
                   </div>
@@ -83,7 +83,7 @@
                     <div class="card">
                       <img class="card-img-top" src="/eoq/dist/img/penjualan.png" alt="">
                       <div class="card-body">
-                        <a class="btn btn-primary btn-block" href="/eoq/backend/penjualan/download.php">Laporan Penjualan</a>
+                        <a class="btn btn-primary btn-block" href="/eoq/pages/laporan/penjualan.php">Laporan Penjualan</a>
                       </div>
                     </div>
                   </div>

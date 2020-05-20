@@ -2,42 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Perhitugan EOQ</title>
+    <title>Laporan Pembelian</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Laporan Perhitugan EOQ</h1>
-        <table class="table table-bordered text-center">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Tanggal Perhitugan EOQ</th>
-                    <th>Nama Barang</th>
-                    <th>Kebutuhan Tahunan</th>
-                    <th>Biaya Sekali Pakai</th>
-                    <th>Biaya Simpan Barang</th>
-                    <th>Hasil EOQ</th>
-                    <th>Hasil Biaya Pesan</th>
-                    <th>Hasil Biaya Simpan</th>
-                    <th>ROP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Senin, 20/04/2020</td>
-                    <td>Bio 7</td>
-                    <td>27.540</td>
-                    <td>Rp 130.000</td>
-                    <td>Rp 150</td>
-                    <td>6,909</td>
-                    <td>Rp 518.193</td>
-                    <td>Rp 518.175</td>
-                    <td>275</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  <div class="text-center">
+    <h5>GTT GROUP</h5>
+    <br />
+    <h5>
+      Jl Mugas Dalem No 7 Semarang 50249<br>
+      Phone +622440124545<br>
+      Email Address: bio_7jateng@yahoo.com
+    </h5>
+    <hr width="100%">
+  </div>
+  <div>
+    <br />
+    <h5 class="text-center">Data Pembelian</h5>
+    <br />
+    <table class="table-borderless">
+      <tr>
+        <td>Berdasarkan Data</td>
+      </tr>
+      <tr>
+        <td>Tanggal Perhitungan</td>
+        <td>
+          <?= ": ".date_format(date_create($temp['tanggal']), "d F Y") ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Data Tahun</td>
+        <td>
+          <?= ": ".ucwords($temp['kode']) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Nama Barang</td>
+        <td>
+          <?= ": ".ucwords($temp['name']) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Kebutuhan Barang Tahunan</td>
+        <td>
+          <?= ": ".ucwords($temp['kebutuhan_tahunan']) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Biaya Sekali Pesan</td>
+        <td>
+          <?= ": ".ucwords($temp['biaya_sekali_pesan']) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Biaya Simpan</td>
+        <td>
+          <?= ": ".ucwords($temp['biaya_simpan_barang']) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Jumlah Hari Kerja</td>
+        <td>: 300 Hari</td>
+      </tr>
+      <tr>
+        <td>Lead Time (Waktu Tunggu)</td>
+        <td>
+          <?= ": ".ucwords($temp['pembeli']) ?>
+        </td>
+      </tr>
+    </table>
+    <br />
+    <h5 class="text-center">Hasil</h5>
+    <br />
+    <table class="table-borderless">
+      <tr>
+        <td>Hasil EOQ</td>
+        <td>
+          <?= ": ".$temp['eoq'] ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Hasil Biaya Pesan</td>
+        <td>
+          <?= ": Rp ".number_format($temp['hasil_biasa_pesan'], 0) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>Hasil Biaya Simpan</td>
+        <td>
+          <?= ": Rp ".number_format($temp['hasil_biaya_simpan'], 0) ?>
+        </td>
+      </tr>
+      <tr>
+        <td>ROP</td>
+        <td>
+          <?= ": ".$temp['rop'] ?>
+        </td>
+      </tr>
+      <tr class="text-white">
+        <td>Kebutuhan Barang Tahunan</td>
+        <td>
+          <?= ": ".ucwords($temp['pembeli']) ?>
+        </td>
+      </tr>
+    </table>
+    <br/>
+    <p class="mx-5"><?= ucwords($_SESSION['username']) ?></p>
+    <br/>
+    <br/>
+    <br/>
+    <p>TTD dan Nama Terang</p>
+  </div>
 </body>
 </html>
