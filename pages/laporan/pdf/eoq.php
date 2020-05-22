@@ -27,13 +27,7 @@
       <tr>
         <td>Tanggal Perhitungan</td>
         <td>
-          <?= ": ".date_format(date_create($temp['tanggal']), "d F Y") ?>
-        </td>
-      </tr>
-      <tr>
-        <td>Data Tahun</td>
-        <td>
-          <?= ": ".ucwords($temp['kode']) ?>
+          <?= ": ".$temp['tanggal'] ?>
         </td>
       </tr>
       <tr>
@@ -62,12 +56,12 @@
       </tr>
       <tr>
         <td>Jumlah Hari Kerja</td>
-        <td>: 300 Hari</td>
+        <td>: <?= $temp['kerja']." Hari" ?></td>
       </tr>
       <tr>
         <td>Lead Time (Waktu Tunggu)</td>
         <td>
-          <?= ": ".ucwords($temp['pembeli']) ?>
+          <?= ": ".ucwords($temp['tunggu']) ?>
         </td>
       </tr>
     </table>

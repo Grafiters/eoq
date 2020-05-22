@@ -1,22 +1,13 @@
 <?php
 include ('../../Connect.php');
 require '../../vendor/autoload.php';
+session_start();
 
 if ($conn) {
-  $query = "
-  SELECT
-    pivot.id AS id,
-    barang.name AS barang,
-    penjualan.code AS kode,
-    penjualan.created_at AS tanggal,
-    penjualan.total AS total
-  FROM penjualan
-  INNER JOIN pivot
-  ON pivot.penjualan_id=penjualan.id
-  INNER JOIN barang
-  ON pivot.barang_id=barang.id
-  ";
+  $awal = "";
+  $query = "SELECT * FROM penjualan";
   $result = $conn->query($query);
+  $buys = $result->fetch_all(MYSQLI_BOTH);
 }
 // var_dump($result);
 ob_start();

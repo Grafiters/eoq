@@ -1,6 +1,7 @@
 <?php
 include ('../../Connect.php');
 require '../../vendor/autoload.php';
+  session_start();
 
   if (isset($_POST)) {
     $awal = $_POST['tgl_awal'];
@@ -10,18 +11,15 @@ require '../../vendor/autoload.php';
     // var_dump($akhir);
     $query = "
       SELECT
-            pembelian.id AS id,
-            pembelian.code AS kode,
-            supplier.name AS supplier,
-            pembelian.total AS total,
-            pembelian.created_at AS tanggal
-          FROM pembelian
-          INNER JOIN supplier
-          ON pembelian.supplier_id=supplier.id
-          WHERE pembelian.created_at BETWEEN '$awal' AND '$akhir'";
-      $buys = $conn->query($query);
-      // var_dump($buys);
-      ob_start();
+        pembelian.id AS id,
+        pembelian.code AS kode,
+        pembelian.supplier AS supplier,
+        pembelian.total AS total,
+        pembelian.tanggal AS tanggal
+      FROM pembelian
+      WHERE pembelian.tanggal BETWEEN '$awal' AND '$akhir'";
+    $buys = $conn->query($query);
+    ob_start();
   }
 ?>
 <?= include('../../pages/laporan/pdf/pembelian.php') ?>

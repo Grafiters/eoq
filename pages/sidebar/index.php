@@ -79,6 +79,12 @@
             <p>Perhitungan EOQ</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="/eoq/pages/retur" class="nav-link <?= strpos($cur, 'eoq/pages/retur/') ? 'active' : '' ?>">
+            <i class="nav-icon fas fa-reply"></i>
+            <p>Retur</p>
+          </a>
+        </li>
         <?php endif; ?>
         <?php if ($_SESSION['role']=="admin" or $_SESSION['role']=="penjualan") : ?>
         <li class="nav-item">

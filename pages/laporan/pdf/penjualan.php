@@ -20,57 +20,34 @@
     <br />
     <h5 class="text-center">Data Penjualan</h5>
     <br />
-    <table class="table-borderless">
-      <tr>
-        <td>Tanggal Penjualan</td>
-        <td>
-          <?= ": ".date_format(date_create($temp[0]['tanggal']), "d F Y") ?>
-        </td>
-      </tr>
-      <tr>
-        <td>Kode Penjualan</td>
-        <td>
-          <?= ": ".ucwords($temp[0]['kode']) ?>
-        </td>
-      </tr>
-      <tr>
-        <td>Nama Pembeli</td>
-        <td>
-          <?= ": ".ucwords($temp[0]['pembeli']) ?>
-        </td>
-      </tr>
-    </table>
-    <br />
+    <?php if ($awal!=""): ?>
+    <p>Data Dari Tanggal <?= $awal ?> Sampai Tanggal <?= $akhir ?></p>
+    <?php endif; ?>
     <table class="d-print table table-bordered text-center">
       <thead>
         <tr>
           <th>No.</th>
-          <th>Nama Barang</th>
-          <th>Harga Satuan</th>
-          <th>Jumlah Beli</th>
-          <th>Bayar</th>
+          <th>Kode Penjualan</th>
+          <th>Tanggal Penjualan</th>
+          <th>Total Bayar</th>
         </tr>
       </thead>
       <tbody>
       <?php
-          foreach ($temp as $id => $buy) {
-            $subtotal = $buy['harga'] * $buy['total'];
-            $total += $subtotal;
+          foreach ($buys as $id => $buy) {
+            $idx = $id + 1;
             echo "<tr>";
-              echo "<td>".ucwords($buy['barang'])."</td>";
-              echo "<td>Rp ".number_format($buy['harga'], 0)."</td>";
-              echo "<td>".$buy['total']."</td>";
-              echo "<td>Rp ".number_format($subtotal, 0)."</td>";
+              echo "<td>$idx</td>";
+              echo "<td>".ucwords($buy['code'])."</td>";
+              echo "<td>".$buy['tanggal']."</td>";
+              echo "<td>Rp ".number_format($buy['total'], 0)."</td>";
             echo "</tr>";
           }
       ?>
       </tbody>
     </table>
-    <p class="text-right">
-      <b>Total Bayar: </b> <?= "Rp ".number_format($total, 0) ?>
-    </p>
     <br/>
-    <p class="mx-5">
+    <p>
       <?= ucwords($_SESSION['username']) ?>
     </p>
     <br/>

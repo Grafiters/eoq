@@ -12,12 +12,10 @@ $query = "
   SELECT
     pembelian.id AS id,
     pembelian.code AS kode,
-    supplier.name AS supplier,
+    pembelian.supplier AS supplier,
     pembelian.total AS total,
-    pembelian.created_at AS tanggal
+    pembelian.tanggal AS tanggal
   FROM pembelian
-  INNER JOIN supplier
-  ON pembelian.supplier_id=supplier.id
 ";
 
 $pembelians = $conn->query($query);
@@ -129,7 +127,7 @@ $conn->close();
                         $kode = $pembelian['kode'];
                         $tanggal = date_format(date_create($pembelian['tanggal']), "D, d/m/Y");
                         $totalHarga = number_format($pembelian['total'], 0);
-                        $btnPrint = "<a href='/eoq/backend/pembelian/detailLaporan.php?id=".$pembelian['id']."' class='btn btn-success btn-sm mx-1 text-white'>cetak</a>";
+                        $btnPrint = "<a href='/eoq/pages/pembelian/detail.php?id=".$pembelian['id']."' class='btn btn-success btn-sm mx-1 text-white'>detail</a>";
                         $btnEdit = "<a href='/eoq/pages/pembelian/edit.php?id=".$pembelian['id']."' class='btn btn-sm btn-primary mx-1'>edit</a>";
                         $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/pembelian/delete.php?id=".$pembelian['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnPrint.$btnEdit.$btnDelete;

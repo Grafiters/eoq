@@ -127,7 +127,6 @@ if($_SESSION['username']==""){
                     <th>Kode Penjualan</th>
                     <th>Tanggal Penjualan</th>
                     <th>Total Bayar</th>
-                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -144,7 +143,6 @@ if($_SESSION['username']==""){
                           echo "<td>".ucwords($buy['kode'])."</td>";
                           echo "<td>$tanggal</td>";
                           echo "<td>$bayar</td>";
-                          echo "<td>$action</td>";
                         echo "</tr>";
                       }
                     ?>

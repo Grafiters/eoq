@@ -12,7 +12,7 @@ if (isset($_POST)) {
 
   for ($i = 0; $i < $totalItem; $i++) {
     $barang = $conn->query("SELECT total FROM barang WHERE id=".$items[$i][1])->fetch_assoc();
-    $totalBarang = $barang['total'] + $items[$i][2];
+    $totalBarang = $barang['total'] - $items[$i][2];
     $query = "UPDATE barang SET total=".$totalBarang." WHERE id=".$items[$i][1];
     $resultBarang = $conn->query($query);
 

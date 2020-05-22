@@ -20,59 +20,37 @@
     <br />
     <h5 class="text-center">Data Pembelian</h5>
     <br />
-    <table class="table-borderless">
-      <tr>
-        <td>Tanggal Pembelian</td>
-        <td>
-          <?= ": ".date_format(date_create($temp[0]['tanggal']), "d F Y") ?>
-        </td>
-      </tr>
-      <tr>
-        <td>Kode Pembelian</td>
-        <td>
-          <?= ": ".ucwords($temp[0]['kode']) ?>
-        </td>
-      </tr>
-      <tr>
-        <td>Nama Supplier</td>
-        <td>
-          <?= ": ".ucwords($temp[0]['supplier']) ?>
-        </td>
-      </tr>
-    </table>
-    <br />
+    <?php if ($awal!=""): ?>
+    <p>Data Dari Tanggal <?= $awal ?> Sampai Tanggal <?= $akhir ?></p>
+    <?php endif; ?>
     <table class="d-print table table-bordered text-center">
       <thead>
         <tr>
-          <th>Nama Barang</th>
-          <th>Harga Satuan</th>
-          <th>Jumlah Beli</th>
-          <th>Bayar</th>
+          <th>No</th>
+          <th>Kode</th>
+          <th>Tanggal Pembelian</th>
+          <th>Total Bayar</th>
         </tr>
       </thead>
       <tbody>
       <?php
-          $subtotal = 0;
-          $total = 0;
-          foreach ($temp as $idx => $buy) {
-            $foo = $idx+1;
-            $subtotal = $buy['harga'] * $buy['total'];
-            $total += $subtotal;
+          $idx = 1;
+          while ($buy = $buys->fetch_assoc()) {
             echo "<tr>";
-              echo "<td>$foo</td>";
-              echo "<td>Rp ".number_format($buy['harga'], 0)."</td>";
-              echo "<td>".ucwords($buy['total'])."</td>";
-              echo "<td>Rp ".number_format($subtotal, 0)."</td>";
+              echo "<td>$idx</td>";
+              echo "<td>".ucwords($buy['kode'])."</td>";
+              echo "<td>".$buy['tanggal']."</td>";
+              echo "<td>Rp ".number_format($buy['total'], 0)."</td>";
             echo "</tr>";
+            $idx++;
           }
       ?>
       </tbody>
     </table>
-    <p class="text-right">
-      <b>Total Bayar: </b> <?= "Rp ".number_format($total, 0) ?>
-    </p>
     <br/>
-    <p class="mx-5"><?= ucwords($_SESSION['username']) ?></p>
+    <p>
+			<?= ucwords($_SESSION['username']) ?>
+		</p>
     <br/>
     <br/>
     <br/>

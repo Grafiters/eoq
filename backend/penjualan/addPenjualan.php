@@ -3,6 +3,7 @@ include("../../Connect.php");
 
 if (isset($_POST['submit'])) {
   $name = $_POST['namepemb'];
+  $tanggal = $_POST['tanggal'];
   $barang = $_POST['barang'];
   $amount = $_POST['amount'];
 
@@ -20,12 +21,12 @@ if (isset($_POST['submit'])) {
   }else{
       $code = $char.$noUrut;
   }
-  $harga = mysqli_query($conn, "SELECT harga FROM barang WHERE id='$barang'");
+  $harga = mysqli_query($conn, "SELECT harga_jual FROM barang WHERE id='$barang'");
   $getharga = mysqli_fetch_assoc($harga);
   // var_dump($getharga);
-  $total = $getharga['harga'] * $amount;
+  $total = $getharga['harga_jual'] * $amount;
 
-  $result_pjl = $conn->query("INSERT INTO penjualan(pembeli,code, total)VALUES('$name','$code','$total')");
+  $result_pjl = $conn->query("INSERT INTO penjualan(pembeli,code, total, tanggal)VALUES('$name','$code','$total', '$tanggal')");
 
   if($result_pjl){
 
@@ -55,8 +56,7 @@ if (isset($_POST['submit'])) {
 
   $query = $conn->query('SELECT MAX(id) as id FROM penjualan')->fetch_assoc();
   $newid = $query['id'];
-  header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status&id=$newid");
-  die();
+  header("location: /eoq/pages/penjualan/temp.php?msg=$message&status=$status&id=$newid");
 }
 
 ?>

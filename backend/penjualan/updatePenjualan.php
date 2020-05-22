@@ -15,12 +15,12 @@ if (isset($_POST)) {
     $ptotal = $pivot['total'];
     $penjualan = $conn->query("SELECT total FROM penjualan WHERE id=$id")->fetch_assoc();
     // var_dump($penjualan);
-    $barang = $conn->query("SELECT total, harga FROM barang WHERE id=$itemId")->fetch_assoc();
+    $barang = $conn->query("SELECT total, harga_jual FROM barang WHERE id=$itemId")->fetch_assoc();
     // var_dump($barang);
-    $satuan = $barang['harga'];
+    $satuan = $barang['harga_jual'];
     $jumlah = $barang['total'];
     $totalpenjualan = $penjualan['total'] + ($satuan * $amount);
-    
+
     $penjualanup = $conn->query("UPDATE penjualan SET total=$totalpenjualan WHERE id=$id");
     if($penjualanup){
        if($pivot == NULL){
@@ -42,7 +42,7 @@ if (isset($_POST)) {
                 $status = false;
             }
         }else{
-            $totalbarang = $penjualan['total'] + $amount;
+            $totalbarang = $penjualan['total'] - $amount;
             $temp = $amount + $pivot['total'];
             
             $pivotup = $conn->query("UPDATE pivot SET total=$temp WHERE id=".$pivot['id']);
@@ -76,7 +76,11 @@ if (isset($_POST)) {
     // }
   
 
-  header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status&id=$id");
+  if ($_POST['tambah']) {
+    header("location: /eoq/pages/penjualan/temp.php?msg=$message&status=$status&id=$id");
+  } else {
+    header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status&id=$id");
+  }
 }
 
 ?>

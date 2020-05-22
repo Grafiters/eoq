@@ -84,7 +84,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- right column -->
-          <div class="col-md-8 mx-auto">
+          <div class="col-12 mx-auto">
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header">
@@ -105,7 +105,7 @@
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Tanggal Penjualan</label>
                       <div class="col-sm-8">
-                        <input type="date" name="tanggal" class="form-control">
+                        <input type="date" id="tanggal" name="tanggal" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -132,6 +132,7 @@
                       <th>Harga Satuan</th>
                       <th>Jumlah Beli</th>
                       <th>Total Bayar</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -144,7 +145,8 @@
                           foreach ($items as $item) {
                             $id = $item[0];
                             $name = $item[2];
-                            echo "<option value='$id'>$name</option>";
+                            $jml = $item[5];
+                            echo "<option value='$id' jumlah='$jml'>$name</option>";
                           }
                           ?>
                           </select>
@@ -154,8 +156,8 @@
                           <?php
                           foreach ($items as $item) {
                             $id = $item[0];
-                            $price = $item[3];
-                            $harga = "Rp ".number_format($item[3], 0);
+                            $price = $item[4];
+                            $harga = "Rp ".number_format($item[4], 0);
                             echo "<option value='$id' price='$price'>$harga</option>";
                           }
                           ?>
@@ -163,19 +165,20 @@
                         </td>
                         <td>
                           <input id="amount" name="amount" class="form-control" type="number">
+                          <small id="amoutHelp" class="form-text text-muted"></small>
                         </td>
                         <td>
                           <input id="total" name="total" class="form-control" type="text" disabled>
                         </td>
+                        <td>
+                          <button class="btn btn-sm btn-success" type="submit" name="submit" id="btn-submit">tambah</button>
+                        </td>
                       </tr>
                       <tr>
-                        <td colspan="5" class="text-right">
-                          <button class="btn btn-sm btn-warning" type="reset">
-                            reset
-                          </button>
-                          <button class="btn btn-sm btn-success" type="submit" name="submit">
-                            submit
-                          </button>
+                        <td colspan="5"></td>
+                        <td>
+                          <a class="btn btn-sm btn-warning" href="/eoq/pages/penjualan">batal</a>
+                          <a class="btn btn-sm btn-primary" href="/eoq/pages/penjualan">simpan</a>
                         </td>
                       </tr>
                     <!-- END form tambah belanja -->
@@ -217,11 +220,20 @@ const barang = document.getElementById('barang')
 const harga = document.getElementById('price')
 const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
+const btnSubmit = document.getElementById('btn-submit')
+const jumlahPeringatan = document.getElementById('amoutHelp')
+const tempJml = barang.selectedOptions[0].getAttribute('jumlah')
 
+jumlahPeringatan.innerHTML = `Batas max barang adalah ${tempJml}`
+jumlah.setAttribute('max', tempJml)
 barang.addEventListener('change', function(e) {
   harga.value = e.target.value
   const price = harga.selectedOptions[0].attributes['price']['value']
   const temp = price * jumlah.value
+  const jmlMax = parseInt(e.target.selectedOptions[0].getAttribute('jumlah'))
+  btnSubmit.disabled = parseInt(jumlah.value) > jmlMax
+  jumlahPeringatan.innerHTML = `Batas max barang adalah ${jmlMax}`
+  jumlah.setAttribute('max', jmlMax)
   total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
 
@@ -229,6 +241,7 @@ jumlah.addEventListener('change', function(e) {
   const hargaBeli = harga.selectedOptions[0].attributes['price']['value']
   const temp = hargaBeli * e.target.value
   total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
+  btnSubmit.disabled = parseInt(e.target.value) > parseInt(e.target.getAttribute('max'))
 })
 
 </script>
