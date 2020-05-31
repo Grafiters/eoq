@@ -4,26 +4,28 @@ require '../../vendor/autoload.php';
 session_start();
 
 if ($conn) {
+  $id = $_GET['id'];
   $query = "
   SELECT
       pembelian.code AS kode,
-      supplier.name AS supplier,
+      pembelian.supplier AS supplier,
+      pembelian.tanggal AS tanggal,
       barang.name AS barang,
       barang.harga AS harga,
-      pivot_pembelian.total AS total,
-      pembelian.created_at AS tanggal
-  FROM pembelian
-  INNER JOIN pivot_pembelian ON pembelian.id = pivot_pembelian.pembelian_id
-  INNER JOIN supplier ON pembelian.supplier_id = supplier.id
+      pivot_pembelian.total AS total
+  FROM pivot_pembelian
+  INNER JOIN pembelian ON pivot_pembelian.pembelian_id = pembelian.id
   INNER JOIN barang ON pivot_pembelian.barang_id = barang.id
+  WHERE pivot_pembelian.pembelian_id=$id
   ";
   $buys = $conn->query($query);
+  
 }
 $temp = $buys->fetch_all(MYSQLI_BOTH);
 ob_start();
 ?>
 
-<?= include('../../pages/laporan/pdf/pembelian.php') ?>
+<?= include('../../pages/laporan/pdf/pembelian_detail.php') ?>
 
 <?php
 

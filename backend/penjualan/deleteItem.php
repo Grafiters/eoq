@@ -7,9 +7,9 @@
         $penjualan = $conn->query("SELECT total FROM penjualan WHERE id=$idpenjualan")->fetch_assoc();
         $pivot = $conn->query("SELECT total, barang_id FROM pivot WHERE id=$idpivot")->fetch_assoc();
         $idBarang = $pivot['barang_id'];
-        $barang = $conn->query("SELECT harga, total FROM barang WHERE id=$idBarang")->fetch_assoc();
+        $barang = $conn->query("SELECT harga_jual, total FROM barang WHERE id=$idBarang")->fetch_assoc();
 
-        $temp = ($barang['harga'] * $pivot['total']);
+        $temp = ($barang['harga_jual'] * $pivot['total']);
         $totalHarga = $penjualan['total'] - $temp;
         $resultPenjualan = $conn->query("UPDATE penjualan SET total = $totalHarga WHERE id=$idpenjualan");
 
@@ -41,7 +41,10 @@
     
     $query = $conn->query('SELECT MAX(id) as id FROM penjualan')->fetch_assoc();
     $newid = $query['id'];
-    header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status&id=$idpenjualan&pivot=$idpivot");
-
+    if ($_POST['tambah']) {
+      header("location: /eoq/pages/penjualan/temp.php?msg=$message&status=$status&id=$idpenjualan&pivot=$idpivot");
+    } else {
+      header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status&id=$idpenjualan&pivot=$idpivot");
+    }
     }
 ?>

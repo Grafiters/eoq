@@ -86,6 +86,7 @@
                     <th>Nama Barang</th>
                     <th>Satuan</th>
                     <th>Harga</th>
+                    <th>Harga Jual</th>
                     <th>Keterangan</th>
                     <?php if ($_SESSION['role']=='admin') : ?>
                       <th>Action</th>
@@ -100,12 +101,14 @@
                         $btnDelete = "<form class='d-inline' action='/eoq/backend/item/deleteitem.php?id=".$item['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnEdit.$btnDelete;
                         $price = "Rp ".number_format($item['harga'], 0);
+                        $sellingPrice = "Rp ".number_format($item['harga_jual'], 0);
                         echo "<tr class='text-center'>";
                           echo "<td>".$idx."</td>";
                           echo "<td>".ucwords($item['code'])."</td>";
                           echo "<td>".ucwords($item['name'])."</td>";
-                          echo "<td>".$item['total']."</td>";
+                          echo "<td>".$item['satuan']."</td>";
                           echo "<td>$price</td>";
+                          echo "<td>$sellingPrice</td>";
                           echo "<td>".ucwords($item['keterangan'])."</td>";
                           if ($_SESSION['role']=="admin") {
                             echo "<td>$action</td>";

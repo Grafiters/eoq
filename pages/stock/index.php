@@ -49,7 +49,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Daftar Barang</h1>
+            <h1>Daftar Stock</h1>
           </div>
           <div class="col-sm-6">
             <?php include('../breadcrumbs/index.php') ?>
@@ -67,14 +67,7 @@
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header text-right border-bottom-0">
-                <h3 class="card-title">Daftar Barang</h3>
-                <?php if($_SESSION['role']=="admin"){ ?>
-                  <a class="btn btn-success btn-sm" href="create.php">
-                  Tambah Barang
-                </a>
-                <?php
-                }
-                ?>
+                <h3 class="card-title">Daftar Stock</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -86,28 +79,26 @@
                     <th>Nama Barang</th>
                     <th>Satuan</th>
                     <th>Harga</th>
+                    <th>Harga Jual</th>
+                    <th>Jumlah</th>
                     <th>Keterangan</th>
-                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
                       $idx = 1;
                       while ($item = $items->fetch_array()) {
-                        $btnEdit = "<a class='btn btn-sm btn-primary mx-1' href='/eoq/pages/item/edit.php?id=".$item['id']."'>edit</a>";
-                        $btnDelete = "<form class='d-inline' action='/eoq/backend/item/deleteitem.php?id=".$item['id']."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
-                        $action = $btnEdit.$btnDelete;
                         $price = "Rp ".number_format($item['harga'], 0);
+                        $sellingPrice = "Rp ".number_format($item['harga_jual'], 0);
                         echo "<tr class='text-center'>";
                           echo "<td>".$idx."</td>";
                           echo "<td>".ucwords($item['code'])."</td>";
                           echo "<td>".ucwords($item['name'])."</td>";
-                          echo "<td>".$item['total']."</td>";
+                          echo "<td>".ucwords($item['satuan'])."</td>";
                           echo "<td>$price</td>";
+                          echo "<td>$sellingPrice</td>";
+                          echo "<td>".$item['total']."</td>";
                           echo "<td>".ucwords($item['keterangan'])."</td>";
-                          if ($_SESSION['role']=="admin") {
-                            echo "<td>$action</td>";
-                          }
                         echo "</tr>";
                         $idx++;
                       }
