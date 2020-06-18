@@ -15,7 +15,9 @@
       $name = $data['name'];
       $total = $data['total'];
       $harga = $data['harga'];
-      $description = $data['description'];
+      $hargaJual = $data['harga_jual'];
+      $satuan = $data['satuan'];
+      $description = $data['keterangan'];
   }
 ?>
 <!DOCTYPE html>
@@ -84,19 +86,30 @@
                 <form action="/eoq/backend/item/updateItem.php?id=<?= $_GET['id'] ?>" method="post">
                   <div class="form-group">
                     <label class="form-label" for="">Kode Item</label>
-                    <input class="form-control" type="text" name="code" value="<?php echo $code ?>" disabled>
+                    <input class="form-control" type="text" name="code" value="<?php echo $code ?>" readonly>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Nama Item</label>
                     <input class="form-control" type="text" name="name" value="<?php echo $name ?>" required>
                   </div>
+                  <div class="form-group d-none">
+                    <label class="form-label" for="">Nama Item</label>
+                    <input class="form-control" type="number" name="total" value="<?php echo $total ?>" required>
+                  </div>
                   <div class="form-group">
                     <label class="form-label" for="">Satuan</label>
-                    <input class="form-control" type="number" name="total" value="<?php echo $total ?>" required>
+                    <select name="satuan" class="form-control">
+                    <option value="botol" <?= $satuan=='botol' ? 'selected': '' ?>>botol</option>
+                    <option value="kotak" <?= $satuan=='kotak' ? 'selected': '' ?>>kotak</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Harga</label>
                     <input class="form-control" type="number" name="harga" value="<?= $harga ?>" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="">Harga Jual</label>
+                    <input class="form-control" type="number" name="harga_jual" value="<?= $hargaJual ?>" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
@@ -104,7 +117,7 @@
                   </div>
                   <input type="hidden" name="id" value=<?php echo $_GET['id'];?> >
                   <div class="form-group text-right">
-                    <a class="btn btn-warning" href="/pages/item">Back</a>
+                    <a class="btn btn-warning" href="/eoq/pages/item">Back</a>
                     <input type="submit" name="update" class="btn btn-primary" value="Submit">
                   </div>
                 </form>

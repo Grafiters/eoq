@@ -45,5 +45,5 @@ if ($status) {
   $message = "Gagal mengubah total barang";
 }
 
-header("location: /eoq/pages/penjualan/edit.php?msg=$message&status=$status");
+header("location: /eoq/pages/penjualan");
 ?>

@@ -5,7 +5,7 @@
 
   // var_dump($id);
 
-  $query = "SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.created_at AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'";
+  $query = "SELECT penjualan.id AS id, penjualan.pembeli AS name, penjualan.code AS code, penjualan.tanggal AS tanggal FROM pivot INNER JOIN penjualan ON penjualan.id='$id'";
   $result = $conn->query($query);
   while ($data = $result->fetch_assoc()) {
     $id = $data['id'];
@@ -22,10 +22,10 @@
       pivot.id AS id,
       barang.name AS barang,
       barang.code AS code,
-      barang.harga AS harga,
+      barang.harga_jual AS harga,
       pivot.total AS jumlah,
       pivot.penjualan_id AS penjualan,
-      pivot.total*barang.harga AS bayar
+      pivot.total*barang.harga_jual AS bayar
     FROM pivot
     INNER JOIN barang ON pivot.barang_id=barang.id
     WHERE pivot.penjualan_id=$id";
@@ -88,7 +88,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- right column -->
-          <div class="col-md-8 mx-auto">
+          <div class="col-12 mx-auto">
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header">
@@ -157,46 +157,50 @@
                     $i++;
                   }
                   ?>
-                    <form action="/eoq/backend/penjualan/updatePenjualan.php?id=<?= $id ?>" method="post">
+                    <form action="/eoq/backend/penjualan/updatePenjualan.php?id=<?= $_GET['id'] ?>" method="post">
                       <tr>
-                        <td><?php echo $id ?></td>
+                        <td><?= $id ?></td>
                         <td>
                           <select id="barang" class="form-control" name="barang">
-                          <?php
-                          foreach ($items as $item) {
+                          <?php foreach ($items as $item) {
                             $id = $item[0];
                             $name = $item[2];
-                            echo "<option value='$id'>$name</option>";
-                          }
-                          ?>
+                            $jml = $item[5];
+                            echo "<option value='$id' jumlah='$jml'>$name</option>";
+                          } ?>
                           </select>
                         </td>
                         <td>
                           <input type="text" name="price" id="payment" class="d-none">
                           <select id="price" class="form-control" disabled>
-                          <?php
-                          foreach ($items as $item) {
-                            $id = $item[0];
-                            $price = $item[3];
-                            $harga = "Rp ".number_format($item[3], 0);
-                            echo "<option value='$id' price='$price'>$harga</option>";
-                          }
-                          ?>
+                          <?php foreach ($items as $item) {
+                            $itemId = $item[0];
+                            $price = $item[4];
+                            $harga = "Rp ".number_format($item[4], 0);
+                            echo "<option value='$itemId' price='$price'>$harga</option>";
+                          } ?>
                           </select>
                         </td>
                         <td>
                           <input id="amount" name="amount" class="form-control" type="number">
+                          <small id="amoutHelp" class="form-text text-muted"></small>
                         </td>
                         <td colspan="1">
                           <input id="total" name="total" class="form-control" type="text" disabled>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-success" type="submit" name="update">
+                          <button class="btn btn-sm btn-success" type="submit" name="update" id="btn-submit">
                             submit
                           </button>
                         </td>
                       </tr>
                     </form>
+                    <tr>
+                      <td colspan="5"></td>
+                      <td>
+                        <a class="btn btn-sm btn-primary" href="/eoq/pages/penjualan">simpan</a>
+                      </td>
+                    </tr>
                     <!-- END form tambah belanja -->
                   </tbody>
                 </table>
@@ -235,11 +239,20 @@ const barang = document.getElementById('barang')
 const harga = document.getElementById('price')
 const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
+const btnSubmit = document.getElementById('btn-submit')
+const jumlahPeringatan = document.getElementById('amoutHelp')
+const tempJml = barang.selectedOptions[0].getAttribute('jumlah')
 
+jumlahPeringatan.innerHTML = `Batas max barang adalah ${tempJml}`
+jumlah.setAttribute('max', tempJml)
 barang.addEventListener('change', function(e) {
   harga.value = e.target.value
   const price = harga.selectedOptions[0].attributes['price']['value']
   const temp = price * jumlah.value
+  const jmlMax = parseInt(e.target.selectedOptions[0].getAttribute('jumlah'))
+  jumlahPeringatan.innerHTML = `Batas max barang adalah ${jmlMax}`
+  btnSubmit.disabled = parseInt(jumlah.value) > jmlMax
+  jumlah.setAttribute('max', jmlMax)
   total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
 })
 
@@ -247,6 +260,7 @@ jumlah.addEventListener('change', function(e) {
   const hargaBeli = harga.selectedOptions[0].attributes['price']['value']
   const temp = hargaBeli * e.target.value
   total.setAttribute('value', `Rp ${temp.toLocaleString('id')}`)
+  btnSubmit.disabled = parseInt(e.target.value) > parseInt(e.target.getAttribute('max'))
 })
 
 </script>

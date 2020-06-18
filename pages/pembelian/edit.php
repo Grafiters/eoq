@@ -26,12 +26,9 @@ $query = "
 SELECT
   pembelian.id AS id,
   pembelian.code AS kode,
-  supplier.name AS supplier,
-  pembelian.created_at AS tanggal
-FROM pembelian
-INNER JOIN supplier
-ON pembelian.supplier_id=supplier.id
-WHERE pembelian.id=$id
+  pembelian.supplier AS supplier,
+  pembelian.tanggal AS tanggal
+FROM pembelian WHERE pembelian.id=$id
 ";
 $pembelian = $conn->query($query)->fetch_assoc();
 $items = $conn->query("SELECT * FROM barang ORDER BY created_at")->fetch_all();
@@ -93,7 +90,7 @@ $conn->close();
       <div class="container-fluid">
         <div class="row">
           <!-- right column -->
-          <div class="col-md-8 mx-auto">
+          <div class="col-12 mx-auto">
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header">
@@ -200,6 +197,12 @@ $conn->close();
                         </td>
                         <td>
                           <button class="btn btn-sm btn-success">submit</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="5"></td>
+                        <td>
+                          <a class="btn btn-sm btn-primary" href="/eoq/pages/pembelian">simpan</a>
                         </td>
                       </tr>
                     </form>

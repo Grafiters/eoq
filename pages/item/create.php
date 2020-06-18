@@ -18,7 +18,7 @@
   if ($noUrut<10) {
       $code = $char."0".$noUrut;
   }else{
-      $code = $char.$noUrut.strtoupper($cutName);
+      $code = $char.$noUrut;
   }
 ?>
 <!DOCTYPE html>
@@ -94,12 +94,19 @@
                     <input class="form-control" type="text" name="name" required>
                   </div>
                   <div class="form-group">
-                    <label class="form-label" for="">Total</label>
-                    <input class="form-control" type="number" name="total" required>
+                    <label class="form-label" for="">Satuan</label>
+                    <select name="satuan" class="form-control">
+                      <option value="botol">botol</option>
+                      <option value="kotak">kotak</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Harga</label>
                     <input class="form-control" type="number" name="harga" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="">Harga Jual</label>
+                    <input class="form-control" type="number" name="harga_jual" required>
                   </div>
                   <div class="form-group">
                     <label class="form-label" for="">Keterangan</label>
