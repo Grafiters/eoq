@@ -87,7 +87,7 @@ if($_SESSION['username']==""){
                   <tbody>
                     <?php
                       foreach ($buys->fetch_all(MYSQLI_BOTH) as $key => $buy) {
-                        $btnPrint = "<a href='/eoq/backend/penjualan/detailLaporan.php?id=".$buy[0]."' class='btn btn-sm btn-success mx-1'>print</a>";
+                        $btnPrint = "<a href='/eoq/pages/penjualan/detail.php?id=".$buy[0]."' class='btn btn-sm btn-success mx-1'>detail</a>";
                         $btnEdit = "<a href='/eoq/pages/penjualan/edit.php?id=".$buy[0]."' class='btn btn-sm btn-primary mx-1'>edit</a>";
                         $btnDelete = "<form class='d-inline mx-1' action='/eoq/backend/penjualan/deletePenjualan.php?id=".$buy[0]."' method='post'><input type='submit' name='delete' class='btn btn-sm btn-danger' value='hapus'/></form>";
                         $action = $btnPrint.$btnEdit.$btnDelete;

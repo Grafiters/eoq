@@ -5,6 +5,7 @@ if (isset($_POST)) {
   // variable dari form
   $barangId = $_POST['barang'];
   $supplier = $_POST['supplier'];
+  $tanggal = $_POST['tanggal'];
   $amount = $_POST['amount'];
 
   // data dari DB
@@ -15,9 +16,8 @@ if (isset($_POST)) {
   $code = "KB".sprintf("%03d", $res['maxid']+1);
   // var_dump($code);
   $totalHarga = $amount * $barang['harga'];
-  $query = "INSERT INTO pembelian(supplier_id, code, total)VALUES('$supplier', '$code', '$totalHarga')";
+  $query = "INSERT INTO pembelian(code, total, supplier, tanggal)VALUES('$code', '$totalHarga', '$supplier', '$tanggal')";
   $pembelian = $conn->query($query);
-
 
   if ($pembelian) {
 
@@ -28,7 +28,7 @@ if (isset($_POST)) {
 
     if ($pivotPembelian) {
 
-      $jumlah = $barang['total'] - $amount;
+      $jumlah = $barang['total'] + $amount;
       $query = "UPDATE barang SET total='$jumlah' WHERE id=$barangId";
 
       $hasil = $conn->query($query);
@@ -54,6 +54,6 @@ if (isset($_POST)) {
   $newid = $getid['id'];
   // var_dump($newid);
 
-  header("location: /eoq/pages/pembelian/edit.php?msg=$message&status=$statusg&id=$newid");
+  header("location: /eoq/pages/pembelian/temp.php?msg=$message&status=$statusg&id=$newid");
 }
 ?>

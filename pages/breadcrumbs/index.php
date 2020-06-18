@@ -3,9 +3,15 @@
   $second = array_splice($first, 2);
   $convToAssoc = function($value) {
     $temp = array_filter(explode('/', $_SERVER['REQUEST_URI']));
-    $idx = array_search($value, $temp);
+    $foo = array_filter($temp , function($val){
+      if (strpos($val, '?')===false) {
+        return $val;
+      }
+    }); 
+    $idx = array_search($value, $foo);
     $url = "/".implode('/', array_splice($temp, 0, $idx));
-    return array('title' => ucwords($value), 'url' => $url);
+    $title = strpos($value, '.php') === false ? $value : explode('.php', $value)[0];
+    return array('title' => ucwords($title), 'url' => $url);
   };
   $paths = array_map($convToAssoc, $second);
 ?>

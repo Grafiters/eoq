@@ -7,13 +7,15 @@
         $code=$_POST['code'];
         $name = $_POST['name'];
         $total=$_POST['total'];
-        $harga=$_POST['harga'];
+        $satuan=$_POST['satuan'];
+        $harga= (int) $_POST['harga'];
+        $hargaJual= (int) $_POST['harga_jual'];
         $description=$_POST['description'];
 
-        $result = mysqli_query($conn, "UPDATE barang SET code='$code',name='$name',total='$total',harga='$harga',description='$description' WHERE id = $id");
+        $result = mysqli_query($conn, "UPDATE barang SET code='$code',name='$name',total='$total',harga='$harga',keterangan='$description',satuan='$satuan',harga_jual='$hargaJual' WHERE id = $id");
 
         if($result) {
-          header("Location: /eoq/pages/item/index.php");
+          header("Location: /eoq/pages/item");
         } else {
           echo "Error: " . $result . "<br>" . $conn->error;
         }

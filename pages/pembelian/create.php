@@ -79,7 +79,7 @@ $conn->close();
       <div class="container-fluid">
         <div class="row">
           <!-- right column -->
-          <div class="col-md-8 mx-auto">
+          <div class="col-12 mx-auto">
             <!-- general form elements disabled -->
             <div class="card">
               <div class="card-header">
@@ -99,7 +99,7 @@ $conn->close();
                     <div class="form-group row">
                       <label class="form-label col-sm-4" for="">Tanggal Pembelian</label>
                       <div class="col-sm-8">
-                        <input type="date" name="tanggal" class="form-control" disabled>
+                        <input type="date" id="tanggal" name="tanggal" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -109,15 +109,7 @@ $conn->close();
                     <div class="form-group row">
                       <label class="col-form-label col-sm-4" for="">Nama Supplier</label>
                       <div class="col-sm-8">
-                        <select id="supplier" class="form-control">
-                          <?php
-                            foreach ($suppliers as $supplier) {
-                              $id = $supplier[0];
-                              $name = ucwords($supplier[2]);
-                              echo "<option value='$id'>$name</option>";
-                            }
-                          ?>
-                        </select>
+                        <input type="text" name="supplier" id="supplier" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -128,17 +120,18 @@ $conn->close();
                 <table class="table table-hover table-borderless text-center">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>Nama Barang</th>
+                      <th>No</th> <th>Nama Barang</th>
                       <th>Harga Satuan</th>
                       <th>Jumlah Beli</th>
                       <th>Total Bayar</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <!-- form tambah belanja -->
                     <form action="/eoq/backend/pembelian/add.php" method="POST">
                       <input type="text" name="supplier" id="real-supplier" class="d-none">
+                      <input type="date" name="tanggal" id="real-tanggal" class="d-none">
                       <tr>
                         <td>1</td>
                         <td>
@@ -170,15 +163,15 @@ $conn->close();
                         <td>
                           <input id="total" name="total" class="form-control" type="text" disabled>
                         </td>
+                        <td>
+                          <button class="btn btn-sm btn-success" type="submit">tambah</button>
+                        </td>
                       </tr>
                       <tr>
-                        <td colspan="5" class="text-right">
-                          <button class="btn btn-sm btn-warning" type="reset">
-                            reset
-                          </button>
-                          <button class="btn btn-sm btn-success" type="submit">
-                            submit
-                          </button>
+                        <td colspan="5"></td>
+                        <td>
+                          <a class="btn btn-sm btn-warning" href="/eoq/pages/pembelian">batal</a>
+                          <a class="btn btn-sm btn-primary" href="/eoq/pages/pembelian">simpan</a>
                         </td>
                       </tr>
                     </form>
@@ -223,7 +216,14 @@ const jumlah = document.getElementById('amount')
 const total = document.getElementById('total')
 const supplier = document.getElementById('supplier')
 const real = document.getElementById('real-supplier')
-real.value = supplier.value
+const tanggal = document.getElementById('tanggal')
+const realTanggal = document.getElementById('real-tanggal')
+supplier.addEventListener('change', function({target}) {
+  real.value = target.value
+})
+tanggal.addEventListener('change', function({target}) {
+  realTanggal.value = target.value
+})
 barang.addEventListener('change', function(e) {
   harga.value = e.target.value
   const price = harga.selectedOptions[0].attributes['price']['value']

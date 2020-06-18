@@ -26,7 +26,7 @@ if (isset($_POST)) {
       $result = $conn->query($query);
 
       if ($result) {
-        $jumlah = $barang['total'] - $amount;
+        $jumlah = $barang['total'] + $amount;
         $query = "UPDATE barang SET total='$jumlah' WHERE id=$itemId";
         $result = $conn->query($query);
         if ($result) {
@@ -47,7 +47,7 @@ if (isset($_POST)) {
       $result = $conn->query($query);
 
       if ($result) {
-        $jumlah = $barang['total'] - $amount;
+        $jumlah = $barang['total'] + $amount;
         $query = "UPDATE barang SET total='$jumlah' WHERE id=$itemId";
         $result = $conn->query($query);
 
@@ -69,7 +69,11 @@ if (isset($_POST)) {
     $message = "Gagal Menyimpan transaksi baru";
   }
 
-  header("location: /eoq/pages/pembelian/edit.php?msg=$message&status=$status&id=$id");
+  if ($_POST['tambah']) {
+    header("location: /eoq/pages/pembelian/temp.php?msg=$message&status=$status&id=$id");
+  } else {
+    header("location: /eoq/pages/pembelian/edit.php?msg=$message&status=$status&id=$id");
+  }
 }
 
 ?>

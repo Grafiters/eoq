@@ -84,10 +84,11 @@
                     <label class="col-md-6 col-form-label" for="">Data</label>
                     <div class="col-md-6">
                       <select class="form-control" name="data">
-                      <?php for ($i = 1; $i < 4; $i++) {
-                          $temp = 2017 + $i;
-                          echo "<option value='$temp'>Data $temp</option>";
-                      } ?>
+                      <?php foreach ($years as $year): ?>
+                        <option value="<?= $year['tahun'] ?>">
+                          Data Tahun <?= $year['tahun'] ?>
+                        </option>
+                      <?php endforeach; ?>
                       </select>
                     </div>
                   </div>
@@ -102,12 +103,6 @@
                         }
                       ?>
                       </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-6 col-form-label" for="">Kebutuhan Barang Tahunan</label>
-                    <div class="col-md-6">
-                      <input class="form-control" type="number" name="kebutuhan_tahunan">
                     </div>
                   </div>
                   <div class="form-group row">
@@ -169,7 +164,7 @@
                         $idx = $key + 1;
                         echo "<tr>";
                         echo "<td>$idx</td>";
-                        echo "<td>".date_format(date_create($eoq['created_at']), "l, d-m-Y")."</td>";
+                        echo "<td>".date_format(date_create($eoq['tanggal']), "l, d-m-Y")."</td>";
                         echo "<td>".ucwords($eoq['name'])."</td>";
                         echo "<td>".ucwords($eoq['kebutuhan_tahunan'])."</td>";
                         echo "<td>".ucwords($eoq['biaya_sekali_pesan'])."</td>";

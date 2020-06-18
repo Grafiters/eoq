@@ -91,7 +91,15 @@ if($_SESSION['username']==""){
                     <div class="card">
                       <img class="card-img-top" src="/eoq/dist/img/stock.png" alt="">
                       <div class="card-body">
-                        <a class="btn btn-primary btn-block" href="">Laporan Stock</a>
+                        <a class="btn btn-primary btn-block" href="/eoq/backend/item/download.php">Laporan Stock</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="card">
+                      <img class="card-img-top" src="/eoq/dist/img/retur.png" alt="">
+                      <div class="card-body">
+                        <a class="btn btn-primary btn-block" href="/eoq/pages/laporan/retur.php">Laporan Retur</a>
                       </div>
                     </div>
                   </div>

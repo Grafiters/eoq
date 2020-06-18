@@ -1,18 +1,18 @@
 <?php
   include ('../../Connect.php');
   require '../../vendor/autoload.php';
+  session_start();
 
   if ($conn) {
+    $awal = "";
     $query = "
     SELECT
           pembelian.id AS id,
           pembelian.code AS kode,
-          supplier.name AS supplier,
+          pembelian.supplier AS supplier,
           pembelian.total AS total,
-          pembelian.created_at AS tanggal
-        FROM pembelian
-        INNER JOIN supplier
-        ON pembelian.supplier_id=supplier.id";
+          pembelian.tanggal AS tanggal
+        FROM pembelian";
     $buys = $conn->query($query);
   }
   // var_dump($buys);

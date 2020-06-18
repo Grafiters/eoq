@@ -20,7 +20,7 @@ if (isset($_POST)) {
 
     if ($resultPivot) {
 
-      $totalBarang = $barang['total'] + $pivot['total'];
+      $totalBarang = $barang['total'] - $pivot['total'];
       $query = "UPDATE barang SET total=$totalBarang WHERE id=$idBarang";
       $resultBarang = $conn->query($query);
 
@@ -42,7 +42,11 @@ if (isset($_POST)) {
     $message = "Gagal meng-update pembelian";
   }
 
-  header("location: /eoq/pages/pembelian/edit.php?msg=$message&status=$status&id=$idPembelian&pivoy=$idPivot");
+  if ($_POST['tambah']) {
+    header("location: /eoq/pages/pembelian/temp.php?msg=$message&status=$status&id=$idPembelian&pivoy=$idPivot");
+  } else {
+    header("location: /eoq/pages/pembelian/edit.php?msg=$message&status=$status&id=$idPembelian&pivoy=$idPivot");
+  }
 
 }
 
